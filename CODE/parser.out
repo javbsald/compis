@@ -1,0 +1,3617 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+Rule 2     programa1 -> vars programa1
+Rule 3     programa1 -> empty
+Rule 4     programa2 -> funciones programa2
+Rule 5     programa2 -> empty
+Rule 6     puntoCreateProgram -> <empty>
+Rule 7     puntoChangeStateLocal -> <empty>
+Rule 8     puntoPrintFinal -> <empty>
+Rule 9     vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+Rule 10    vars1 -> COMMA ID puntoCreateVar vars1
+Rule 11    vars1 -> empty
+Rule 12    vars2 -> tipo puntoCreateVarType
+Rule 13    vars2 -> tipo_graph
+Rule 14    vars3 -> LBRACKET CTE_INT puntoChangeDimension RBRACKET
+Rule 15    vars3 -> empty
+Rule 16    puntoChangeDimension -> <empty>
+Rule 17    puntoCreateVarTable -> <empty>
+Rule 18    puntoCreateVarTableState -> <empty>
+Rule 19    puntoCreateVar -> <empty>
+Rule 20    puntoCreateVarType -> <empty>
+Rule 21    puntoCreateDimension -> <empty>
+Rule 22    tipo -> INT puntoCurrentType
+Rule 23    tipo -> FLOAT puntoCurrentType
+Rule 24    tipo -> BOOL puntoCurrentType
+Rule 25    tipo -> CHAR puntoCurrentType
+Rule 26    puntoCurrentType -> <empty>
+Rule 27    tipo_cte -> CTE_INT
+Rule 28    tipo_cte -> CTE_FLOAT
+Rule 29    tipo_cte -> CTE_BOOL
+Rule 30    tipo_cte -> CTE_CHAR
+Rule 31    tipo_cte -> ID tipo_cte1
+Rule 32    tipo_cte -> llamada
+Rule 33    tipo_cte1 -> LBRACKET CTE_INT RBRACKET
+Rule 34    tipo_cte1 -> funciones_arr
+Rule 35    tipo_cte1 -> empty
+Rule 36    tipo_graph -> PIECHART
+Rule 37    tipo_graph -> BARGRAPH
+Rule 38    tipo_graph -> PLOTLINE
+Rule 39    funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+Rule 40    funciones1 -> VOID
+Rule 41    funciones1 -> tipo
+Rule 42    funciones2 -> tipo ID funciones3
+Rule 43    funciones2 -> empty
+Rule 44    funciones3 -> COMMA tipo ID funciones3
+Rule 45    funciones3 -> empty
+Rule 46    puntoChangeStateFuncion -> <empty>
+Rule 47    main -> VOID MAIN LPAREN RPAREN bloque_modular
+Rule 48    bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE
+Rule 49    bloque_modular1 -> vars bloque_modular1
+Rule 50    bloque_modular1 -> empty
+Rule 51    bloque_modular2 -> estatuto bloque_modular2
+Rule 52    bloque_modular2 -> empty
+Rule 53    bloque -> LBLOQUE bloque1 RBLOQUE
+Rule 54    bloque1 -> estatuto bloque1
+Rule 55    bloque1 -> empty
+Rule 56    estatuto -> asignacion
+Rule 57    estatuto -> condicion
+Rule 58    estatuto -> escritura
+Rule 59    estatuto -> return
+Rule 60    estatuto -> while
+Rule 61    estatuto -> do_while
+Rule 62    estatuto -> llamada SEMICOLON
+Rule 63    asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON
+Rule 64    asignacion1 -> LBRACKET expresion RBRACKET
+Rule 65    asignacion1 -> empty
+Rule 66    asignacion2 -> expresion
+Rule 67    asignacion2 -> leida
+Rule 68    leida -> INPUT LPAREN RPAREN
+Rule 69    condicion -> IF LPAREN expresion RPAREN bloque condicion1
+Rule 70    condicion1 -> ELSE bloque
+Rule 71    condicion1 -> empty
+Rule 72    escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON
+Rule 73    escritura1 -> expresion
+Rule 74    escritura1 -> CTE_STRING
+Rule 75    llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN
+Rule 76    llamada1 -> expresion llamada2
+Rule 77    llamada1 -> empty
+Rule 78    llamada2 -> COMMA tipo ID llamada2
+Rule 79    llamada2 -> empty
+Rule 80    return -> RETURN expresion SEMICOLON
+Rule 81    while -> WHILE LPAREN expresion RPAREN bloque
+Rule 82    do_while -> DO bloque WHILE LPAREN expresion RPAREN
+Rule 83    expresion -> compare expresion2
+Rule 84    expresion2 -> AND compare
+Rule 85    expresion2 -> OR compare
+Rule 86    expresion2 -> empty
+Rule 87    compare -> exp compare1
+Rule 88    compare1 -> GREATERTHAN exp
+Rule 89    compare1 -> LESSTHAN exp
+Rule 90    compare1 -> GREATERTHANEQUAL exp
+Rule 91    compare1 -> LESSTHANEQUAL exp
+Rule 92    compare1 -> EQUALEQUAL exp
+Rule 93    compare1 -> NOTEQUAL exp
+Rule 94    compare1 -> empty
+Rule 95    exp -> termino exp1
+Rule 96    exp1 -> PLUS termino exp1
+Rule 97    exp1 -> MINUS termino exp1
+Rule 98    exp1 -> empty
+Rule 99    termino -> factor termino1
+Rule 100   termino1 -> TIMES factor termino1
+Rule 101   termino1 -> DIVIDE factor termino1
+Rule 102   termino1 -> empty
+Rule 103   factor -> LPAREN expresion RPAREN
+Rule 104   factor -> tipo_cte
+Rule 105   factor -> MINUS tipo_cte
+Rule 106   factor -> NOT tipo_cte
+Rule 107   funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN
+Rule 108   funciones_arr1 -> MAX
+Rule 109   funciones_arr1 -> MIN
+Rule 110   funciones_arr1 -> RANGE
+Rule 111   funciones_arr1 -> MEDIAN
+Rule 112   funciones_arr1 -> AVERAGE
+Rule 113   funciones_arr1 -> IQRANGE
+Rule 114   funciones_arr1 -> STDEV
+Rule 115   funciones_arr1 -> VARIANCE
+Rule 116   funciones_arr1 -> MODIFY
+Rule 117   funciones_arr1 -> DRAW
+Rule 118   empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 84
+AS                   : 9
+AVERAGE              : 112
+BARGRAPH             : 37
+BOOL                 : 24
+CALL                 : 75
+CHAR                 : 25
+COMMA                : 10 44 78
+CTE_BOOL             : 29
+CTE_CHAR             : 30
+CTE_FLOAT            : 28
+CTE_INT              : 14 27 33
+CTE_STRING           : 74
+DIVIDE               : 101
+DO                   : 82
+DRAW                 : 117
+ELSE                 : 70
+EQUALEQUAL           : 92
+EQUALS               : 63
+FLOAT                : 23
+FUNC                 : 39
+GREATERTHAN          : 88
+GREATERTHANEQUAL     : 90
+ID                   : 1 9 10 31 39 42 44 63 75 78
+IF                   : 69
+INPUT                : 68
+INT                  : 22
+IQRANGE              : 113
+LBLOQUE              : 48 53
+LBRACKET             : 14 33 64
+LESSTHAN             : 89
+LESSTHANEQUAL        : 91
+LPAREN               : 39 47 68 69 72 75 81 82 103 107
+MAIN                 : 47
+MAX                  : 108
+MEDIAN               : 111
+MIN                  : 109
+MINUS                : 97 105
+MODIFY               : 116
+NOT                  : 106
+NOTEQUAL             : 93
+OR                   : 85
+PIECHART             : 36
+PLOTLINE             : 38
+PLUS                 : 96
+PRINT                : 72
+PROGRAM              : 1
+PUNTO                : 75 107
+RANGE                : 110
+RBLOQUE              : 48 53
+RBRACKET             : 14 33 64
+RETURN               : 80
+RPAREN               : 39 47 68 69 72 75 81 82 103 107
+SEMICOLON            : 1 9 62 63 72 80
+STDEV                : 114
+TIMES                : 100
+VAR                  : 9
+VARIANCE             : 115
+VOID                 : 40 47
+WHILE                : 81 82
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 56
+asignacion1          : 63
+asignacion2          : 63
+bloque               : 69 70 81 82
+bloque1              : 53 54
+bloque_modular       : 39 47
+bloque_modular1      : 48 49
+bloque_modular2      : 48 51
+compare              : 83 84 85
+compare1             : 87
+condicion            : 57
+condicion1           : 69
+do_while             : 61
+empty                : 3 5 11 15 35 43 45 50 52 55 65 71 77 79 86 94 98 102
+escritura            : 58
+escritura1           : 72
+estatuto             : 51 54
+exp                  : 87 88 89 90 91 92 93
+exp1                 : 95 96 97
+expresion            : 64 66 69 73 76 80 81 82 103
+expresion2           : 83
+factor               : 99 100 101
+funciones            : 4
+funciones1           : 39
+funciones2           : 39
+funciones3           : 42 44
+funciones_arr        : 34
+funciones_arr1       : 107
+leida                : 67
+llamada              : 32 62
+llamada1             : 75
+llamada2             : 76 78
+main                 : 1
+programa             : 0
+programa1            : 1 2
+programa2            : 1 4
+puntoChangeDimension : 14
+puntoChangeStateFuncion : 39
+puntoChangeStateLocal : 1
+puntoCreateDimension : 9
+puntoCreateProgram   : 1
+puntoCreateVar       : 9 10
+puntoCreateVarTable  : 1
+puntoCreateVarTableState : 1 1 39
+puntoCreateVarType   : 12
+puntoCurrentType     : 22 23 24 25
+puntoPrintFinal      : 1
+return               : 59
+termino              : 95 96 97
+termino1             : 99 100 101
+tipo                 : 12 41 42 44 78
+tipo_cte             : 104 105 106
+tipo_cte1            : 31
+tipo_graph           : 13
+vars                 : 2 49
+vars1                : 9 10
+vars2                : 9
+vars3                : 9
+while                : 60
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+
+    PROGRAM         shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAM . ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) programa -> PROGRAM ID . puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (6) puntoCreateProgram -> .
+
+    SEMICOLON       reduce using rule 6 (puntoCreateProgram -> .)
+
+    puntoCreateProgram             shift and go to state 4
+
+state 4
+
+    (1) programa -> PROGRAM ID puntoCreateProgram . SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+
+    SEMICOLON       shift and go to state 5
+
+
+state 5
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON . puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (17) puntoCreateVarTable -> .
+
+    VAR             reduce using rule 17 (puntoCreateVarTable -> .)
+    FUNC            reduce using rule 17 (puntoCreateVarTable -> .)
+    VOID            reduce using rule 17 (puntoCreateVarTable -> .)
+
+    puntoCreateVarTable            shift and go to state 6
+
+state 6
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable . puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (18) puntoCreateVarTableState -> .
+
+    VAR             reduce using rule 18 (puntoCreateVarTableState -> .)
+    FUNC            reduce using rule 18 (puntoCreateVarTableState -> .)
+    VOID            reduce using rule 18 (puntoCreateVarTableState -> .)
+
+    puntoCreateVarTableState       shift and go to state 7
+
+state 7
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState . programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (2) programa1 -> . vars programa1
+    (3) programa1 -> . empty
+    (9) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (118) empty -> .
+
+    VAR             shift and go to state 11
+    FUNC            reduce using rule 118 (empty -> .)
+    VOID            reduce using rule 118 (empty -> .)
+
+    programa1                      shift and go to state 8
+    vars                           shift and go to state 9
+    empty                          shift and go to state 10
+
+state 8
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 . programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (4) programa2 -> . funciones programa2
+    (5) programa2 -> . empty
+    (39) funciones -> . FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+    (118) empty -> .
+
+    FUNC            shift and go to state 15
+    VOID            reduce using rule 118 (empty -> .)
+
+    programa2                      shift and go to state 12
+    funciones                      shift and go to state 13
+    empty                          shift and go to state 14
+
+state 9
+
+    (2) programa1 -> vars . programa1
+    (2) programa1 -> . vars programa1
+    (3) programa1 -> . empty
+    (9) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (118) empty -> .
+
+    VAR             shift and go to state 11
+    FUNC            reduce using rule 118 (empty -> .)
+    VOID            reduce using rule 118 (empty -> .)
+
+    vars                           shift and go to state 9
+    programa1                      shift and go to state 16
+    empty                          shift and go to state 10
+
+state 10
+
+    (3) programa1 -> empty .
+
+    FUNC            reduce using rule 3 (programa1 -> empty .)
+    VOID            reduce using rule 3 (programa1 -> empty .)
+
+
+state 11
+
+    (9) vars -> VAR . ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+
+    ID              shift and go to state 17
+
+
+state 12
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 . puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal
+    (7) puntoChangeStateLocal -> .
+
+    VOID            reduce using rule 7 (puntoChangeStateLocal -> .)
+
+    puntoChangeStateLocal          shift and go to state 18
+
+state 13
+
+    (4) programa2 -> funciones . programa2
+    (4) programa2 -> . funciones programa2
+    (5) programa2 -> . empty
+    (39) funciones -> . FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+    (118) empty -> .
+
+    FUNC            shift and go to state 15
+    VOID            reduce using rule 118 (empty -> .)
+
+    funciones                      shift and go to state 13
+    programa2                      shift and go to state 19
+    empty                          shift and go to state 14
+
+state 14
+
+    (5) programa2 -> empty .
+
+    VOID            reduce using rule 5 (programa2 -> empty .)
+
+
+state 15
+
+    (39) funciones -> FUNC . funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+    (40) funciones1 -> . VOID
+    (41) funciones1 -> . tipo
+    (22) tipo -> . INT puntoCurrentType
+    (23) tipo -> . FLOAT puntoCurrentType
+    (24) tipo -> . BOOL puntoCurrentType
+    (25) tipo -> . CHAR puntoCurrentType
+
+    VOID            shift and go to state 21
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    BOOL            shift and go to state 25
+    CHAR            shift and go to state 26
+
+    funciones1                     shift and go to state 20
+    tipo                           shift and go to state 22
+
+state 16
+
+    (2) programa1 -> vars programa1 .
+
+    FUNC            reduce using rule 2 (programa1 -> vars programa1 .)
+    VOID            reduce using rule 2 (programa1 -> vars programa1 .)
+
+
+state 17
+
+    (9) vars -> VAR ID . puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (19) puntoCreateVar -> .
+
+    COMMA           reduce using rule 19 (puntoCreateVar -> .)
+    AS              reduce using rule 19 (puntoCreateVar -> .)
+
+    puntoCreateVar                 shift and go to state 27
+
+state 18
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal . puntoCreateVarTableState main puntoPrintFinal
+    (18) puntoCreateVarTableState -> .
+
+    VOID            reduce using rule 18 (puntoCreateVarTableState -> .)
+
+    puntoCreateVarTableState       shift and go to state 28
+
+state 19
+
+    (4) programa2 -> funciones programa2 .
+
+    VOID            reduce using rule 4 (programa2 -> funciones programa2 .)
+
+
+state 20
+
+    (39) funciones -> FUNC funciones1 . ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+
+    ID              shift and go to state 29
+
+
+state 21
+
+    (40) funciones1 -> VOID .
+
+    ID              reduce using rule 40 (funciones1 -> VOID .)
+
+
+state 22
+
+    (41) funciones1 -> tipo .
+
+    ID              reduce using rule 41 (funciones1 -> tipo .)
+
+
+state 23
+
+    (22) tipo -> INT . puntoCurrentType
+    (26) puntoCurrentType -> .
+
+    ID              reduce using rule 26 (puntoCurrentType -> .)
+    LBRACKET        reduce using rule 26 (puntoCurrentType -> .)
+    SEMICOLON       reduce using rule 26 (puntoCurrentType -> .)
+
+    puntoCurrentType               shift and go to state 30
+
+state 24
+
+    (23) tipo -> FLOAT . puntoCurrentType
+    (26) puntoCurrentType -> .
+
+    ID              reduce using rule 26 (puntoCurrentType -> .)
+    LBRACKET        reduce using rule 26 (puntoCurrentType -> .)
+    SEMICOLON       reduce using rule 26 (puntoCurrentType -> .)
+
+    puntoCurrentType               shift and go to state 31
+
+state 25
+
+    (24) tipo -> BOOL . puntoCurrentType
+    (26) puntoCurrentType -> .
+
+    ID              reduce using rule 26 (puntoCurrentType -> .)
+    LBRACKET        reduce using rule 26 (puntoCurrentType -> .)
+    SEMICOLON       reduce using rule 26 (puntoCurrentType -> .)
+
+    puntoCurrentType               shift and go to state 32
+
+state 26
+
+    (25) tipo -> CHAR . puntoCurrentType
+    (26) puntoCurrentType -> .
+
+    ID              reduce using rule 26 (puntoCurrentType -> .)
+    LBRACKET        reduce using rule 26 (puntoCurrentType -> .)
+    SEMICOLON       reduce using rule 26 (puntoCurrentType -> .)
+
+    puntoCurrentType               shift and go to state 33
+
+state 27
+
+    (9) vars -> VAR ID puntoCreateVar . vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (10) vars1 -> . COMMA ID puntoCreateVar vars1
+    (11) vars1 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 35
+    AS              reduce using rule 118 (empty -> .)
+
+    vars1                          shift and go to state 34
+    empty                          shift and go to state 36
+
+state 28
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState . main puntoPrintFinal
+    (47) main -> . VOID MAIN LPAREN RPAREN bloque_modular
+
+    VOID            shift and go to state 38
+
+    main                           shift and go to state 37
+
+state 29
+
+    (39) funciones -> FUNC funciones1 ID . puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+    (46) puntoChangeStateFuncion -> .
+
+    LPAREN          reduce using rule 46 (puntoChangeStateFuncion -> .)
+
+    puntoChangeStateFuncion        shift and go to state 39
+
+state 30
+
+    (22) tipo -> INT puntoCurrentType .
+
+    ID              reduce using rule 22 (tipo -> INT puntoCurrentType .)
+    LBRACKET        reduce using rule 22 (tipo -> INT puntoCurrentType .)
+    SEMICOLON       reduce using rule 22 (tipo -> INT puntoCurrentType .)
+
+
+state 31
+
+    (23) tipo -> FLOAT puntoCurrentType .
+
+    ID              reduce using rule 23 (tipo -> FLOAT puntoCurrentType .)
+    LBRACKET        reduce using rule 23 (tipo -> FLOAT puntoCurrentType .)
+    SEMICOLON       reduce using rule 23 (tipo -> FLOAT puntoCurrentType .)
+
+
+state 32
+
+    (24) tipo -> BOOL puntoCurrentType .
+
+    ID              reduce using rule 24 (tipo -> BOOL puntoCurrentType .)
+    LBRACKET        reduce using rule 24 (tipo -> BOOL puntoCurrentType .)
+    SEMICOLON       reduce using rule 24 (tipo -> BOOL puntoCurrentType .)
+
+
+state 33
+
+    (25) tipo -> CHAR puntoCurrentType .
+
+    ID              reduce using rule 25 (tipo -> CHAR puntoCurrentType .)
+    LBRACKET        reduce using rule 25 (tipo -> CHAR puntoCurrentType .)
+    SEMICOLON       reduce using rule 25 (tipo -> CHAR puntoCurrentType .)
+
+
+state 34
+
+    (9) vars -> VAR ID puntoCreateVar vars1 . AS vars2 vars3 puntoCreateDimension SEMICOLON
+
+    AS              shift and go to state 40
+
+
+state 35
+
+    (10) vars1 -> COMMA . ID puntoCreateVar vars1
+
+    ID              shift and go to state 41
+
+
+state 36
+
+    (11) vars1 -> empty .
+
+    AS              reduce using rule 11 (vars1 -> empty .)
+
+
+state 37
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main . puntoPrintFinal
+    (8) puntoPrintFinal -> .
+
+    $end            reduce using rule 8 (puntoPrintFinal -> .)
+
+    puntoPrintFinal                shift and go to state 42
+
+state 38
+
+    (47) main -> VOID . MAIN LPAREN RPAREN bloque_modular
+
+    MAIN            shift and go to state 43
+
+
+state 39
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion . puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular
+    (18) puntoCreateVarTableState -> .
+
+    LPAREN          reduce using rule 18 (puntoCreateVarTableState -> .)
+
+    puntoCreateVarTableState       shift and go to state 44
+
+state 40
+
+    (9) vars -> VAR ID puntoCreateVar vars1 AS . vars2 vars3 puntoCreateDimension SEMICOLON
+    (12) vars2 -> . tipo puntoCreateVarType
+    (13) vars2 -> . tipo_graph
+    (22) tipo -> . INT puntoCurrentType
+    (23) tipo -> . FLOAT puntoCurrentType
+    (24) tipo -> . BOOL puntoCurrentType
+    (25) tipo -> . CHAR puntoCurrentType
+    (36) tipo_graph -> . PIECHART
+    (37) tipo_graph -> . BARGRAPH
+    (38) tipo_graph -> . PLOTLINE
+
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    BOOL            shift and go to state 25
+    CHAR            shift and go to state 26
+    PIECHART        shift and go to state 48
+    BARGRAPH        shift and go to state 49
+    PLOTLINE        shift and go to state 50
+
+    vars2                          shift and go to state 45
+    tipo                           shift and go to state 46
+    tipo_graph                     shift and go to state 47
+
+state 41
+
+    (10) vars1 -> COMMA ID . puntoCreateVar vars1
+    (19) puntoCreateVar -> .
+
+    COMMA           reduce using rule 19 (puntoCreateVar -> .)
+    AS              reduce using rule 19 (puntoCreateVar -> .)
+
+    puntoCreateVar                 shift and go to state 51
+
+state 42
+
+    (1) programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal .
+
+    $end            reduce using rule 1 (programa -> PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal .)
+
+
+state 43
+
+    (47) main -> VOID MAIN . LPAREN RPAREN bloque_modular
+
+    LPAREN          shift and go to state 52
+
+
+state 44
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState . LPAREN funciones2 RPAREN bloque_modular
+
+    LPAREN          shift and go to state 53
+
+
+state 45
+
+    (9) vars -> VAR ID puntoCreateVar vars1 AS vars2 . vars3 puntoCreateDimension SEMICOLON
+    (14) vars3 -> . LBRACKET CTE_INT puntoChangeDimension RBRACKET
+    (15) vars3 -> . empty
+    (118) empty -> .
+
+    LBRACKET        shift and go to state 55
+    SEMICOLON       reduce using rule 118 (empty -> .)
+
+    vars3                          shift and go to state 54
+    empty                          shift and go to state 56
+
+state 46
+
+    (12) vars2 -> tipo . puntoCreateVarType
+    (20) puntoCreateVarType -> .
+
+    LBRACKET        reduce using rule 20 (puntoCreateVarType -> .)
+    SEMICOLON       reduce using rule 20 (puntoCreateVarType -> .)
+
+    puntoCreateVarType             shift and go to state 57
+
+state 47
+
+    (13) vars2 -> tipo_graph .
+
+    LBRACKET        reduce using rule 13 (vars2 -> tipo_graph .)
+    SEMICOLON       reduce using rule 13 (vars2 -> tipo_graph .)
+
+
+state 48
+
+    (36) tipo_graph -> PIECHART .
+
+    LBRACKET        reduce using rule 36 (tipo_graph -> PIECHART .)
+    SEMICOLON       reduce using rule 36 (tipo_graph -> PIECHART .)
+
+
+state 49
+
+    (37) tipo_graph -> BARGRAPH .
+
+    LBRACKET        reduce using rule 37 (tipo_graph -> BARGRAPH .)
+    SEMICOLON       reduce using rule 37 (tipo_graph -> BARGRAPH .)
+
+
+state 50
+
+    (38) tipo_graph -> PLOTLINE .
+
+    LBRACKET        reduce using rule 38 (tipo_graph -> PLOTLINE .)
+    SEMICOLON       reduce using rule 38 (tipo_graph -> PLOTLINE .)
+
+
+state 51
+
+    (10) vars1 -> COMMA ID puntoCreateVar . vars1
+    (10) vars1 -> . COMMA ID puntoCreateVar vars1
+    (11) vars1 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 35
+    AS              reduce using rule 118 (empty -> .)
+
+    vars1                          shift and go to state 58
+    empty                          shift and go to state 36
+
+state 52
+
+    (47) main -> VOID MAIN LPAREN . RPAREN bloque_modular
+
+    RPAREN          shift and go to state 59
+
+
+state 53
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN . funciones2 RPAREN bloque_modular
+    (42) funciones2 -> . tipo ID funciones3
+    (43) funciones2 -> . empty
+    (22) tipo -> . INT puntoCurrentType
+    (23) tipo -> . FLOAT puntoCurrentType
+    (24) tipo -> . BOOL puntoCurrentType
+    (25) tipo -> . CHAR puntoCurrentType
+    (118) empty -> .
+
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    BOOL            shift and go to state 25
+    CHAR            shift and go to state 26
+    RPAREN          reduce using rule 118 (empty -> .)
+
+    funciones2                     shift and go to state 60
+    tipo                           shift and go to state 61
+    empty                          shift and go to state 62
+
+state 54
+
+    (9) vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 . puntoCreateDimension SEMICOLON
+    (21) puntoCreateDimension -> .
+
+    SEMICOLON       reduce using rule 21 (puntoCreateDimension -> .)
+
+    puntoCreateDimension           shift and go to state 63
+
+state 55
+
+    (14) vars3 -> LBRACKET . CTE_INT puntoChangeDimension RBRACKET
+
+    CTE_INT         shift and go to state 64
+
+
+state 56
+
+    (15) vars3 -> empty .
+
+    SEMICOLON       reduce using rule 15 (vars3 -> empty .)
+
+
+state 57
+
+    (12) vars2 -> tipo puntoCreateVarType .
+
+    LBRACKET        reduce using rule 12 (vars2 -> tipo puntoCreateVarType .)
+    SEMICOLON       reduce using rule 12 (vars2 -> tipo puntoCreateVarType .)
+
+
+state 58
+
+    (10) vars1 -> COMMA ID puntoCreateVar vars1 .
+
+    AS              reduce using rule 10 (vars1 -> COMMA ID puntoCreateVar vars1 .)
+
+
+state 59
+
+    (47) main -> VOID MAIN LPAREN RPAREN . bloque_modular
+    (48) bloque_modular -> . LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE
+
+    LBLOQUE         shift and go to state 66
+
+    bloque_modular                 shift and go to state 65
+
+state 60
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 . RPAREN bloque_modular
+
+    RPAREN          shift and go to state 67
+
+
+state 61
+
+    (42) funciones2 -> tipo . ID funciones3
+
+    ID              shift and go to state 68
+
+
+state 62
+
+    (43) funciones2 -> empty .
+
+    RPAREN          reduce using rule 43 (funciones2 -> empty .)
+
+
+state 63
+
+    (9) vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension . SEMICOLON
+
+    SEMICOLON       shift and go to state 69
+
+
+state 64
+
+    (14) vars3 -> LBRACKET CTE_INT . puntoChangeDimension RBRACKET
+    (16) puntoChangeDimension -> .
+
+    RBRACKET        reduce using rule 16 (puntoChangeDimension -> .)
+
+    puntoChangeDimension           shift and go to state 70
+
+state 65
+
+    (47) main -> VOID MAIN LPAREN RPAREN bloque_modular .
+
+    $end            reduce using rule 47 (main -> VOID MAIN LPAREN RPAREN bloque_modular .)
+
+
+state 66
+
+    (48) bloque_modular -> LBLOQUE . bloque_modular1 bloque_modular2 RBLOQUE
+    (49) bloque_modular1 -> . vars bloque_modular1
+    (50) bloque_modular1 -> . empty
+    (9) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (118) empty -> .
+
+    VAR             shift and go to state 11
+    ID              reduce using rule 118 (empty -> .)
+    IF              reduce using rule 118 (empty -> .)
+    PRINT           reduce using rule 118 (empty -> .)
+    RETURN          reduce using rule 118 (empty -> .)
+    WHILE           reduce using rule 118 (empty -> .)
+    DO              reduce using rule 118 (empty -> .)
+    CALL            reduce using rule 118 (empty -> .)
+    RBLOQUE         reduce using rule 118 (empty -> .)
+
+    bloque_modular1                shift and go to state 71
+    vars                           shift and go to state 72
+    empty                          shift and go to state 73
+
+state 67
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN . bloque_modular
+    (48) bloque_modular -> . LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE
+
+    LBLOQUE         shift and go to state 66
+
+    bloque_modular                 shift and go to state 74
+
+state 68
+
+    (42) funciones2 -> tipo ID . funciones3
+    (44) funciones3 -> . COMMA tipo ID funciones3
+    (45) funciones3 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 76
+    RPAREN          reduce using rule 118 (empty -> .)
+
+    funciones3                     shift and go to state 75
+    empty                          shift and go to state 77
+
+state 69
+
+    (9) vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .
+
+    VAR             reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    FUNC            reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    VOID            reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    ID              reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    IF              reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    PRINT           reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    RETURN          reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    WHILE           reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    DO              reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    CALL            reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+    RBLOQUE         reduce using rule 9 (vars -> VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON .)
+
+
+state 70
+
+    (14) vars3 -> LBRACKET CTE_INT puntoChangeDimension . RBRACKET
+
+    RBRACKET        shift and go to state 78
+
+
+state 71
+
+    (48) bloque_modular -> LBLOQUE bloque_modular1 . bloque_modular2 RBLOQUE
+    (51) bloque_modular2 -> . estatuto bloque_modular2
+    (52) bloque_modular2 -> . empty
+    (56) estatuto -> . asignacion
+    (57) estatuto -> . condicion
+    (58) estatuto -> . escritura
+    (59) estatuto -> . return
+    (60) estatuto -> . while
+    (61) estatuto -> . do_while
+    (62) estatuto -> . llamada SEMICOLON
+    (118) empty -> .
+    (63) asignacion -> . ID asignacion1 EQUALS asignacion2 SEMICOLON
+    (69) condicion -> . IF LPAREN expresion RPAREN bloque condicion1
+    (72) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
+    (80) return -> . RETURN expresion SEMICOLON
+    (81) while -> . WHILE LPAREN expresion RPAREN bloque
+    (82) do_while -> . DO bloque WHILE LPAREN expresion RPAREN
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    RBLOQUE         reduce using rule 118 (empty -> .)
+    ID              shift and go to state 89
+    IF              shift and go to state 90
+    PRINT           shift and go to state 91
+    RETURN          shift and go to state 92
+    WHILE           shift and go to state 93
+    DO              shift and go to state 94
+    CALL            shift and go to state 95
+
+    bloque_modular2                shift and go to state 79
+    estatuto                       shift and go to state 80
+    empty                          shift and go to state 81
+    asignacion                     shift and go to state 82
+    condicion                      shift and go to state 83
+    escritura                      shift and go to state 84
+    return                         shift and go to state 85
+    while                          shift and go to state 86
+    do_while                       shift and go to state 87
+    llamada                        shift and go to state 88
+
+state 72
+
+    (49) bloque_modular1 -> vars . bloque_modular1
+    (49) bloque_modular1 -> . vars bloque_modular1
+    (50) bloque_modular1 -> . empty
+    (9) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
+    (118) empty -> .
+
+    VAR             shift and go to state 11
+    ID              reduce using rule 118 (empty -> .)
+    IF              reduce using rule 118 (empty -> .)
+    PRINT           reduce using rule 118 (empty -> .)
+    RETURN          reduce using rule 118 (empty -> .)
+    WHILE           reduce using rule 118 (empty -> .)
+    DO              reduce using rule 118 (empty -> .)
+    CALL            reduce using rule 118 (empty -> .)
+    RBLOQUE         reduce using rule 118 (empty -> .)
+
+    vars                           shift and go to state 72
+    bloque_modular1                shift and go to state 96
+    empty                          shift and go to state 73
+
+state 73
+
+    (50) bloque_modular1 -> empty .
+
+    ID              reduce using rule 50 (bloque_modular1 -> empty .)
+    IF              reduce using rule 50 (bloque_modular1 -> empty .)
+    PRINT           reduce using rule 50 (bloque_modular1 -> empty .)
+    RETURN          reduce using rule 50 (bloque_modular1 -> empty .)
+    WHILE           reduce using rule 50 (bloque_modular1 -> empty .)
+    DO              reduce using rule 50 (bloque_modular1 -> empty .)
+    CALL            reduce using rule 50 (bloque_modular1 -> empty .)
+    RBLOQUE         reduce using rule 50 (bloque_modular1 -> empty .)
+
+
+state 74
+
+    (39) funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular .
+
+    FUNC            reduce using rule 39 (funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular .)
+    VOID            reduce using rule 39 (funciones -> FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular .)
+
+
+state 75
+
+    (42) funciones2 -> tipo ID funciones3 .
+
+    RPAREN          reduce using rule 42 (funciones2 -> tipo ID funciones3 .)
+
+
+state 76
+
+    (44) funciones3 -> COMMA . tipo ID funciones3
+    (22) tipo -> . INT puntoCurrentType
+    (23) tipo -> . FLOAT puntoCurrentType
+    (24) tipo -> . BOOL puntoCurrentType
+    (25) tipo -> . CHAR puntoCurrentType
+
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    BOOL            shift and go to state 25
+    CHAR            shift and go to state 26
+
+    tipo                           shift and go to state 97
+
+state 77
+
+    (45) funciones3 -> empty .
+
+    RPAREN          reduce using rule 45 (funciones3 -> empty .)
+
+
+state 78
+
+    (14) vars3 -> LBRACKET CTE_INT puntoChangeDimension RBRACKET .
+
+    SEMICOLON       reduce using rule 14 (vars3 -> LBRACKET CTE_INT puntoChangeDimension RBRACKET .)
+
+
+state 79
+
+    (48) bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 . RBLOQUE
+
+    RBLOQUE         shift and go to state 98
+
+
+state 80
+
+    (51) bloque_modular2 -> estatuto . bloque_modular2
+    (51) bloque_modular2 -> . estatuto bloque_modular2
+    (52) bloque_modular2 -> . empty
+    (56) estatuto -> . asignacion
+    (57) estatuto -> . condicion
+    (58) estatuto -> . escritura
+    (59) estatuto -> . return
+    (60) estatuto -> . while
+    (61) estatuto -> . do_while
+    (62) estatuto -> . llamada SEMICOLON
+    (118) empty -> .
+    (63) asignacion -> . ID asignacion1 EQUALS asignacion2 SEMICOLON
+    (69) condicion -> . IF LPAREN expresion RPAREN bloque condicion1
+    (72) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
+    (80) return -> . RETURN expresion SEMICOLON
+    (81) while -> . WHILE LPAREN expresion RPAREN bloque
+    (82) do_while -> . DO bloque WHILE LPAREN expresion RPAREN
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    RBLOQUE         reduce using rule 118 (empty -> .)
+    ID              shift and go to state 89
+    IF              shift and go to state 90
+    PRINT           shift and go to state 91
+    RETURN          shift and go to state 92
+    WHILE           shift and go to state 93
+    DO              shift and go to state 94
+    CALL            shift and go to state 95
+
+    estatuto                       shift and go to state 80
+    bloque_modular2                shift and go to state 99
+    empty                          shift and go to state 81
+    asignacion                     shift and go to state 82
+    condicion                      shift and go to state 83
+    escritura                      shift and go to state 84
+    return                         shift and go to state 85
+    while                          shift and go to state 86
+    do_while                       shift and go to state 87
+    llamada                        shift and go to state 88
+
+state 81
+
+    (52) bloque_modular2 -> empty .
+
+    RBLOQUE         reduce using rule 52 (bloque_modular2 -> empty .)
+
+
+state 82
+
+    (56) estatuto -> asignacion .
+
+    ID              reduce using rule 56 (estatuto -> asignacion .)
+    IF              reduce using rule 56 (estatuto -> asignacion .)
+    PRINT           reduce using rule 56 (estatuto -> asignacion .)
+    RETURN          reduce using rule 56 (estatuto -> asignacion .)
+    WHILE           reduce using rule 56 (estatuto -> asignacion .)
+    DO              reduce using rule 56 (estatuto -> asignacion .)
+    CALL            reduce using rule 56 (estatuto -> asignacion .)
+    RBLOQUE         reduce using rule 56 (estatuto -> asignacion .)
+
+
+state 83
+
+    (57) estatuto -> condicion .
+
+    ID              reduce using rule 57 (estatuto -> condicion .)
+    IF              reduce using rule 57 (estatuto -> condicion .)
+    PRINT           reduce using rule 57 (estatuto -> condicion .)
+    RETURN          reduce using rule 57 (estatuto -> condicion .)
+    WHILE           reduce using rule 57 (estatuto -> condicion .)
+    DO              reduce using rule 57 (estatuto -> condicion .)
+    CALL            reduce using rule 57 (estatuto -> condicion .)
+    RBLOQUE         reduce using rule 57 (estatuto -> condicion .)
+
+
+state 84
+
+    (58) estatuto -> escritura .
+
+    ID              reduce using rule 58 (estatuto -> escritura .)
+    IF              reduce using rule 58 (estatuto -> escritura .)
+    PRINT           reduce using rule 58 (estatuto -> escritura .)
+    RETURN          reduce using rule 58 (estatuto -> escritura .)
+    WHILE           reduce using rule 58 (estatuto -> escritura .)
+    DO              reduce using rule 58 (estatuto -> escritura .)
+    CALL            reduce using rule 58 (estatuto -> escritura .)
+    RBLOQUE         reduce using rule 58 (estatuto -> escritura .)
+
+
+state 85
+
+    (59) estatuto -> return .
+
+    ID              reduce using rule 59 (estatuto -> return .)
+    IF              reduce using rule 59 (estatuto -> return .)
+    PRINT           reduce using rule 59 (estatuto -> return .)
+    RETURN          reduce using rule 59 (estatuto -> return .)
+    WHILE           reduce using rule 59 (estatuto -> return .)
+    DO              reduce using rule 59 (estatuto -> return .)
+    CALL            reduce using rule 59 (estatuto -> return .)
+    RBLOQUE         reduce using rule 59 (estatuto -> return .)
+
+
+state 86
+
+    (60) estatuto -> while .
+
+    ID              reduce using rule 60 (estatuto -> while .)
+    IF              reduce using rule 60 (estatuto -> while .)
+    PRINT           reduce using rule 60 (estatuto -> while .)
+    RETURN          reduce using rule 60 (estatuto -> while .)
+    WHILE           reduce using rule 60 (estatuto -> while .)
+    DO              reduce using rule 60 (estatuto -> while .)
+    CALL            reduce using rule 60 (estatuto -> while .)
+    RBLOQUE         reduce using rule 60 (estatuto -> while .)
+
+
+state 87
+
+    (61) estatuto -> do_while .
+
+    ID              reduce using rule 61 (estatuto -> do_while .)
+    IF              reduce using rule 61 (estatuto -> do_while .)
+    PRINT           reduce using rule 61 (estatuto -> do_while .)
+    RETURN          reduce using rule 61 (estatuto -> do_while .)
+    WHILE           reduce using rule 61 (estatuto -> do_while .)
+    DO              reduce using rule 61 (estatuto -> do_while .)
+    CALL            reduce using rule 61 (estatuto -> do_while .)
+    RBLOQUE         reduce using rule 61 (estatuto -> do_while .)
+
+
+state 88
+
+    (62) estatuto -> llamada . SEMICOLON
+
+    SEMICOLON       shift and go to state 100
+
+
+state 89
+
+    (63) asignacion -> ID . asignacion1 EQUALS asignacion2 SEMICOLON
+    (64) asignacion1 -> . LBRACKET expresion RBRACKET
+    (65) asignacion1 -> . empty
+    (118) empty -> .
+
+    LBRACKET        shift and go to state 102
+    EQUALS          reduce using rule 118 (empty -> .)
+
+    asignacion1                    shift and go to state 101
+    empty                          shift and go to state 103
+
+state 90
+
+    (69) condicion -> IF . LPAREN expresion RPAREN bloque condicion1
+
+    LPAREN          shift and go to state 104
+
+
+state 91
+
+    (72) escritura -> PRINT . LPAREN escritura1 RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 105
+
+
+state 92
+
+    (80) return -> RETURN . expresion SEMICOLON
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 106
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 93
+
+    (81) while -> WHILE . LPAREN expresion RPAREN bloque
+
+    LPAREN          shift and go to state 121
+
+
+state 94
+
+    (82) do_while -> DO . bloque WHILE LPAREN expresion RPAREN
+    (53) bloque -> . LBLOQUE bloque1 RBLOQUE
+
+    LBLOQUE         shift and go to state 123
+
+    bloque                         shift and go to state 122
+
+state 95
+
+    (75) llamada -> CALL . PUNTO ID LPAREN llamada1 RPAREN
+
+    PUNTO           shift and go to state 124
+
+
+state 96
+
+    (49) bloque_modular1 -> vars bloque_modular1 .
+
+    ID              reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    IF              reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    PRINT           reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    RETURN          reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    WHILE           reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    DO              reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    CALL            reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+    RBLOQUE         reduce using rule 49 (bloque_modular1 -> vars bloque_modular1 .)
+
+
+state 97
+
+    (44) funciones3 -> COMMA tipo . ID funciones3
+
+    ID              shift and go to state 125
+
+
+state 98
+
+    (48) bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE .
+
+    $end            reduce using rule 48 (bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE .)
+    FUNC            reduce using rule 48 (bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE .)
+    VOID            reduce using rule 48 (bloque_modular -> LBLOQUE bloque_modular1 bloque_modular2 RBLOQUE .)
+
+
+state 99
+
+    (51) bloque_modular2 -> estatuto bloque_modular2 .
+
+    RBLOQUE         reduce using rule 51 (bloque_modular2 -> estatuto bloque_modular2 .)
+
+
+state 100
+
+    (62) estatuto -> llamada SEMICOLON .
+
+    ID              reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    IF              reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    PRINT           reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    RETURN          reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    WHILE           reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    DO              reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    CALL            reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+    RBLOQUE         reduce using rule 62 (estatuto -> llamada SEMICOLON .)
+
+
+state 101
+
+    (63) asignacion -> ID asignacion1 . EQUALS asignacion2 SEMICOLON
+
+    EQUALS          shift and go to state 126
+
+
+state 102
+
+    (64) asignacion1 -> LBRACKET . expresion RBRACKET
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 127
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 103
+
+    (65) asignacion1 -> empty .
+
+    EQUALS          reduce using rule 65 (asignacion1 -> empty .)
+
+
+state 104
+
+    (69) condicion -> IF LPAREN . expresion RPAREN bloque condicion1
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 128
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 105
+
+    (72) escritura -> PRINT LPAREN . escritura1 RPAREN SEMICOLON
+    (73) escritura1 -> . expresion
+    (74) escritura1 -> . CTE_STRING
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    CTE_STRING      shift and go to state 131
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    escritura1                     shift and go to state 129
+    expresion                      shift and go to state 130
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 106
+
+    (80) return -> RETURN expresion . SEMICOLON
+
+    SEMICOLON       shift and go to state 132
+
+
+state 107
+
+    (83) expresion -> compare . expresion2
+    (84) expresion2 -> . AND compare
+    (85) expresion2 -> . OR compare
+    (86) expresion2 -> . empty
+    (118) empty -> .
+
+    AND             shift and go to state 134
+    OR              shift and go to state 135
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    expresion2                     shift and go to state 133
+    empty                          shift and go to state 136
+
+state 108
+
+    (87) compare -> exp . compare1
+    (88) compare1 -> . GREATERTHAN exp
+    (89) compare1 -> . LESSTHAN exp
+    (90) compare1 -> . GREATERTHANEQUAL exp
+    (91) compare1 -> . LESSTHANEQUAL exp
+    (92) compare1 -> . EQUALEQUAL exp
+    (93) compare1 -> . NOTEQUAL exp
+    (94) compare1 -> . empty
+    (118) empty -> .
+
+    GREATERTHAN     shift and go to state 138
+    LESSTHAN        shift and go to state 139
+    GREATERTHANEQUAL shift and go to state 140
+    LESSTHANEQUAL   shift and go to state 141
+    EQUALEQUAL      shift and go to state 142
+    NOTEQUAL        shift and go to state 143
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    compare1                       shift and go to state 137
+    empty                          shift and go to state 144
+
+state 109
+
+    (95) exp -> termino . exp1
+    (96) exp1 -> . PLUS termino exp1
+    (97) exp1 -> . MINUS termino exp1
+    (98) exp1 -> . empty
+    (118) empty -> .
+
+    PLUS            shift and go to state 146
+    MINUS           shift and go to state 147
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    exp1                           shift and go to state 145
+    empty                          shift and go to state 148
+
+state 110
+
+    (99) termino -> factor . termino1
+    (100) termino1 -> . TIMES factor termino1
+    (101) termino1 -> . DIVIDE factor termino1
+    (102) termino1 -> . empty
+    (118) empty -> .
+
+    TIMES           shift and go to state 150
+    DIVIDE          shift and go to state 151
+    PLUS            reduce using rule 118 (empty -> .)
+    MINUS           reduce using rule 118 (empty -> .)
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    termino1                       shift and go to state 149
+    empty                          shift and go to state 152
+
+state 111
+
+    (103) factor -> LPAREN . expresion RPAREN
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 153
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 112
+
+    (104) factor -> tipo_cte .
+
+    TIMES           reduce using rule 104 (factor -> tipo_cte .)
+    DIVIDE          reduce using rule 104 (factor -> tipo_cte .)
+    PLUS            reduce using rule 104 (factor -> tipo_cte .)
+    MINUS           reduce using rule 104 (factor -> tipo_cte .)
+    GREATERTHAN     reduce using rule 104 (factor -> tipo_cte .)
+    LESSTHAN        reduce using rule 104 (factor -> tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 104 (factor -> tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 104 (factor -> tipo_cte .)
+    EQUALEQUAL      reduce using rule 104 (factor -> tipo_cte .)
+    NOTEQUAL        reduce using rule 104 (factor -> tipo_cte .)
+    AND             reduce using rule 104 (factor -> tipo_cte .)
+    OR              reduce using rule 104 (factor -> tipo_cte .)
+    SEMICOLON       reduce using rule 104 (factor -> tipo_cte .)
+    RBRACKET        reduce using rule 104 (factor -> tipo_cte .)
+    RPAREN          reduce using rule 104 (factor -> tipo_cte .)
+    COMMA           reduce using rule 104 (factor -> tipo_cte .)
+
+
+state 113
+
+    (105) factor -> MINUS . tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    tipo_cte                       shift and go to state 154
+    llamada                        shift and go to state 120
+
+state 114
+
+    (106) factor -> NOT . tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    tipo_cte                       shift and go to state 155
+    llamada                        shift and go to state 120
+
+state 115
+
+    (27) tipo_cte -> CTE_INT .
+
+    TIMES           reduce using rule 27 (tipo_cte -> CTE_INT .)
+    DIVIDE          reduce using rule 27 (tipo_cte -> CTE_INT .)
+    PLUS            reduce using rule 27 (tipo_cte -> CTE_INT .)
+    MINUS           reduce using rule 27 (tipo_cte -> CTE_INT .)
+    GREATERTHAN     reduce using rule 27 (tipo_cte -> CTE_INT .)
+    LESSTHAN        reduce using rule 27 (tipo_cte -> CTE_INT .)
+    GREATERTHANEQUAL reduce using rule 27 (tipo_cte -> CTE_INT .)
+    LESSTHANEQUAL   reduce using rule 27 (tipo_cte -> CTE_INT .)
+    EQUALEQUAL      reduce using rule 27 (tipo_cte -> CTE_INT .)
+    NOTEQUAL        reduce using rule 27 (tipo_cte -> CTE_INT .)
+    AND             reduce using rule 27 (tipo_cte -> CTE_INT .)
+    OR              reduce using rule 27 (tipo_cte -> CTE_INT .)
+    SEMICOLON       reduce using rule 27 (tipo_cte -> CTE_INT .)
+    RBRACKET        reduce using rule 27 (tipo_cte -> CTE_INT .)
+    RPAREN          reduce using rule 27 (tipo_cte -> CTE_INT .)
+    COMMA           reduce using rule 27 (tipo_cte -> CTE_INT .)
+
+
+state 116
+
+    (28) tipo_cte -> CTE_FLOAT .
+
+    TIMES           reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    DIVIDE          reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    PLUS            reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    MINUS           reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    GREATERTHAN     reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    LESSTHAN        reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    GREATERTHANEQUAL reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    LESSTHANEQUAL   reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    EQUALEQUAL      reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    NOTEQUAL        reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    AND             reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    OR              reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    SEMICOLON       reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    RBRACKET        reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    RPAREN          reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+    COMMA           reduce using rule 28 (tipo_cte -> CTE_FLOAT .)
+
+
+state 117
+
+    (29) tipo_cte -> CTE_BOOL .
+
+    TIMES           reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    DIVIDE          reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    PLUS            reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    MINUS           reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    GREATERTHAN     reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    LESSTHAN        reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    GREATERTHANEQUAL reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    LESSTHANEQUAL   reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    EQUALEQUAL      reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    NOTEQUAL        reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    AND             reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    OR              reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    SEMICOLON       reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    RBRACKET        reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    RPAREN          reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+    COMMA           reduce using rule 29 (tipo_cte -> CTE_BOOL .)
+
+
+state 118
+
+    (30) tipo_cte -> CTE_CHAR .
+
+    TIMES           reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    DIVIDE          reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    PLUS            reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    MINUS           reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    GREATERTHAN     reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    LESSTHAN        reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    GREATERTHANEQUAL reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    LESSTHANEQUAL   reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    EQUALEQUAL      reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    NOTEQUAL        reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    AND             reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    OR              reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    SEMICOLON       reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    RBRACKET        reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    RPAREN          reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+    COMMA           reduce using rule 30 (tipo_cte -> CTE_CHAR .)
+
+
+state 119
+
+    (31) tipo_cte -> ID . tipo_cte1
+    (33) tipo_cte1 -> . LBRACKET CTE_INT RBRACKET
+    (34) tipo_cte1 -> . funciones_arr
+    (35) tipo_cte1 -> . empty
+    (107) funciones_arr -> . PUNTO funciones_arr1 LPAREN RPAREN
+    (118) empty -> .
+
+    LBRACKET        shift and go to state 157
+    PUNTO           shift and go to state 160
+    TIMES           reduce using rule 118 (empty -> .)
+    DIVIDE          reduce using rule 118 (empty -> .)
+    PLUS            reduce using rule 118 (empty -> .)
+    MINUS           reduce using rule 118 (empty -> .)
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    tipo_cte1                      shift and go to state 156
+    funciones_arr                  shift and go to state 158
+    empty                          shift and go to state 159
+
+state 120
+
+    (32) tipo_cte -> llamada .
+
+    TIMES           reduce using rule 32 (tipo_cte -> llamada .)
+    DIVIDE          reduce using rule 32 (tipo_cte -> llamada .)
+    PLUS            reduce using rule 32 (tipo_cte -> llamada .)
+    MINUS           reduce using rule 32 (tipo_cte -> llamada .)
+    GREATERTHAN     reduce using rule 32 (tipo_cte -> llamada .)
+    LESSTHAN        reduce using rule 32 (tipo_cte -> llamada .)
+    GREATERTHANEQUAL reduce using rule 32 (tipo_cte -> llamada .)
+    LESSTHANEQUAL   reduce using rule 32 (tipo_cte -> llamada .)
+    EQUALEQUAL      reduce using rule 32 (tipo_cte -> llamada .)
+    NOTEQUAL        reduce using rule 32 (tipo_cte -> llamada .)
+    AND             reduce using rule 32 (tipo_cte -> llamada .)
+    OR              reduce using rule 32 (tipo_cte -> llamada .)
+    SEMICOLON       reduce using rule 32 (tipo_cte -> llamada .)
+    RBRACKET        reduce using rule 32 (tipo_cte -> llamada .)
+    RPAREN          reduce using rule 32 (tipo_cte -> llamada .)
+    COMMA           reduce using rule 32 (tipo_cte -> llamada .)
+
+
+state 121
+
+    (81) while -> WHILE LPAREN . expresion RPAREN bloque
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 161
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 122
+
+    (82) do_while -> DO bloque . WHILE LPAREN expresion RPAREN
+
+    WHILE           shift and go to state 162
+
+
+state 123
+
+    (53) bloque -> LBLOQUE . bloque1 RBLOQUE
+    (54) bloque1 -> . estatuto bloque1
+    (55) bloque1 -> . empty
+    (56) estatuto -> . asignacion
+    (57) estatuto -> . condicion
+    (58) estatuto -> . escritura
+    (59) estatuto -> . return
+    (60) estatuto -> . while
+    (61) estatuto -> . do_while
+    (62) estatuto -> . llamada SEMICOLON
+    (118) empty -> .
+    (63) asignacion -> . ID asignacion1 EQUALS asignacion2 SEMICOLON
+    (69) condicion -> . IF LPAREN expresion RPAREN bloque condicion1
+    (72) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
+    (80) return -> . RETURN expresion SEMICOLON
+    (81) while -> . WHILE LPAREN expresion RPAREN bloque
+    (82) do_while -> . DO bloque WHILE LPAREN expresion RPAREN
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    RBLOQUE         reduce using rule 118 (empty -> .)
+    ID              shift and go to state 89
+    IF              shift and go to state 90
+    PRINT           shift and go to state 91
+    RETURN          shift and go to state 92
+    WHILE           shift and go to state 93
+    DO              shift and go to state 94
+    CALL            shift and go to state 95
+
+    bloque1                        shift and go to state 163
+    estatuto                       shift and go to state 164
+    empty                          shift and go to state 165
+    asignacion                     shift and go to state 82
+    condicion                      shift and go to state 83
+    escritura                      shift and go to state 84
+    return                         shift and go to state 85
+    while                          shift and go to state 86
+    do_while                       shift and go to state 87
+    llamada                        shift and go to state 88
+
+state 124
+
+    (75) llamada -> CALL PUNTO . ID LPAREN llamada1 RPAREN
+
+    ID              shift and go to state 166
+
+
+state 125
+
+    (44) funciones3 -> COMMA tipo ID . funciones3
+    (44) funciones3 -> . COMMA tipo ID funciones3
+    (45) funciones3 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 76
+    RPAREN          reduce using rule 118 (empty -> .)
+
+    funciones3                     shift and go to state 167
+    empty                          shift and go to state 77
+
+state 126
+
+    (63) asignacion -> ID asignacion1 EQUALS . asignacion2 SEMICOLON
+    (66) asignacion2 -> . expresion
+    (67) asignacion2 -> . leida
+    (83) expresion -> . compare expresion2
+    (68) leida -> . INPUT LPAREN RPAREN
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    INPUT           shift and go to state 171
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    asignacion2                    shift and go to state 168
+    expresion                      shift and go to state 169
+    leida                          shift and go to state 170
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 127
+
+    (64) asignacion1 -> LBRACKET expresion . RBRACKET
+
+    RBRACKET        shift and go to state 172
+
+
+state 128
+
+    (69) condicion -> IF LPAREN expresion . RPAREN bloque condicion1
+
+    RPAREN          shift and go to state 173
+
+
+state 129
+
+    (72) escritura -> PRINT LPAREN escritura1 . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 174
+
+
+state 130
+
+    (73) escritura1 -> expresion .
+
+    RPAREN          reduce using rule 73 (escritura1 -> expresion .)
+
+
+state 131
+
+    (74) escritura1 -> CTE_STRING .
+
+    RPAREN          reduce using rule 74 (escritura1 -> CTE_STRING .)
+
+
+state 132
+
+    (80) return -> RETURN expresion SEMICOLON .
+
+    ID              reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    IF              reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    PRINT           reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    RETURN          reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    WHILE           reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    DO              reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    CALL            reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+    RBLOQUE         reduce using rule 80 (return -> RETURN expresion SEMICOLON .)
+
+
+state 133
+
+    (83) expresion -> compare expresion2 .
+
+    SEMICOLON       reduce using rule 83 (expresion -> compare expresion2 .)
+    RBRACKET        reduce using rule 83 (expresion -> compare expresion2 .)
+    RPAREN          reduce using rule 83 (expresion -> compare expresion2 .)
+    COMMA           reduce using rule 83 (expresion -> compare expresion2 .)
+
+
+state 134
+
+    (84) expresion2 -> AND . compare
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    compare                        shift and go to state 175
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 135
+
+    (85) expresion2 -> OR . compare
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    compare                        shift and go to state 176
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 136
+
+    (86) expresion2 -> empty .
+
+    SEMICOLON       reduce using rule 86 (expresion2 -> empty .)
+    RBRACKET        reduce using rule 86 (expresion2 -> empty .)
+    RPAREN          reduce using rule 86 (expresion2 -> empty .)
+    COMMA           reduce using rule 86 (expresion2 -> empty .)
+
+
+state 137
+
+    (87) compare -> exp compare1 .
+
+    AND             reduce using rule 87 (compare -> exp compare1 .)
+    OR              reduce using rule 87 (compare -> exp compare1 .)
+    SEMICOLON       reduce using rule 87 (compare -> exp compare1 .)
+    RBRACKET        reduce using rule 87 (compare -> exp compare1 .)
+    RPAREN          reduce using rule 87 (compare -> exp compare1 .)
+    COMMA           reduce using rule 87 (compare -> exp compare1 .)
+
+
+state 138
+
+    (88) compare1 -> GREATERTHAN . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 177
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 139
+
+    (89) compare1 -> LESSTHAN . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 178
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 140
+
+    (90) compare1 -> GREATERTHANEQUAL . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 179
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 141
+
+    (91) compare1 -> LESSTHANEQUAL . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 180
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 142
+
+    (92) compare1 -> EQUALEQUAL . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 181
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 143
+
+    (93) compare1 -> NOTEQUAL . exp
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    exp                            shift and go to state 182
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 144
+
+    (94) compare1 -> empty .
+
+    AND             reduce using rule 94 (compare1 -> empty .)
+    OR              reduce using rule 94 (compare1 -> empty .)
+    SEMICOLON       reduce using rule 94 (compare1 -> empty .)
+    RBRACKET        reduce using rule 94 (compare1 -> empty .)
+    RPAREN          reduce using rule 94 (compare1 -> empty .)
+    COMMA           reduce using rule 94 (compare1 -> empty .)
+
+
+state 145
+
+    (95) exp -> termino exp1 .
+
+    GREATERTHAN     reduce using rule 95 (exp -> termino exp1 .)
+    LESSTHAN        reduce using rule 95 (exp -> termino exp1 .)
+    GREATERTHANEQUAL reduce using rule 95 (exp -> termino exp1 .)
+    LESSTHANEQUAL   reduce using rule 95 (exp -> termino exp1 .)
+    EQUALEQUAL      reduce using rule 95 (exp -> termino exp1 .)
+    NOTEQUAL        reduce using rule 95 (exp -> termino exp1 .)
+    AND             reduce using rule 95 (exp -> termino exp1 .)
+    OR              reduce using rule 95 (exp -> termino exp1 .)
+    SEMICOLON       reduce using rule 95 (exp -> termino exp1 .)
+    RBRACKET        reduce using rule 95 (exp -> termino exp1 .)
+    RPAREN          reduce using rule 95 (exp -> termino exp1 .)
+    COMMA           reduce using rule 95 (exp -> termino exp1 .)
+
+
+state 146
+
+    (96) exp1 -> PLUS . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    termino                        shift and go to state 183
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 147
+
+    (97) exp1 -> MINUS . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    termino                        shift and go to state 184
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 148
+
+    (98) exp1 -> empty .
+
+    GREATERTHAN     reduce using rule 98 (exp1 -> empty .)
+    LESSTHAN        reduce using rule 98 (exp1 -> empty .)
+    GREATERTHANEQUAL reduce using rule 98 (exp1 -> empty .)
+    LESSTHANEQUAL   reduce using rule 98 (exp1 -> empty .)
+    EQUALEQUAL      reduce using rule 98 (exp1 -> empty .)
+    NOTEQUAL        reduce using rule 98 (exp1 -> empty .)
+    AND             reduce using rule 98 (exp1 -> empty .)
+    OR              reduce using rule 98 (exp1 -> empty .)
+    SEMICOLON       reduce using rule 98 (exp1 -> empty .)
+    RBRACKET        reduce using rule 98 (exp1 -> empty .)
+    RPAREN          reduce using rule 98 (exp1 -> empty .)
+    COMMA           reduce using rule 98 (exp1 -> empty .)
+
+
+state 149
+
+    (99) termino -> factor termino1 .
+
+    PLUS            reduce using rule 99 (termino -> factor termino1 .)
+    MINUS           reduce using rule 99 (termino -> factor termino1 .)
+    GREATERTHAN     reduce using rule 99 (termino -> factor termino1 .)
+    LESSTHAN        reduce using rule 99 (termino -> factor termino1 .)
+    GREATERTHANEQUAL reduce using rule 99 (termino -> factor termino1 .)
+    LESSTHANEQUAL   reduce using rule 99 (termino -> factor termino1 .)
+    EQUALEQUAL      reduce using rule 99 (termino -> factor termino1 .)
+    NOTEQUAL        reduce using rule 99 (termino -> factor termino1 .)
+    AND             reduce using rule 99 (termino -> factor termino1 .)
+    OR              reduce using rule 99 (termino -> factor termino1 .)
+    SEMICOLON       reduce using rule 99 (termino -> factor termino1 .)
+    RBRACKET        reduce using rule 99 (termino -> factor termino1 .)
+    RPAREN          reduce using rule 99 (termino -> factor termino1 .)
+    COMMA           reduce using rule 99 (termino -> factor termino1 .)
+
+
+state 150
+
+    (100) termino1 -> TIMES . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    factor                         shift and go to state 185
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 151
+
+    (101) termino1 -> DIVIDE . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    factor                         shift and go to state 186
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 152
+
+    (102) termino1 -> empty .
+
+    PLUS            reduce using rule 102 (termino1 -> empty .)
+    MINUS           reduce using rule 102 (termino1 -> empty .)
+    GREATERTHAN     reduce using rule 102 (termino1 -> empty .)
+    LESSTHAN        reduce using rule 102 (termino1 -> empty .)
+    GREATERTHANEQUAL reduce using rule 102 (termino1 -> empty .)
+    LESSTHANEQUAL   reduce using rule 102 (termino1 -> empty .)
+    EQUALEQUAL      reduce using rule 102 (termino1 -> empty .)
+    NOTEQUAL        reduce using rule 102 (termino1 -> empty .)
+    AND             reduce using rule 102 (termino1 -> empty .)
+    OR              reduce using rule 102 (termino1 -> empty .)
+    SEMICOLON       reduce using rule 102 (termino1 -> empty .)
+    RBRACKET        reduce using rule 102 (termino1 -> empty .)
+    RPAREN          reduce using rule 102 (termino1 -> empty .)
+    COMMA           reduce using rule 102 (termino1 -> empty .)
+
+
+state 153
+
+    (103) factor -> LPAREN expresion . RPAREN
+
+    RPAREN          shift and go to state 187
+
+
+state 154
+
+    (105) factor -> MINUS tipo_cte .
+
+    TIMES           reduce using rule 105 (factor -> MINUS tipo_cte .)
+    DIVIDE          reduce using rule 105 (factor -> MINUS tipo_cte .)
+    PLUS            reduce using rule 105 (factor -> MINUS tipo_cte .)
+    MINUS           reduce using rule 105 (factor -> MINUS tipo_cte .)
+    GREATERTHAN     reduce using rule 105 (factor -> MINUS tipo_cte .)
+    LESSTHAN        reduce using rule 105 (factor -> MINUS tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 105 (factor -> MINUS tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 105 (factor -> MINUS tipo_cte .)
+    EQUALEQUAL      reduce using rule 105 (factor -> MINUS tipo_cte .)
+    NOTEQUAL        reduce using rule 105 (factor -> MINUS tipo_cte .)
+    AND             reduce using rule 105 (factor -> MINUS tipo_cte .)
+    OR              reduce using rule 105 (factor -> MINUS tipo_cte .)
+    SEMICOLON       reduce using rule 105 (factor -> MINUS tipo_cte .)
+    RBRACKET        reduce using rule 105 (factor -> MINUS tipo_cte .)
+    RPAREN          reduce using rule 105 (factor -> MINUS tipo_cte .)
+    COMMA           reduce using rule 105 (factor -> MINUS tipo_cte .)
+
+
+state 155
+
+    (106) factor -> NOT tipo_cte .
+
+    TIMES           reduce using rule 106 (factor -> NOT tipo_cte .)
+    DIVIDE          reduce using rule 106 (factor -> NOT tipo_cte .)
+    PLUS            reduce using rule 106 (factor -> NOT tipo_cte .)
+    MINUS           reduce using rule 106 (factor -> NOT tipo_cte .)
+    GREATERTHAN     reduce using rule 106 (factor -> NOT tipo_cte .)
+    LESSTHAN        reduce using rule 106 (factor -> NOT tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 106 (factor -> NOT tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 106 (factor -> NOT tipo_cte .)
+    EQUALEQUAL      reduce using rule 106 (factor -> NOT tipo_cte .)
+    NOTEQUAL        reduce using rule 106 (factor -> NOT tipo_cte .)
+    AND             reduce using rule 106 (factor -> NOT tipo_cte .)
+    OR              reduce using rule 106 (factor -> NOT tipo_cte .)
+    SEMICOLON       reduce using rule 106 (factor -> NOT tipo_cte .)
+    RBRACKET        reduce using rule 106 (factor -> NOT tipo_cte .)
+    RPAREN          reduce using rule 106 (factor -> NOT tipo_cte .)
+    COMMA           reduce using rule 106 (factor -> NOT tipo_cte .)
+
+
+state 156
+
+    (31) tipo_cte -> ID tipo_cte1 .
+
+    TIMES           reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    DIVIDE          reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    PLUS            reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    MINUS           reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    GREATERTHAN     reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    LESSTHAN        reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    GREATERTHANEQUAL reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    LESSTHANEQUAL   reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    EQUALEQUAL      reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    NOTEQUAL        reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    AND             reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    OR              reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    SEMICOLON       reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    RBRACKET        reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    RPAREN          reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+    COMMA           reduce using rule 31 (tipo_cte -> ID tipo_cte1 .)
+
+
+state 157
+
+    (33) tipo_cte1 -> LBRACKET . CTE_INT RBRACKET
+
+    CTE_INT         shift and go to state 188
+
+
+state 158
+
+    (34) tipo_cte1 -> funciones_arr .
+
+    TIMES           reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    DIVIDE          reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    PLUS            reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    MINUS           reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    GREATERTHAN     reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    LESSTHAN        reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    GREATERTHANEQUAL reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    LESSTHANEQUAL   reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    EQUALEQUAL      reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    NOTEQUAL        reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    AND             reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    OR              reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    SEMICOLON       reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    RBRACKET        reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    RPAREN          reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+    COMMA           reduce using rule 34 (tipo_cte1 -> funciones_arr .)
+
+
+state 159
+
+    (35) tipo_cte1 -> empty .
+
+    TIMES           reduce using rule 35 (tipo_cte1 -> empty .)
+    DIVIDE          reduce using rule 35 (tipo_cte1 -> empty .)
+    PLUS            reduce using rule 35 (tipo_cte1 -> empty .)
+    MINUS           reduce using rule 35 (tipo_cte1 -> empty .)
+    GREATERTHAN     reduce using rule 35 (tipo_cte1 -> empty .)
+    LESSTHAN        reduce using rule 35 (tipo_cte1 -> empty .)
+    GREATERTHANEQUAL reduce using rule 35 (tipo_cte1 -> empty .)
+    LESSTHANEQUAL   reduce using rule 35 (tipo_cte1 -> empty .)
+    EQUALEQUAL      reduce using rule 35 (tipo_cte1 -> empty .)
+    NOTEQUAL        reduce using rule 35 (tipo_cte1 -> empty .)
+    AND             reduce using rule 35 (tipo_cte1 -> empty .)
+    OR              reduce using rule 35 (tipo_cte1 -> empty .)
+    SEMICOLON       reduce using rule 35 (tipo_cte1 -> empty .)
+    RBRACKET        reduce using rule 35 (tipo_cte1 -> empty .)
+    RPAREN          reduce using rule 35 (tipo_cte1 -> empty .)
+    COMMA           reduce using rule 35 (tipo_cte1 -> empty .)
+
+
+state 160
+
+    (107) funciones_arr -> PUNTO . funciones_arr1 LPAREN RPAREN
+    (108) funciones_arr1 -> . MAX
+    (109) funciones_arr1 -> . MIN
+    (110) funciones_arr1 -> . RANGE
+    (111) funciones_arr1 -> . MEDIAN
+    (112) funciones_arr1 -> . AVERAGE
+    (113) funciones_arr1 -> . IQRANGE
+    (114) funciones_arr1 -> . STDEV
+    (115) funciones_arr1 -> . VARIANCE
+    (116) funciones_arr1 -> . MODIFY
+    (117) funciones_arr1 -> . DRAW
+
+    MAX             shift and go to state 190
+    MIN             shift and go to state 191
+    RANGE           shift and go to state 192
+    MEDIAN          shift and go to state 193
+    AVERAGE         shift and go to state 194
+    IQRANGE         shift and go to state 195
+    STDEV           shift and go to state 196
+    VARIANCE        shift and go to state 197
+    MODIFY          shift and go to state 198
+    DRAW            shift and go to state 199
+
+    funciones_arr1                 shift and go to state 189
+
+state 161
+
+    (81) while -> WHILE LPAREN expresion . RPAREN bloque
+
+    RPAREN          shift and go to state 200
+
+
+state 162
+
+    (82) do_while -> DO bloque WHILE . LPAREN expresion RPAREN
+
+    LPAREN          shift and go to state 201
+
+
+state 163
+
+    (53) bloque -> LBLOQUE bloque1 . RBLOQUE
+
+    RBLOQUE         shift and go to state 202
+
+
+state 164
+
+    (54) bloque1 -> estatuto . bloque1
+    (54) bloque1 -> . estatuto bloque1
+    (55) bloque1 -> . empty
+    (56) estatuto -> . asignacion
+    (57) estatuto -> . condicion
+    (58) estatuto -> . escritura
+    (59) estatuto -> . return
+    (60) estatuto -> . while
+    (61) estatuto -> . do_while
+    (62) estatuto -> . llamada SEMICOLON
+    (118) empty -> .
+    (63) asignacion -> . ID asignacion1 EQUALS asignacion2 SEMICOLON
+    (69) condicion -> . IF LPAREN expresion RPAREN bloque condicion1
+    (72) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
+    (80) return -> . RETURN expresion SEMICOLON
+    (81) while -> . WHILE LPAREN expresion RPAREN bloque
+    (82) do_while -> . DO bloque WHILE LPAREN expresion RPAREN
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    RBLOQUE         reduce using rule 118 (empty -> .)
+    ID              shift and go to state 89
+    IF              shift and go to state 90
+    PRINT           shift and go to state 91
+    RETURN          shift and go to state 92
+    WHILE           shift and go to state 93
+    DO              shift and go to state 94
+    CALL            shift and go to state 95
+
+    estatuto                       shift and go to state 164
+    bloque1                        shift and go to state 203
+    empty                          shift and go to state 165
+    asignacion                     shift and go to state 82
+    condicion                      shift and go to state 83
+    escritura                      shift and go to state 84
+    return                         shift and go to state 85
+    while                          shift and go to state 86
+    do_while                       shift and go to state 87
+    llamada                        shift and go to state 88
+
+state 165
+
+    (55) bloque1 -> empty .
+
+    RBLOQUE         reduce using rule 55 (bloque1 -> empty .)
+
+
+state 166
+
+    (75) llamada -> CALL PUNTO ID . LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 204
+
+
+state 167
+
+    (44) funciones3 -> COMMA tipo ID funciones3 .
+
+    RPAREN          reduce using rule 44 (funciones3 -> COMMA tipo ID funciones3 .)
+
+
+state 168
+
+    (63) asignacion -> ID asignacion1 EQUALS asignacion2 . SEMICOLON
+
+    SEMICOLON       shift and go to state 205
+
+
+state 169
+
+    (66) asignacion2 -> expresion .
+
+    SEMICOLON       reduce using rule 66 (asignacion2 -> expresion .)
+
+
+state 170
+
+    (67) asignacion2 -> leida .
+
+    SEMICOLON       reduce using rule 67 (asignacion2 -> leida .)
+
+
+state 171
+
+    (68) leida -> INPUT . LPAREN RPAREN
+
+    LPAREN          shift and go to state 206
+
+
+state 172
+
+    (64) asignacion1 -> LBRACKET expresion RBRACKET .
+
+    EQUALS          reduce using rule 64 (asignacion1 -> LBRACKET expresion RBRACKET .)
+
+
+state 173
+
+    (69) condicion -> IF LPAREN expresion RPAREN . bloque condicion1
+    (53) bloque -> . LBLOQUE bloque1 RBLOQUE
+
+    LBLOQUE         shift and go to state 123
+
+    bloque                         shift and go to state 207
+
+state 174
+
+    (72) escritura -> PRINT LPAREN escritura1 RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 208
+
+
+state 175
+
+    (84) expresion2 -> AND compare .
+
+    SEMICOLON       reduce using rule 84 (expresion2 -> AND compare .)
+    RBRACKET        reduce using rule 84 (expresion2 -> AND compare .)
+    RPAREN          reduce using rule 84 (expresion2 -> AND compare .)
+    COMMA           reduce using rule 84 (expresion2 -> AND compare .)
+
+
+state 176
+
+    (85) expresion2 -> OR compare .
+
+    SEMICOLON       reduce using rule 85 (expresion2 -> OR compare .)
+    RBRACKET        reduce using rule 85 (expresion2 -> OR compare .)
+    RPAREN          reduce using rule 85 (expresion2 -> OR compare .)
+    COMMA           reduce using rule 85 (expresion2 -> OR compare .)
+
+
+state 177
+
+    (88) compare1 -> GREATERTHAN exp .
+
+    AND             reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+    OR              reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+    SEMICOLON       reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+    RBRACKET        reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+    RPAREN          reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+    COMMA           reduce using rule 88 (compare1 -> GREATERTHAN exp .)
+
+
+state 178
+
+    (89) compare1 -> LESSTHAN exp .
+
+    AND             reduce using rule 89 (compare1 -> LESSTHAN exp .)
+    OR              reduce using rule 89 (compare1 -> LESSTHAN exp .)
+    SEMICOLON       reduce using rule 89 (compare1 -> LESSTHAN exp .)
+    RBRACKET        reduce using rule 89 (compare1 -> LESSTHAN exp .)
+    RPAREN          reduce using rule 89 (compare1 -> LESSTHAN exp .)
+    COMMA           reduce using rule 89 (compare1 -> LESSTHAN exp .)
+
+
+state 179
+
+    (90) compare1 -> GREATERTHANEQUAL exp .
+
+    AND             reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+    OR              reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+    SEMICOLON       reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+    RBRACKET        reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+    RPAREN          reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+    COMMA           reduce using rule 90 (compare1 -> GREATERTHANEQUAL exp .)
+
+
+state 180
+
+    (91) compare1 -> LESSTHANEQUAL exp .
+
+    AND             reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+    OR              reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+    SEMICOLON       reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+    RBRACKET        reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+    RPAREN          reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+    COMMA           reduce using rule 91 (compare1 -> LESSTHANEQUAL exp .)
+
+
+state 181
+
+    (92) compare1 -> EQUALEQUAL exp .
+
+    AND             reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+    OR              reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+    SEMICOLON       reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+    RBRACKET        reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+    RPAREN          reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+    COMMA           reduce using rule 92 (compare1 -> EQUALEQUAL exp .)
+
+
+state 182
+
+    (93) compare1 -> NOTEQUAL exp .
+
+    AND             reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+    OR              reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+    SEMICOLON       reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+    RBRACKET        reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+    RPAREN          reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+    COMMA           reduce using rule 93 (compare1 -> NOTEQUAL exp .)
+
+
+state 183
+
+    (96) exp1 -> PLUS termino . exp1
+    (96) exp1 -> . PLUS termino exp1
+    (97) exp1 -> . MINUS termino exp1
+    (98) exp1 -> . empty
+    (118) empty -> .
+
+    PLUS            shift and go to state 146
+    MINUS           shift and go to state 147
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    exp1                           shift and go to state 209
+    empty                          shift and go to state 148
+
+state 184
+
+    (97) exp1 -> MINUS termino . exp1
+    (96) exp1 -> . PLUS termino exp1
+    (97) exp1 -> . MINUS termino exp1
+    (98) exp1 -> . empty
+    (118) empty -> .
+
+    PLUS            shift and go to state 146
+    MINUS           shift and go to state 147
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    exp1                           shift and go to state 210
+    empty                          shift and go to state 148
+
+state 185
+
+    (100) termino1 -> TIMES factor . termino1
+    (100) termino1 -> . TIMES factor termino1
+    (101) termino1 -> . DIVIDE factor termino1
+    (102) termino1 -> . empty
+    (118) empty -> .
+
+    TIMES           shift and go to state 150
+    DIVIDE          shift and go to state 151
+    PLUS            reduce using rule 118 (empty -> .)
+    MINUS           reduce using rule 118 (empty -> .)
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    termino1                       shift and go to state 211
+    empty                          shift and go to state 152
+
+state 186
+
+    (101) termino1 -> DIVIDE factor . termino1
+    (100) termino1 -> . TIMES factor termino1
+    (101) termino1 -> . DIVIDE factor termino1
+    (102) termino1 -> . empty
+    (118) empty -> .
+
+    TIMES           shift and go to state 150
+    DIVIDE          shift and go to state 151
+    PLUS            reduce using rule 118 (empty -> .)
+    MINUS           reduce using rule 118 (empty -> .)
+    GREATERTHAN     reduce using rule 118 (empty -> .)
+    LESSTHAN        reduce using rule 118 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 118 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 118 (empty -> .)
+    EQUALEQUAL      reduce using rule 118 (empty -> .)
+    NOTEQUAL        reduce using rule 118 (empty -> .)
+    AND             reduce using rule 118 (empty -> .)
+    OR              reduce using rule 118 (empty -> .)
+    SEMICOLON       reduce using rule 118 (empty -> .)
+    RBRACKET        reduce using rule 118 (empty -> .)
+    RPAREN          reduce using rule 118 (empty -> .)
+    COMMA           reduce using rule 118 (empty -> .)
+
+    termino1                       shift and go to state 212
+    empty                          shift and go to state 152
+
+state 187
+
+    (103) factor -> LPAREN expresion RPAREN .
+
+    TIMES           reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    DIVIDE          reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    GREATERTHAN     reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    LESSTHAN        reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    GREATERTHANEQUAL reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    LESSTHANEQUAL   reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    EQUALEQUAL      reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    NOTEQUAL        reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    AND             reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    OR              reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    SEMICOLON       reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    RBRACKET        reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+    COMMA           reduce using rule 103 (factor -> LPAREN expresion RPAREN .)
+
+
+state 188
+
+    (33) tipo_cte1 -> LBRACKET CTE_INT . RBRACKET
+
+    RBRACKET        shift and go to state 213
+
+
+state 189
+
+    (107) funciones_arr -> PUNTO funciones_arr1 . LPAREN RPAREN
+
+    LPAREN          shift and go to state 214
+
+
+state 190
+
+    (108) funciones_arr1 -> MAX .
+
+    LPAREN          reduce using rule 108 (funciones_arr1 -> MAX .)
+
+
+state 191
+
+    (109) funciones_arr1 -> MIN .
+
+    LPAREN          reduce using rule 109 (funciones_arr1 -> MIN .)
+
+
+state 192
+
+    (110) funciones_arr1 -> RANGE .
+
+    LPAREN          reduce using rule 110 (funciones_arr1 -> RANGE .)
+
+
+state 193
+
+    (111) funciones_arr1 -> MEDIAN .
+
+    LPAREN          reduce using rule 111 (funciones_arr1 -> MEDIAN .)
+
+
+state 194
+
+    (112) funciones_arr1 -> AVERAGE .
+
+    LPAREN          reduce using rule 112 (funciones_arr1 -> AVERAGE .)
+
+
+state 195
+
+    (113) funciones_arr1 -> IQRANGE .
+
+    LPAREN          reduce using rule 113 (funciones_arr1 -> IQRANGE .)
+
+
+state 196
+
+    (114) funciones_arr1 -> STDEV .
+
+    LPAREN          reduce using rule 114 (funciones_arr1 -> STDEV .)
+
+
+state 197
+
+    (115) funciones_arr1 -> VARIANCE .
+
+    LPAREN          reduce using rule 115 (funciones_arr1 -> VARIANCE .)
+
+
+state 198
+
+    (116) funciones_arr1 -> MODIFY .
+
+    LPAREN          reduce using rule 116 (funciones_arr1 -> MODIFY .)
+
+
+state 199
+
+    (117) funciones_arr1 -> DRAW .
+
+    LPAREN          reduce using rule 117 (funciones_arr1 -> DRAW .)
+
+
+state 200
+
+    (81) while -> WHILE LPAREN expresion RPAREN . bloque
+    (53) bloque -> . LBLOQUE bloque1 RBLOQUE
+
+    LBLOQUE         shift and go to state 123
+
+    bloque                         shift and go to state 215
+
+state 201
+
+    (82) do_while -> DO bloque WHILE LPAREN . expresion RPAREN
+    (83) expresion -> . compare expresion2
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    expresion                      shift and go to state 216
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 202
+
+    (53) bloque -> LBLOQUE bloque1 RBLOQUE .
+
+    WHILE           reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    ELSE            reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    ID              reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    IF              reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    PRINT           reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    RETURN          reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    DO              reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    CALL            reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+    RBLOQUE         reduce using rule 53 (bloque -> LBLOQUE bloque1 RBLOQUE .)
+
+
+state 203
+
+    (54) bloque1 -> estatuto bloque1 .
+
+    RBLOQUE         reduce using rule 54 (bloque1 -> estatuto bloque1 .)
+
+
+state 204
+
+    (75) llamada -> CALL PUNTO ID LPAREN . llamada1 RPAREN
+    (76) llamada1 -> . expresion llamada2
+    (77) llamada1 -> . empty
+    (83) expresion -> . compare expresion2
+    (118) empty -> .
+    (87) compare -> . exp compare1
+    (95) exp -> . termino exp1
+    (99) termino -> . factor termino1
+    (103) factor -> . LPAREN expresion RPAREN
+    (104) factor -> . tipo_cte
+    (105) factor -> . MINUS tipo_cte
+    (106) factor -> . NOT tipo_cte
+    (27) tipo_cte -> . CTE_INT
+    (28) tipo_cte -> . CTE_FLOAT
+    (29) tipo_cte -> . CTE_BOOL
+    (30) tipo_cte -> . CTE_CHAR
+    (31) tipo_cte -> . ID tipo_cte1
+    (32) tipo_cte -> . llamada
+    (75) llamada -> . CALL PUNTO ID LPAREN llamada1 RPAREN
+
+    RPAREN          reduce using rule 118 (empty -> .)
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 95
+
+    llamada1                       shift and go to state 217
+    expresion                      shift and go to state 218
+    empty                          shift and go to state 219
+    compare                        shift and go to state 107
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 205
+
+    (63) asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .
+
+    ID              reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    IF              reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    PRINT           reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    RETURN          reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    WHILE           reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    DO              reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    CALL            reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+    RBLOQUE         reduce using rule 63 (asignacion -> ID asignacion1 EQUALS asignacion2 SEMICOLON .)
+
+
+state 206
+
+    (68) leida -> INPUT LPAREN . RPAREN
+
+    RPAREN          shift and go to state 220
+
+
+state 207
+
+    (69) condicion -> IF LPAREN expresion RPAREN bloque . condicion1
+    (70) condicion1 -> . ELSE bloque
+    (71) condicion1 -> . empty
+    (118) empty -> .
+
+    ELSE            shift and go to state 222
+    ID              reduce using rule 118 (empty -> .)
+    IF              reduce using rule 118 (empty -> .)
+    PRINT           reduce using rule 118 (empty -> .)
+    RETURN          reduce using rule 118 (empty -> .)
+    WHILE           reduce using rule 118 (empty -> .)
+    DO              reduce using rule 118 (empty -> .)
+    CALL            reduce using rule 118 (empty -> .)
+    RBLOQUE         reduce using rule 118 (empty -> .)
+
+    condicion1                     shift and go to state 221
+    empty                          shift and go to state 223
+
+state 208
+
+    (72) escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .
+
+    ID              reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    IF              reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    PRINT           reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    RETURN          reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    WHILE           reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    DO              reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    CALL            reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+    RBLOQUE         reduce using rule 72 (escritura -> PRINT LPAREN escritura1 RPAREN SEMICOLON .)
+
+
+state 209
+
+    (96) exp1 -> PLUS termino exp1 .
+
+    GREATERTHAN     reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    LESSTHAN        reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    GREATERTHANEQUAL reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    LESSTHANEQUAL   reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    EQUALEQUAL      reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    NOTEQUAL        reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    AND             reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    OR              reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    SEMICOLON       reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    RBRACKET        reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    RPAREN          reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+    COMMA           reduce using rule 96 (exp1 -> PLUS termino exp1 .)
+
+
+state 210
+
+    (97) exp1 -> MINUS termino exp1 .
+
+    GREATERTHAN     reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    LESSTHAN        reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    GREATERTHANEQUAL reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    LESSTHANEQUAL   reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    EQUALEQUAL      reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    NOTEQUAL        reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    AND             reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    OR              reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    SEMICOLON       reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    RBRACKET        reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    RPAREN          reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+    COMMA           reduce using rule 97 (exp1 -> MINUS termino exp1 .)
+
+
+state 211
+
+    (100) termino1 -> TIMES factor termino1 .
+
+    PLUS            reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    MINUS           reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    GREATERTHAN     reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    LESSTHAN        reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    GREATERTHANEQUAL reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    LESSTHANEQUAL   reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    EQUALEQUAL      reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    NOTEQUAL        reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    AND             reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    OR              reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    SEMICOLON       reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    RBRACKET        reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    RPAREN          reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+    COMMA           reduce using rule 100 (termino1 -> TIMES factor termino1 .)
+
+
+state 212
+
+    (101) termino1 -> DIVIDE factor termino1 .
+
+    PLUS            reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    MINUS           reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    GREATERTHAN     reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    LESSTHAN        reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    GREATERTHANEQUAL reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    LESSTHANEQUAL   reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    EQUALEQUAL      reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    NOTEQUAL        reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    AND             reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    OR              reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    SEMICOLON       reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    RBRACKET        reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    RPAREN          reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+    COMMA           reduce using rule 101 (termino1 -> DIVIDE factor termino1 .)
+
+
+state 213
+
+    (33) tipo_cte1 -> LBRACKET CTE_INT RBRACKET .
+
+    TIMES           reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    DIVIDE          reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    PLUS            reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    MINUS           reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    GREATERTHAN     reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    LESSTHAN        reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    GREATERTHANEQUAL reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    LESSTHANEQUAL   reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    EQUALEQUAL      reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    NOTEQUAL        reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    AND             reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    OR              reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    SEMICOLON       reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    RBRACKET        reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    RPAREN          reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+    COMMA           reduce using rule 33 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
+
+
+state 214
+
+    (107) funciones_arr -> PUNTO funciones_arr1 LPAREN . RPAREN
+
+    RPAREN          shift and go to state 224
+
+
+state 215
+
+    (81) while -> WHILE LPAREN expresion RPAREN bloque .
+
+    ID              reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    IF              reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    PRINT           reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    RETURN          reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    WHILE           reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    DO              reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    CALL            reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+    RBLOQUE         reduce using rule 81 (while -> WHILE LPAREN expresion RPAREN bloque .)
+
+
+state 216
+
+    (82) do_while -> DO bloque WHILE LPAREN expresion . RPAREN
+
+    RPAREN          shift and go to state 225
+
+
+state 217
+
+    (75) llamada -> CALL PUNTO ID LPAREN llamada1 . RPAREN
+
+    RPAREN          shift and go to state 226
+
+
+state 218
+
+    (76) llamada1 -> expresion . llamada2
+    (78) llamada2 -> . COMMA tipo ID llamada2
+    (79) llamada2 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 228
+    RPAREN          reduce using rule 118 (empty -> .)
+
+    llamada2                       shift and go to state 227
+    empty                          shift and go to state 229
+
+state 219
+
+    (77) llamada1 -> empty .
+
+    RPAREN          reduce using rule 77 (llamada1 -> empty .)
+
+
+state 220
+
+    (68) leida -> INPUT LPAREN RPAREN .
+
+    SEMICOLON       reduce using rule 68 (leida -> INPUT LPAREN RPAREN .)
+
+
+state 221
+
+    (69) condicion -> IF LPAREN expresion RPAREN bloque condicion1 .
+
+    ID              reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    IF              reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    PRINT           reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    RETURN          reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    WHILE           reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    DO              reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    CALL            reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+    RBLOQUE         reduce using rule 69 (condicion -> IF LPAREN expresion RPAREN bloque condicion1 .)
+
+
+state 222
+
+    (70) condicion1 -> ELSE . bloque
+    (53) bloque -> . LBLOQUE bloque1 RBLOQUE
+
+    LBLOQUE         shift and go to state 123
+
+    bloque                         shift and go to state 230
+
+state 223
+
+    (71) condicion1 -> empty .
+
+    ID              reduce using rule 71 (condicion1 -> empty .)
+    IF              reduce using rule 71 (condicion1 -> empty .)
+    PRINT           reduce using rule 71 (condicion1 -> empty .)
+    RETURN          reduce using rule 71 (condicion1 -> empty .)
+    WHILE           reduce using rule 71 (condicion1 -> empty .)
+    DO              reduce using rule 71 (condicion1 -> empty .)
+    CALL            reduce using rule 71 (condicion1 -> empty .)
+    RBLOQUE         reduce using rule 71 (condicion1 -> empty .)
+
+
+state 224
+
+    (107) funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .
+
+    TIMES           reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    DIVIDE          reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    PLUS            reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    MINUS           reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    GREATERTHAN     reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    LESSTHAN        reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    GREATERTHANEQUAL reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    LESSTHANEQUAL   reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    EQUALEQUAL      reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    NOTEQUAL        reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    AND             reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    OR              reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    SEMICOLON       reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    RBRACKET        reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    RPAREN          reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    COMMA           reduce using rule 107 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+
+
+state 225
+
+    (82) do_while -> DO bloque WHILE LPAREN expresion RPAREN .
+
+    ID              reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    IF              reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    PRINT           reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    RETURN          reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    WHILE           reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    DO              reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    CALL            reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+    RBLOQUE         reduce using rule 82 (do_while -> DO bloque WHILE LPAREN expresion RPAREN .)
+
+
+state 226
+
+    (75) llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .
+
+    SEMICOLON       reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    TIMES           reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    DIVIDE          reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    PLUS            reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    MINUS           reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    GREATERTHAN     reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    LESSTHAN        reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    GREATERTHANEQUAL reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    LESSTHANEQUAL   reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    EQUALEQUAL      reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    NOTEQUAL        reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    AND             reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    OR              reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    RBRACKET        reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    RPAREN          reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+    COMMA           reduce using rule 75 (llamada -> CALL PUNTO ID LPAREN llamada1 RPAREN .)
+
+
+state 227
+
+    (76) llamada1 -> expresion llamada2 .
+
+    RPAREN          reduce using rule 76 (llamada1 -> expresion llamada2 .)
+
+
+state 228
+
+    (78) llamada2 -> COMMA . tipo ID llamada2
+    (22) tipo -> . INT puntoCurrentType
+    (23) tipo -> . FLOAT puntoCurrentType
+    (24) tipo -> . BOOL puntoCurrentType
+    (25) tipo -> . CHAR puntoCurrentType
+
+    INT             shift and go to state 23
+    FLOAT           shift and go to state 24
+    BOOL            shift and go to state 25
+    CHAR            shift and go to state 26
+
+    tipo                           shift and go to state 231
+
+state 229
+
+    (79) llamada2 -> empty .
+
+    RPAREN          reduce using rule 79 (llamada2 -> empty .)
+
+
+state 230
+
+    (70) condicion1 -> ELSE bloque .
+
+    ID              reduce using rule 70 (condicion1 -> ELSE bloque .)
+    IF              reduce using rule 70 (condicion1 -> ELSE bloque .)
+    PRINT           reduce using rule 70 (condicion1 -> ELSE bloque .)
+    RETURN          reduce using rule 70 (condicion1 -> ELSE bloque .)
+    WHILE           reduce using rule 70 (condicion1 -> ELSE bloque .)
+    DO              reduce using rule 70 (condicion1 -> ELSE bloque .)
+    CALL            reduce using rule 70 (condicion1 -> ELSE bloque .)
+    RBLOQUE         reduce using rule 70 (condicion1 -> ELSE bloque .)
+
+
+state 231
+
+    (78) llamada2 -> COMMA tipo . ID llamada2
+
+    ID              shift and go to state 232
+
+
+state 232
+
+    (78) llamada2 -> COMMA tipo ID . llamada2
+    (78) llamada2 -> . COMMA tipo ID llamada2
+    (79) llamada2 -> . empty
+    (118) empty -> .
+
+    COMMA           shift and go to state 228
+    RPAREN          reduce using rule 118 (empty -> .)
+
+    llamada2                       shift and go to state 233
+    empty                          shift and go to state 229
+
+state 233
+
+    (78) llamada2 -> COMMA tipo ID llamada2 .
+
+    RPAREN          reduce using rule 78 (llamada2 -> COMMA tipo ID llamada2 .)
+
