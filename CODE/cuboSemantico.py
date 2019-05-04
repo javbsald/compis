@@ -18,11 +18,51 @@
 
 import pprint
 
-operacion = 14
-tipo1 = 8
-tipo2 = 8
+def convertSemCubeParam(tipo):
+    if tipo == "void" or tipo == "&&":
+        return 0
+    elif tipo == "int" or tipo == "||":
+        return 1
+    elif tipo == "float" or tipo == "<":
+        return 2
+    elif tipo == "bool" or tipo == ">":
+        return 3
+    elif tipo == "char"  or tipo == "<=":
+        return 4
+    elif tipo == "pieChart" or tipo == ">=":
+        return 5
+    elif tipo == "barGraph" or tipo == "==":
+        return 6
+    elif tipo == "plotLine" or tipo == "!=":
+        return 7
+    elif tipo == "+":
+        return 8
+    elif tipo == "-":
+        return 9
+    elif tipo == "*":
+        return 10
+    elif tipo == "/":
+        return 11
+    elif tipo == "=":
+        return 12
+    elif tipo == "!":
+        return 13
+    elif tipo == 1:
+        return "int"
+    elif tipo == 2:
+        return "float"
+    elif tipo == 3:
+        return "bool"
+    elif tipo == 4:
+        return "char"
+    else:
+        return "Error"
 
-semCube = [[["Error" for k in range(tipo1)] for j in range(tipo2)] for i in range(operacion)]
+cube_operacion = 14
+cube_tipo1 = 8
+cube_tipo2 = 8
+
+semCube = [[["Error" for k in range(cube_tipo1)] for j in range(cube_tipo2)] for i in range(cube_operacion)]
 
 # 0 - &&
 semCube[0][3][3] = 3        # bool && bool = bool
@@ -113,4 +153,4 @@ semCube[13][5][3] = 3        # pieChart ! bool = char
 semCube[13][6][3] = 3        # barGraph ! bool = char
 semCube[13][7][3] = 3        # plotLine ! bool = char
 
-pprint.pprint(semCube)
+#pprint.pprint(semCube)

@@ -1,6 +1,14 @@
 import ply.yacc as yacc
-import pprint
 from lex import tokens
+
+# Libreria pretty print
+import pprint
+
+# Import cubo semantico
+from cuboSemantico import *
+
+# Import memoria Virtual
+from memoriaVirtual import *
 
 # Variables globales para crear la var table
 globalProgram = dict()
@@ -9,6 +17,13 @@ programID = None
 currentState = "global"
 currentType = None
 currentDimension = 0
+
+# Varibles globales para Cuadruplos
+vectorPolaco = []
+pilaOper = []
+pilaTipos = []
+pilaQuads = []
+currentIDAsignacion = None # Para guardar el ID al que se le va a asignar
 
 def p_programa(p):
     'programa : PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal'
@@ -36,6 +51,7 @@ def p_puntoChangeStateLocal(p):
 def p_puntoPrintFinal(p):
     'puntoPrintFinal : '
     pprint.pprint(globalProgram)
+    pprint.pprint(pilaQuads)
 
 def p_vars(p):
     'vars : VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON'
@@ -83,6 +99,11 @@ def p_puntoCreateVarType(p):
     'puntoCreateVarType : '
     for x in varList:
         globalProgram[programID][currentState]['varTable'][x]["Type"] = currentType
+        if(currentState=="global"):
+            currentDireccion = getGlobalDir(currentType)
+        else:
+            currentDireccion = getLocalDir(currentType)
+        globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
         #varList.pop(0)
     #pprint.pprint(globalProgram)
 
@@ -108,11 +129,11 @@ def p_puntoCurrentType(p):
 
 def p_tipo_cte(p):
     '''
-    tipo_cte : CTE_INT
-    | CTE_FLOAT
-    | CTE_BOOL
-    | CTE_CHAR
-    | ID tipo_cte1
+    tipo_cte : CTE_INT puntoPushInt
+    | CTE_FLOAT puntoPushFloat
+    | CTE_BOOL puntoPushBool
+    | CTE_CHAR puntoPushChar
+    | ID puntoPushID tipo_cte1
     | llamada
     '''
 def p_tipo_cte1(p):
@@ -121,6 +142,38 @@ def p_tipo_cte1(p):
     | funciones_arr
     | empty
     '''
+def p_puntoPushInt(p):
+    'puntoPushInt : '
+    vectorPolaco.append(p[-1])
+    pilaTipos.append("int")
+
+def p_puntoPushFloat(p):
+    'puntoPushFloat : '
+    vectorPolaco.append(p[-1])
+    pilaTipos.append("float")
+
+def p_puntoPushBool(p):
+    'puntoPushBool : '
+    vectorPolaco.append(p[-1])
+    pilaTipos.append("bool")
+
+def p_puntoPushChar(p):
+    'puntoPushChar : '
+    vectorPolaco.append(p[-1])
+    pilaTipos.append("char")
+
+def p_puntoPushID(p):
+    'puntoPushID : '
+    currentID = p[-1]
+    vectorPolaco.append(currentID)
+    #print(currentID)
+    if currentID in globalProgram[programID][currentState]['varTable']:
+        pilaTipos.append(globalProgram[programID][currentState]['varTable'][currentID]['Type'])
+    elif currentID in globalProgram[programID]['global']['varTable']:
+        pilaTipos.append(globalProgram[programID]['global']['varTable'][currentID]['Type'])
+    else:
+        print("not found in varTable, does not exist o es constante")
+        #print(globalProgram[programID][currentState]['varTable'][currentID])
 
 def p_tipo_graph(p):
     '''
@@ -195,7 +248,7 @@ def p_estatuto(p):
     '''
 
 def p_asignacion(p):
-    'asignacion : ID asignacion1 EQUALS asignacion2 SEMICOLON'
+    'asignacion : ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON'
 def p_asignacion1(p):
     '''
     asignacion1 : LBRACKET expresion RBRACKET
@@ -203,9 +256,20 @@ def p_asignacion1(p):
     '''
 def p_asignacion2(p):
     '''
-    asignacion2 : expresion
+    asignacion2 : expresion puntoCreateAsignacionQuad
     | leida
     '''
+def p_puntoSaveIDAsignacion(p):
+    'puntoSaveIDAsignacion :'
+    global currentIDAsignacion
+    currentIDAsignacion = p[-1]
+def p_puntoCreateAsignacionQuad(p):
+    'puntoCreateAsignacionQuad : '
+    global currentIDAsignacion
+    assignTo = vectorPolaco.pop()
+    quad = ("=", currentIDAsignacion, None, assignTo)
+    pilaQuads.append(quad)
+    currentIDAsignacion = None
 
 def p_leida(p):
     'leida : INPUT LPAREN RPAREN'
@@ -219,12 +283,18 @@ def p_condicion1(p):
     '''
 
 def p_escritura(p):
-    'escritura : PRINT LPAREN escritura1 RPAREN SEMICOLON'
+    'escritura : PRINT LPAREN escritura1 RPAREN puntoCreatePrintQuad SEMICOLON'
 def p_escritura1(p):
     '''
     escritura1 : expresion
     | CTE_STRING
     '''
+def p_puntoCreatePrintQuad(p):
+    'puntoCreatePrintQuad : '
+    toPrint = vectorPolaco.pop()
+    quad = ("write", None, None, toPrint)
+    # print(quad)
+    pilaQuads.append(quad);
 
 def p_llamada(p):
     'llamada : CALL PUNTO ID LPAREN llamada1 RPAREN'
@@ -261,40 +331,112 @@ def p_compare(p):
     'compare : exp compare1'
 def p_compare1(p):
     '''
-    compare1 : GREATERTHAN exp
-    | LESSTHAN exp
-    | GREATERTHANEQUAL exp
-    | LESSTHANEQUAL exp
-    | EQUALEQUAL exp
-    | NOTEQUAL exp
+    compare1 : GREATERTHAN puntoPushOperador exp puntoOperacionRelacional
+    | LESSTHAN puntoPushOperador exp puntoOperacionRelacional
+    | GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+    | LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+    | EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional
+    | NOTEQUAL puntoPushOperador exp puntoOperacionRelacional
     | empty
     '''
+def p_puntoOperacionRelacional(p):
+    'puntoOperacionRelacional : '
+    length = len(pilaOper)
+    if length > 0:
+        if pilaOper[length-1] == "<":
+            createOperationQuad()
+        elif pilaOper[length-1] == ">":
+            createOperationQuad()
+        elif pilaOper[length-1] == ">=":
+            createOperationQuad()
+        elif pilaOper[length-1] == "<=":
+            createOperationQuad()
+        elif pilaOper[length-1] == "==":
+            createOperationQuad()
+        elif pilaOper[length-1] == "!=":
+            createOperationQuad()
 
 def p_exp(p):
-    'exp : termino exp1'
+    'exp : termino puntoSumaResta exp1'
 def p_exp1(p):
     '''
-    exp1 : PLUS termino exp1
-    | MINUS termino exp1
+    exp1 : PLUS puntoPushOperador termino puntoSumaResta exp1
+    | MINUS puntoPushOperador termino puntoSumaResta exp1
     | empty
     '''
 
+def p_puntoSumaResta(p):
+    'puntoSumaResta : '
+    length = len(pilaOper)
+    if length > 0:
+        if pilaOper[length-1] == "+":
+            createOperationQuad()
+        elif pilaOper[length-1] == "-":
+            createOperationQuad()
+
+def createOperationQuad():
+    right_operand = vectorPolaco.pop()
+    right_Type = pilaTipos.pop()
+    left_operand = vectorPolaco.pop()
+    left_Type = pilaTipos.pop()
+    operator = pilaOper.pop()
+
+    operatorCube = convertSemCubeParam(operator)
+    leftTypeCube = convertSemCubeParam(left_Type)
+    rightTypeCube = convertSemCubeParam(right_Type)
+
+    result_Type = semCube[operatorCube][leftTypeCube][rightTypeCube]
+
+    result_Type = convertSemCubeParam(result_Type)
+
+    if result_Type != "Error":
+        result = getTempDir(result_Type)
+        # print("create quad ", result_Type)
+        quad = (operator, left_operand, right_operand, result)
+        # print(quad)
+        pilaQuads.append(quad)
+        vectorPolaco.append(result)
+        pilaTipos.append(result_Type)
+    else:
+        print("Error: Type mismatch")
+
 def p_termino(p):
-    'termino : factor termino1'
+    'termino : factor puntoMultDivide termino1'
 def p_termino1(p):
     '''
-    termino1 : TIMES factor termino1
-    | DIVIDE factor termino1
+    termino1 : TIMES puntoPushOperador factor puntoMultDivide termino1
+    | DIVIDE puntoPushOperador factor puntoMultDivide termino1
     | empty
     '''
+
+def p_puntoMultDivide(p):
+    'puntoMultDivide : '
+    length = len(pilaOper)
+    if length > 0:
+        if pilaOper[length-1] == "*":
+            createOperationQuad()
+        elif pilaOper[length-1] == "/":
+            createOperationQuad()
+
+def p_puntoPushOperador(p):
+    'puntoPushOperador : '
+    pilaOper.append(p[-1])
+    #print(p[-1], " added to pilaOper")
 
 def p_factor(p):
     '''
-    factor : LPAREN expresion RPAREN
+    factor : LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
     | tipo_cte
     | MINUS tipo_cte
     | NOT tipo_cte
     '''
+def p_puntoPushFondoFalso(p):
+    'puntoPushFondoFalso : '
+    pilaOper.append("(")
+
+def p_puntoPopFondoFalso(p):
+    'puntoPopFondoFalso : '
+    pilaOper.pop()
 
 def p_funciones_arr(p):
     'funciones_arr : PUNTO funciones_arr1 LPAREN RPAREN'
@@ -326,44 +468,23 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program patito2k19;
+program simple;
 var globalCounter, sum as int;
-// globalCounter = 100;
-func int suma1(int x)
-{
-    var y as int;
-    var pog as char[100];
-    y = x/2;
-    x = y+1;
-    print(10);
-    return x;
-}
-func void printSmile()
-{
-    print("happy face");
-}
 void main()
 {
-    var counter, secondArr as int[10];
-    var pi as float;
-    var x as int;
-    if(counter[5]>10)
-    {
-        counter[5] = input();
+    var a, b, c as int;
+
+    a=1;
+    b=2;
+    c=3;
+    c = b + a;
+    print(a+b*c);
+    if(b<a){
+        print(b+1);
     }
-    else
-    {
-        print(counter.average());
+    else{
+        print(a+1);
     }
-    print(30);
-    pi = 3.14;
-    // two decimals
-    x = call.suma1(x);
-    boolID = true;
-    chad = 'A';
-    call.printSmile();
-    x = call.factorial(4) + call.factorial(5);
-    print("end");
 }
 '''
 
