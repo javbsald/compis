@@ -13,6 +13,8 @@ from memoriaVirtual import *
 # Variables globales para crear la var table
 globalProgram = dict()
 varList = []
+paramList = []
+paramListTypes = []
 programID = None
 currentState = "global"
 currentType = None
@@ -192,7 +194,7 @@ def p_tipo_graph(p):
 #    '''
 
 def p_funciones(p):
-    'funciones : FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN funciones2 RPAREN bloque_modular'
+    'funciones : FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN puntoCreateParamTable funciones2 RPAREN puntoCreateParamCount bloque_modular puntoFinalFuncQuad'
 def p_funciones1(p):
     '''
     funciones1 : VOID
@@ -200,7 +202,7 @@ def p_funciones1(p):
     '''
 def p_funciones2(p):
     '''
-    funciones2 : tipo ID funciones3
+    funciones2 : tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     | empty
     '''
 def p_funciones3(p):
@@ -212,6 +214,29 @@ def p_puntoChangeStateFuncion(p):
     'puntoChangeStateFuncion : '
     global currentState
     currentState = p[-1]
+    print("reset funcion local")
+    resetLocal()
+def p_puntoCreateParamTable(p):
+    'puntoCreateParamTable : '
+    globalProgram[programID][currentState]['paramTable'] = dict()
+def p_puntoPushParam(p):
+    'puntoPushParam : '
+    paramListTypes.append(currentType)
+    paramList.append(p[-1])
+def p_puntoCreateParamCount(p):
+    'puntoCreateParamCount : '
+    globalProgram[programID][currentState]['paramTable']['count'] = len(paramList)
+    globalProgram[programID][currentState]['paramTable']['types'] = paramListTypes
+    globalProgram[programID][currentState]['currentQuadCount'] = len(pilaQuads)
+
+    for x in paramList:
+        paramList.pop()
+    for x in paramListTypes:
+        paramListTypes.pop()
+def p_puntoFinalFuncQuad(p):
+    'puntoFinalFuncQuad : '
+    quad = ("ENDPROC", None, None, None)
+    pilaQuads.append(quad)
 
 def p_main(p):
     'main : VOID MAIN LPAREN RPAREN bloque_modular'
@@ -310,11 +335,11 @@ def fillQuad(previousJump, nextQuad):
     pilaQuads[previousJump] = newQuad
 
 def p_escritura(p):
-    'escritura : PRINT LPAREN escritura1 RPAREN puntoCreatePrintQuad SEMICOLON'
+    'escritura : PRINT LPAREN escritura1 RPAREN SEMICOLON'
 def p_escritura1(p):
     '''
-    escritura1 : expresion
-    | CTE_STRING
+    escritura1 : expresion puntoCreatePrintQuad
+    | CTE_STRING puntoCreatePrintConstantQuad
     '''
 def p_puntoCreatePrintQuad(p):
     'puntoCreatePrintQuad : '
@@ -322,6 +347,11 @@ def p_puntoCreatePrintQuad(p):
     quad = ("write", None, None, toPrint)
     # print(quad)
     pilaQuads.append(quad);
+def p_puntoCreatePrintConstantQuad(p):
+    'puntoCreatePrintConstantQuad : '
+    stringToPrint = p[-1]
+    quad = ("write", None, None, stringToPrint)
+    pilaQuads.append(quad)
 
 def p_llamada(p):
     'llamada : CALL PUNTO ID LPAREN llamada1 RPAREN'
@@ -528,32 +558,41 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program whileQuadCheck;
+program patito;
+var globalCounter, sum as int;
+// globalCounter = 100;
+func int suma1(int x)
+{
+    var y,z,w as int;
+    w=x+y;
+    return x;
+}
+func void printSmile()
+{
+    print("happy face");
+}
 void main()
 {
-    var a, b, c, d as int;
-
-    while (a+b*c<d)
+    var counter as int[10];
+    var pi as float;
+    var x as int;
+    if(pi>x)
     {
-        if(a+b<c)
-        {
-            a=b+c;
-            do
-            {
-                a=a-1;
-            }while(a>b+c)
-        }
-        else
-        {
-            while(b>c+d)
-            {
-                a=b+c*d;
-                b=a-d;
-            }
-        }
+        counter[5] = input();
     }
-    a=b*c;
-    c=0;
+    else
+    {
+        print(counter.average());
+    }
+    print(30);
+    pi = 3.14;
+    // two decimals
+    x = call.suma1(x);
+    boolID = true;
+    chad = 'A';
+    call.printSmile();
+    x = call.factorial(4) + call.factorial(5);
+    print("end");
 }
 '''
 
