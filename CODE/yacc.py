@@ -162,32 +162,66 @@ def p_tipo_cte1(p):
     '''
 def p_puntoPushInt(p):
     'puntoPushInt : '
-    vectorPolaco.append(p[-1])
+    constanteInt = p[-1]
+    if constanteInt in memoriaLocal:
+        vectorPolaco.append(memoriaLocal[constanteInt])
+    else:
+        tempInt = getTempDir("int")
+        vectorPolaco.append(tempInt)
+        memoriaLocal[constanteInt] =  tempInt
+    #vectorPolaco.append(p[-1])
     pilaTipos.append("int")
 
 def p_puntoPushFloat(p):
     'puntoPushFloat : '
-    vectorPolaco.append(p[-1])
+    constanteFloat = p[-1]
+    if constanteFloat in memoriaLocal:
+        vectorPolaco.append(memoriaLocal[constanteFloat])
+    else:
+        tempFloat = getTempDir("float")
+        vectorPolaco.append(tempFloat)
+        memoriaLocal[constanteFloat] =  tempFloat
+    #vectorPolaco.append(p[-1])
     pilaTipos.append("float")
 
 def p_puntoPushBool(p):
     'puntoPushBool : '
-    vectorPolaco.append(p[-1])
+    constanteBool = p[-1]
+    if constanteBool in memoriaLocal:
+        vectorPolaco.append(memoriaLocal[constanteBool])
+    else:
+        tempBool = getTempDir("bool")
+        vectorPolaco.append(tempBool)
+        memoriaLocal[constanteBool] =  tempBool
+    #vectorPolaco.append(p[-1])
     pilaTipos.append("bool")
 
 def p_puntoPushChar(p):
     'puntoPushChar : '
-    vectorPolaco.append(p[-1])
+    constanteChar = p[-1]
+    if constanteChar in memoriaLocal:
+        vectorPolaco.append(memoriaLocal[constanteChar])
+    else:
+        tempChar = getTempDir("char")
+        vectorPolaco.append(tempChar)
+        memoriaLocal[constanteChar] =  tempChar
+    #vectorPolaco.append(p[-1])
     pilaTipos.append("char")
 
 def p_puntoPushID(p):
     'puntoPushID : '
     currentID = p[-1]
-    vectorPolaco.append(currentID)
-    #print(currentID)
+    #vectorPolaco.append(currentID)
+    #print("Push  ID ", currentID, " - ", globalProgram[programID][currentState]['varTable'][currentID]['Direccion'])
     if currentID in globalProgram[programID][currentState]['varTable']:
+        tempDir = globalProgram[programID][currentState]['varTable'][currentID]['Direccion']
+        vectorPolaco.append(tempDir)
+        memoriaLocal[currentID] = tempDir
         pilaTipos.append(globalProgram[programID][currentState]['varTable'][currentID]['Type'])
     elif currentID in globalProgram[programID]['global']['varTable']:
+        tempDir = globalProgram[programID]['global']['varTable'][currentID]['Direccion']
+        vectorPolaco.append(tempDir)
+        memoriaGlobal[currentID] = tempDir
         pilaTipos.append(globalProgram[programID]['global']['varTable'][currentID]['Type'])
     else:
         print("not found in varTable, does not exist o es constante")
@@ -310,11 +344,23 @@ def p_puntoSaveIDAsignacion(p):
     'puntoSaveIDAsignacion :'
     global currentIDAsignacion
     currentIDAsignacion = p[-1]
+    if currentIDAsignacion in globalProgram[programID][currentState]['varTable']:
+        tempDir = globalProgram[programID][currentState]['varTable'][currentIDAsignacion]['Direccion']
+        vectorPolaco.append(tempDir)
+        memoriaLocal[currentIDAsignacion] = tempDir
+        currentIDAsignacion = tempDir
+    elif currentIDAsignacion in globalProgram[programID]['global']['varTable']:
+        tempDir = globalProgram[programID]['global']['varTable'][currentIDAsignacion]['Direccion']
+        vectorPolaco.append(tempDir)
+        memoriaGlobal[currentIDAsignacion] = tempDir
+        currentIDAsignacion = tempDir
+    else:
+        print("not found in varTable, does not exist o es constante")
 def p_puntoCreateAsignacionQuad(p):
     'puntoCreateAsignacionQuad : '
     global currentIDAsignacion
     assignTo = vectorPolaco.pop()
-    quad = ("=", currentIDAsignacion, None, assignTo)
+    quad = ("=", assignTo, None, currentIDAsignacion)
     pilaQuads.append(quad)
     currentIDAsignacion = None
 
@@ -612,39 +658,32 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program patito;
-var a, b as int;
-var f as float;
+program moduleVA;
+var i, j as int;
 func void uno(int a)
 {
-    a=a+b*a;
-    print(a);
-    print(b);
-    print(a+b);
-}
-func void dos(int a, int b, float g)
-{
     var i as int;
-    i=b;
-    while(i>0)
+
+    i=a*2;
+    if(i<a+4)
     {
-        a=a+b*i+b;
-        call.uno(i*2);
-        print(a);
-        i=i-1;
+        call.uno(a+1);
     }
+    print(i);
+}
+func int dos(int b)
+{
+    b=b*i+j;
+    return (b*2);
 }
 void main()
 {
-    a=3;
-    b=a+1;
-    print(a);
-    print(b);
-    f=3.14;
-    call.dos(a+b*2, b, f*3);
-    print(a);
-    print(b);
-    print(f*2+1);
+    i=2;
+    j=i*2-1;
+
+    call.uno(j);
+
+    print(i + call.dos(i+j));
 }
 '''
 

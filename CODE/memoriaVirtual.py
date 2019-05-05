@@ -1,12 +1,14 @@
 # Mapa de Memoria
 
 # Memoria Global
+memoriaGlobal = dict()
 global_int_start = 1000
 global_float_start = 5000
 global_char_start = 7000
 global_bool_start = 9000
 
 # Memoria local
+memoriaLocal = dict()
 local_int_start = 10000
 local_int_counter = local_int_start
 local_float_start = 15000
