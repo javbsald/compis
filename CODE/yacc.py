@@ -23,6 +23,7 @@ vectorPolaco = []
 pilaOper = []
 pilaTipos = []
 pilaQuads = []
+pilaSaltos = []
 currentIDAsignacion = None # Para guardar el ID al que se le va a asignar
 
 def p_programa(p):
@@ -275,12 +276,38 @@ def p_leida(p):
     'leida : INPUT LPAREN RPAREN'
 
 def p_condicion(p):
-    'condicion : IF LPAREN expresion RPAREN bloque condicion1'
+    'condicion : IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad'
 def p_condicion1(p):
     '''
-    condicion1 : ELSE bloque
+    condicion1 : ELSE puntoCreateElseQuad bloque
     | empty
     '''
+def p_puntoCreateIfQuad(p):
+    'puntoCreateIfQuad : '
+    exp_type = pilaTipos.pop()
+    if(exp_type != "bool"):
+        print("Error: Type mismatch")
+    else:
+        result = vectorPolaco.pop()
+        quad = ("GOTOF", result, None, None)
+        pilaQuads.append(quad)
+        pilaSaltos.append(len(pilaQuads)-1)
+def p_puntoFillIfQuad(p):
+    'puntoFillIfQuad : '
+    end = pilaSaltos.pop()
+    fillQuad(end, len(pilaQuads)+1)
+def p_puntoCreateElseQuad(p):
+    'puntoCreateElseQuad : '
+    quad = ("GOTO", None, None, None)
+    pilaQuads.append(quad)
+    false = pilaSaltos.pop()
+    pilaSaltos.append(len(pilaQuads)-1)
+    fillQuad(false, len(pilaQuads)+1)
+
+def fillQuad(previousJump, nextQuad):
+    quad = pilaQuads[previousJump]
+    newQuad = (quad[0], quad[1], quad[2], nextQuad)
+    pilaQuads[previousJump] = newQuad
 
 def p_escritura(p):
     'escritura : PRINT LPAREN escritura1 RPAREN puntoCreatePrintQuad SEMICOLON'
@@ -313,10 +340,43 @@ def p_return(p):
     'return : RETURN expresion SEMICOLON'
 
 def p_while(p):
-    'while : WHILE LPAREN expresion RPAREN bloque'
+    'while : WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad'
+def p_puntoPushSaltoWhile(p):
+    'puntoPushSaltoWhile : '
+    pilaSaltos.append(len(pilaQuads)+1)
+def p_puntoCreateWhileQuad(p):
+    'puntoCreateWhileQuad : '
+    exp_type = pilaTipos.pop()
+    if exp_type != "bool":
+        print("Error: Type mismatch")
+    else:
+        result = vectorPolaco.pop()
+        quad = ("GOTOF", result, None, None)
+        pilaQuads.append(quad)
+        pilaSaltos.append(len(pilaQuads)-1)
+def p_puntoEndWhileQuad(p):
+    'puntoEndWhileQuad : '
+    end = pilaSaltos.pop()
+    goBack = pilaSaltos.pop()
+    quad = ("GOTO", None, None, goBack)
+    pilaQuads.append(quad)
+    fillQuad(end, len(pilaQuads)+1)
 
 def p_do_while(p):
-    'do_while : DO bloque WHILE LPAREN expresion RPAREN'
+    'do_while : DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad'
+def p_puntoPushSaltoDoWhile(p):
+    'puntoPushSaltoDoWhile : '
+    pilaSaltos.append(len(pilaQuads)+1)
+def p_puntoCreateDoWhileQuad(p):
+    'puntoCreateDoWhileQuad : '
+    exp_type = pilaTipos.pop()
+    if exp_type != "bool":
+        print("Error: Type mismatch")
+    else:
+        result = vectorPolaco.pop()
+        goBack = pilaSaltos.pop()
+        quad = ("GOTOT", None, None, goBack)
+        pilaQuads.append(quad)
 
 def p_expresion(p):
     'expresion : compare expresion2'
@@ -468,23 +528,32 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program simple;
-var globalCounter, sum as int;
+program whileQuadCheck;
 void main()
 {
-    var a, b, c as int;
+    var a, b, c, d as int;
 
-    a=1;
-    b=2;
-    c=3;
-    c = b + a;
-    print(a+b*c);
-    if(b<a){
-        print(b+1);
+    while (a+b*c<d)
+    {
+        if(a+b<c)
+        {
+            a=b+c;
+            do
+            {
+                a=a-1;
+            }while(a>b+c)
+        }
+        else
+        {
+            while(b>c+d)
+            {
+                a=b+c*d;
+                b=a-d;
+            }
+        }
     }
-    else{
-        print(a+1);
-    }
+    a=b*c;
+    c=0;
 }
 '''
 
