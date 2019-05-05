@@ -28,8 +28,14 @@ pilaQuads = []
 pilaSaltos = []
 currentIDAsignacion = None # Para guardar el ID al que se le va a asignar
 
+# Variables globales para llamadas de funciones
+llamadaIDExists = False
+paramFlag = False
+paramCounterToSend = 0
+funcToCall = None
+
 def p_programa(p):
-    'programa : PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState main puntoPrintFinal'
+    'programa : PROGRAM ID puntoCreateProgram SEMICOLON puntoCreateVarTable puntoCreateVarTableState programa1 programa2 puntoChangeStateLocal puntoCreateVarTableState puntoFillMainQuad main puntoPrintFinal'
 def p_programa1(p):
     '''
     programa1 : vars programa1
@@ -40,11 +46,18 @@ def p_programa2(p):
     programa2 : funciones programa2
     | empty
     '''
+def p_puntoFillMainQuad(p):
+    'puntoFillMainQuad : '
+    goBack = pilaSaltos.pop()
+    fillQuad(goBack, len(pilaQuads)+1)
 
 def p_puntoCreateProgram(p):
     'puntoCreateProgram : '
     global programID
     programID = p[-1]
+    quad = ("GOTO", None, None, None)
+    pilaQuads.append(quad)
+    pilaSaltos.append(len(pilaQuads)-1)
 
 def p_puntoChangeStateLocal(p):
     'puntoChangeStateLocal : '
@@ -97,6 +110,8 @@ def p_puntoCreateVar(p):
     varList.append(currentVar)
     globalProgram[programID][currentState]['varTable'][currentVar] = dict()
     globalProgram[programID][currentState]['varTable'][currentVar]["Name"] = currentVar
+    if(paramFlag == True):
+        paramList.append(currentVar)
 
 def p_puntoCreateVarType(p):
     'puntoCreateVarType : '
@@ -207,32 +222,38 @@ def p_funciones2(p):
     '''
 def p_funciones3(p):
     '''
-    funciones3 : COMMA tipo ID funciones3
+    funciones3 : COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     | empty
     '''
 def p_puntoChangeStateFuncion(p):
     'puntoChangeStateFuncion : '
     global currentState
     currentState = p[-1]
-    print("reset funcion local")
+    #print("reset funcion local")
     resetLocal()
 def p_puntoCreateParamTable(p):
     'puntoCreateParamTable : '
+    global paramFlag
+    paramFlag = True;
     globalProgram[programID][currentState]['paramTable'] = dict()
 def p_puntoPushParam(p):
     'puntoPushParam : '
     paramListTypes.append(currentType)
-    paramList.append(p[-1])
 def p_puntoCreateParamCount(p):
     'puntoCreateParamCount : '
+    global paramFlag
     globalProgram[programID][currentState]['paramTable']['count'] = len(paramList)
-    globalProgram[programID][currentState]['paramTable']['types'] = paramListTypes
+    globalProgram[programID][currentState]['paramTable']['parametros'] = dict()
+    globalProgram[programID][currentState]['paramTable']['types'] = dict()
     globalProgram[programID][currentState]['currentQuadCount'] = len(pilaQuads)
 
-    for x in paramList:
-        paramList.pop()
-    for x in paramListTypes:
-        paramListTypes.pop()
+    while (len(paramList) > 0):
+        #print("paramList - ", paramList.pop())
+        globalProgram[programID][currentState]['paramTable']['parametros'][len(paramList)+1] = paramList.pop()
+    while (len(paramListTypes) > 0):
+        #print("paramListTypes - ", paramListTypes.pop())
+        globalProgram[programID][currentState]['paramTable']['types'][len(paramListTypes)+1] = paramListTypes.pop()
+    paramFlag = False
 def p_puntoFinalFuncQuad(p):
     'puntoFinalFuncQuad : '
     quad = ("ENDPROC", None, None, None)
@@ -354,17 +375,50 @@ def p_puntoCreatePrintConstantQuad(p):
     pilaQuads.append(quad)
 
 def p_llamada(p):
-    'llamada : CALL PUNTO ID LPAREN llamada1 RPAREN'
+    'llamada : CALL PUNTO ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoCreateGoSubQuad'
 def p_llamada1(p):
     '''
-    llamada1 : expresion llamada2
+    llamada1 : expresion puntoVerifyArgumento llamada2
     | empty
     '''
 def p_llamada2(p):
     '''
-    llamada2 : COMMA tipo ID llamada2
+    llamada2 : COMMA expresion puntoVerifyArgumento llamada2
     | empty
     '''
+def p_puntoVerifyLlamada(p):
+    'puntoVerifyLlamada : '
+    global llamadaIDExists
+    global paramCounterToSend
+    global funcToCall
+    llamadaID = p[-1]
+    if llamadaID in globalProgram[programID]:
+        #print (llamadaID, " found")
+        funcToCall = llamadaID
+        llamadaIDExists = True
+        quad = ("ERA", None, None, llamadaID)
+        pilaQuads.append(quad)
+        paramCounterToSend = 0
+    else:
+        print("Error: Funcion ", llamadaID, " not found")
+        llamadaIDExists = False
+def p_puntoVerifyArgumento(p):
+    'puntoVerifyArgumento : '
+    global paramCounterToSend
+    argumento = vectorPolaco.pop()
+    argumentoType = pilaTipos.pop()
+    #print("Comparing ", argumento, " - ", argumentoType, " vs. ")
+    #print(globalProgram[programID][funcToCall]['paramTable']['types'][paramCounterToSend+1])
+    if(argumentoType == globalProgram[programID][funcToCall]['paramTable']['types'][paramCounterToSend+1]):
+        quad = ("PARAM", argumento, None, "argumentoDir")
+        pilaQuads.append(quad)
+    else:
+        print("Error: Parameter Type mismatch")
+    paramCounterToSend += 1
+def p_puntoCreateGoSubQuad(p):
+    'puntoCreateGoSubQuad : '
+    quad = ("GOSUB", funcToCall, None, "direccion")
+    pilaQuads.append(quad)
 
 def p_return(p):
     'return : RETURN expresion SEMICOLON'
@@ -559,40 +613,38 @@ parser = yacc.yacc()
 
 s = '''
 program patito;
-var globalCounter, sum as int;
-// globalCounter = 100;
-func int suma1(int x)
+var a, b as int;
+var f as float;
+func void uno(int a)
 {
-    var y,z,w as int;
-    w=x+y;
-    return x;
+    a=a+b*a;
+    print(a);
+    print(b);
+    print(a+b);
 }
-func void printSmile()
+func void dos(int a, int b, float g)
 {
-    print("happy face");
+    var i as int;
+    i=b;
+    while(i>0)
+    {
+        a=a+b*i+b;
+        call.uno(i*2);
+        print(a);
+        i=i-1;
+    }
 }
 void main()
 {
-    var counter as int[10];
-    var pi as float;
-    var x as int;
-    if(pi>x)
-    {
-        counter[5] = input();
-    }
-    else
-    {
-        print(counter.average());
-    }
-    print(30);
-    pi = 3.14;
-    // two decimals
-    x = call.suma1(x);
-    boolID = true;
-    chad = 'A';
-    call.printSmile();
-    x = call.factorial(4) + call.factorial(5);
-    print("end");
+    a=3;
+    b=a+1;
+    print(a);
+    print(b);
+    f=3.14;
+    call.dos(a+b*2, b, f*3);
+    print(a);
+    print(b);
+    print(f*2+1);
 }
 '''
 
