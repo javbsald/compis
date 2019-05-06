@@ -129,7 +129,7 @@ semCube[10][2][1] = 2        # float * int = float
 semCube[10][2][2] = 2        # float * float = float
 
 # 11 - /
-semCube[11][1][1] = 1        # int / int = int
+semCube[11][1][1] = 2        # int / int = float
 semCube[11][1][2] = 2        # int / float = float
 semCube[11][2][1] = 2        # float / int = float
 semCube[11][2][2] = 2        # float / float = float

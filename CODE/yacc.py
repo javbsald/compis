@@ -164,48 +164,52 @@ def p_tipo_cte1(p):
 def p_puntoPushInt(p):
     'puntoPushInt : '
     constanteInt = p[-1]
-    if constanteInt in memoriaLocal:
-        vectorPolaco.append(memoriaLocal[constanteInt])
+    if constanteInt in memoriaConstante:
+        vectorPolaco.append(memoriaConstante[constanteInt])
     else:
-        tempInt = getTempDir("int")
+        tempInt = getConstantDir("int")
         vectorPolaco.append(tempInt)
-        memoriaLocal[constanteInt] =  tempInt
+        memoriaConstante[constanteInt] =  tempInt
+        memoriaConstanteDir[tempInt] = constanteInt
     #vectorPolaco.append(p[-1])
     pilaTipos.append("int")
 
 def p_puntoPushFloat(p):
     'puntoPushFloat : '
     constanteFloat = p[-1]
-    if constanteFloat in memoriaLocal:
-        vectorPolaco.append(memoriaLocal[constanteFloat])
+    if constanteFloat in memoriaConstante:
+        vectorPolaco.append(memoriaConstante[constanteFloat])
     else:
-        tempFloat = getTempDir("float")
+        tempFloat = getConstantDir("float")
         vectorPolaco.append(tempFloat)
-        memoriaLocal[constanteFloat] =  tempFloat
+        memoriaConstante[constanteFloat] =  tempFloat
+        memoriaConstanteDir[tempFloat] = constanteFloat
     #vectorPolaco.append(p[-1])
     pilaTipos.append("float")
 
 def p_puntoPushBool(p):
     'puntoPushBool : '
     constanteBool = p[-1]
-    if constanteBool in memoriaLocal:
-        vectorPolaco.append(memoriaLocal[constanteBool])
+    if constanteBool in memoriaConstante:
+        vectorPolaco.append(memoriaConstante[constanteBool])
     else:
-        tempBool = getTempDir("bool")
+        tempBool = getConstantDir("bool")
         vectorPolaco.append(tempBool)
-        memoriaLocal[constanteBool] =  tempBool
+        memoriaConstante[constanteBool] =  tempBool
+        memoriaConstanteDir[tempBool] = constanteBool
     #vectorPolaco.append(p[-1])
     pilaTipos.append("bool")
 
 def p_puntoPushChar(p):
     'puntoPushChar : '
     constanteChar = p[-1]
-    if constanteChar in memoriaLocal:
-        vectorPolaco.append(memoriaLocal[constanteChar])
+    if constanteChar in memoriaConstante:
+        vectorPolaco.append(memoriaConstante[constanteChar])
     else:
-        tempChar = getTempDir("char")
+        tempChar = getConstantDir("char")
         vectorPolaco.append(tempChar)
-        memoriaLocal[constanteChar] =  tempChar
+        memoriaConstante[constanteChar] =  tempChar
+        memoriaConstanteDir[tempChar] = constanteChar
     #vectorPolaco.append(p[-1])
     pilaTipos.append("char")
 
@@ -354,15 +358,16 @@ def p_asignacion2(p):
 def p_puntoSaveIDAsignacion(p):
     'puntoSaveIDAsignacion :'
     currentIDAsignacion = p[-1]
-    pilaAsignacion.append(currentIDAsignacion)
     if currentIDAsignacion in globalProgram[programID][currentState]['varTable']:
         tempDir = globalProgram[programID][currentState]['varTable'][currentIDAsignacion]['Direccion']
         vectorPolaco.append(tempDir)
         currentIDAsignacion = tempDir
+        pilaAsignacion.append(currentIDAsignacion)
     elif currentIDAsignacion in globalProgram[programID]['global']['varTable']:
         tempDir = globalProgram[programID]['global']['varTable'][currentIDAsignacion]['Direccion']
         vectorPolaco.append(tempDir)
         currentIDAsignacion = tempDir
+        pilaAsignacion.append(currentIDAsignacion)
     else:
         print("not found in varTable, does not exist o es constante")
 def p_puntoCreateAsignacionQuad(p):
@@ -535,10 +540,18 @@ def p_expresion(p):
     'expresion : compare expresion2'
 def p_expresion2(p):
     '''
-    expresion2 : AND compare
-    | OR compare
+    expresion2 : AND puntoPushOperador compare puntoAndOr
+    | OR puntoPushOperador compare puntoAndOr
     | empty
     '''
+def p_puntoAndOr(p):
+    'puntoAndOr : '
+    length = len(pilaOper)
+    if length > 0:
+        if pilaOper[length-1] == "&&":
+            createOperationQuad()
+        elif pilaOper[length-1] == "||":
+            createOperationQuad()
 
 def p_compare(p):
     'compare : exp compare1'
@@ -681,32 +694,21 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program moduleVA;
+program patito;
 var i, j as int;
-func void uno(int a)
-{
-    var i as int;
-
-    i=a*2;
-    if(i<a+4)
-    {
-        call.uno(a+1);
-    }
-    print(i);
-}
-func int dos(int b)
-{
-    b=b*i+j;
-    return (b*2);
-}
 void main()
 {
-    i=2;
+    var try as bool;
+    i=2+3;
     j=i*2-1;
+    i=j/1;
 
-    call.uno(j);
+    if(i!=9 && j==9)
+    {
+        print("Pog");
+    }
 
-    print(i + call.dos(i+j));
+    //print(1);
 }
 '''
 

@@ -113,53 +113,54 @@ Rule 107   do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RP
 Rule 108   puntoPushSaltoDoWhile -> <empty>
 Rule 109   puntoCreateDoWhileQuad -> <empty>
 Rule 110   expresion -> compare expresion2
-Rule 111   expresion2 -> AND compare
-Rule 112   expresion2 -> OR compare
+Rule 111   expresion2 -> AND puntoPushOperador compare puntoAndOr
+Rule 112   expresion2 -> OR puntoPushOperador compare puntoAndOr
 Rule 113   expresion2 -> empty
-Rule 114   compare -> exp compare1
-Rule 115   compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional
-Rule 116   compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional
-Rule 117   compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
-Rule 118   compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
-Rule 119   compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional
-Rule 120   compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional
-Rule 121   compare1 -> empty
-Rule 122   puntoOperacionRelacional -> <empty>
-Rule 123   exp -> termino puntoSumaResta exp1
-Rule 124   exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1
-Rule 125   exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1
-Rule 126   exp1 -> empty
-Rule 127   puntoSumaResta -> <empty>
-Rule 128   termino -> factor puntoMultDivide termino1
-Rule 129   termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1
-Rule 130   termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1
-Rule 131   termino1 -> empty
-Rule 132   puntoMultDivide -> <empty>
-Rule 133   puntoPushOperador -> <empty>
-Rule 134   factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-Rule 135   factor -> tipo_cte
-Rule 136   factor -> MINUS tipo_cte
-Rule 137   factor -> NOT tipo_cte
-Rule 138   puntoPushFondoFalso -> <empty>
-Rule 139   puntoPopFondoFalso -> <empty>
-Rule 140   funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN
-Rule 141   funciones_arr1 -> MAX
-Rule 142   funciones_arr1 -> MIN
-Rule 143   funciones_arr1 -> RANGE
-Rule 144   funciones_arr1 -> MEDIAN
-Rule 145   funciones_arr1 -> AVERAGE
-Rule 146   funciones_arr1 -> IQRANGE
-Rule 147   funciones_arr1 -> STDEV
-Rule 148   funciones_arr1 -> VARIANCE
-Rule 149   funciones_arr1 -> MODIFY
-Rule 150   funciones_arr1 -> DRAW
-Rule 151   empty -> <empty>
+Rule 114   puntoAndOr -> <empty>
+Rule 115   compare -> exp compare1
+Rule 116   compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional
+Rule 117   compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional
+Rule 118   compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+Rule 119   compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+Rule 120   compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional
+Rule 121   compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional
+Rule 122   compare1 -> empty
+Rule 123   puntoOperacionRelacional -> <empty>
+Rule 124   exp -> termino puntoSumaResta exp1
+Rule 125   exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1
+Rule 126   exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1
+Rule 127   exp1 -> empty
+Rule 128   puntoSumaResta -> <empty>
+Rule 129   termino -> factor puntoMultDivide termino1
+Rule 130   termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1
+Rule 131   termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1
+Rule 132   termino1 -> empty
+Rule 133   puntoMultDivide -> <empty>
+Rule 134   puntoPushOperador -> <empty>
+Rule 135   factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+Rule 136   factor -> tipo_cte
+Rule 137   factor -> MINUS tipo_cte
+Rule 138   factor -> NOT tipo_cte
+Rule 139   puntoPushFondoFalso -> <empty>
+Rule 140   puntoPopFondoFalso -> <empty>
+Rule 141   funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN
+Rule 142   funciones_arr1 -> MAX
+Rule 143   funciones_arr1 -> MIN
+Rule 144   funciones_arr1 -> RANGE
+Rule 145   funciones_arr1 -> MEDIAN
+Rule 146   funciones_arr1 -> AVERAGE
+Rule 147   funciones_arr1 -> IQRANGE
+Rule 148   funciones_arr1 -> STDEV
+Rule 149   funciones_arr1 -> VARIANCE
+Rule 150   funciones_arr1 -> MODIFY
+Rule 151   funciones_arr1 -> DRAW
+Rule 152   empty -> <empty>
 
 Terminals, with rules where they appear
 
 AND                  : 111
 AS                   : 10
-AVERAGE              : 145
+AVERAGE              : 146
 BARGRAPH             : 43
 BOOL                 : 25
 CALL                 : 93
@@ -170,51 +171,51 @@ CTE_CHAR             : 31
 CTE_FLOAT            : 29
 CTE_INT              : 15 28 34
 CTE_STRING           : 90
-DIVIDE               : 130
+DIVIDE               : 131
 DO                   : 107
-DRAW                 : 150
+DRAW                 : 151
 ELSE                 : 83
-EQUALEQUAL           : 119
+EQUALEQUAL           : 120
 EQUALS               : 74
 FLOAT                : 24
 FUNC                 : 45
-GREATERTHAN          : 115
-GREATERTHANEQUAL     : 117
+GREATERTHAN          : 116
+GREATERTHANEQUAL     : 118
 ID                   : 1 10 11 32 45 48 50 74 93
 IF                   : 82
 INPUT                : 81
 INT                  : 23
-IQRANGE              : 146
+IQRANGE              : 147
 LBLOQUE              : 59 64
 LBRACKET             : 15 34 75
-LESSTHAN             : 116
-LESSTHANEQUAL        : 118
-LPAREN               : 45 58 81 82 88 93 103 107 134 140
+LESSTHAN             : 117
+LESSTHANEQUAL        : 119
+LPAREN               : 45 58 81 82 88 93 103 107 135 141
 MAIN                 : 58
-MAX                  : 141
-MEDIAN               : 144
-MIN                  : 142
-MINUS                : 125 136
-MODIFY               : 149
-NOT                  : 137
-NOTEQUAL             : 120
+MAX                  : 142
+MEDIAN               : 145
+MIN                  : 143
+MINUS                : 126 137
+MODIFY               : 150
+NOT                  : 138
+NOTEQUAL             : 121
 OR                   : 112
 PIECHART             : 42
 PLOTLINE             : 44
-PLUS                 : 124
+PLUS                 : 125
 PRINT                : 88
 PROGRAM              : 1
-PUNTO                : 93 140
-RANGE                : 143
+PUNTO                : 93 141
+RANGE                : 144
 RBLOQUE              : 59 64
 RBRACKET             : 15 34 75
 RETURN               : 101
-RPAREN               : 45 58 81 82 88 93 103 107 134 140
+RPAREN               : 45 58 81 82 88 93 103 107 135 141
 SEMICOLON            : 1 10 73 74 88 101
-STDEV                : 147
-TIMES                : 129
+STDEV                : 148
+TIMES                : 130
 VAR                  : 10
-VARIANCE             : 148
+VARIANCE             : 149
 VOID                 : 46 58
 WHILE                : 103 107
 error                : 
@@ -230,25 +231,25 @@ bloque_modular       : 45 58
 bloque_modular1      : 59 60
 bloque_modular2      : 59 62
 compare              : 110 111 112
-compare1             : 114
+compare1             : 115
 condicion            : 68
 condicion1           : 82
 do_while             : 72
-empty                : 3 5 12 16 36 49 51 61 63 66 76 84 95 97 113 121 126 131
+empty                : 3 5 12 16 36 49 51 61 63 66 76 84 95 97 113 122 127 132
 escritura            : 69
 escritura1           : 88
 estatuto             : 62 65
-exp                  : 114 115 116 117 118 119 120
-exp1                 : 123 124 125
-expresion            : 75 77 82 89 94 96 101 103 107 134
+exp                  : 115 116 117 118 119 120 121
+exp1                 : 124 125 126
+expresion            : 75 77 82 89 94 96 101 103 107 135
 expresion2           : 110
-factor               : 128 129 130
+factor               : 129 130 131
 funciones            : 4
 funciones1           : 45
 funciones2           : 45
 funciones3           : 48 50
 funciones_arr        : 35
-funciones_arr1       : 140
+funciones_arr1       : 141
 leida                : 78
 llamada              : 33 73
 llamada1             : 93
@@ -257,6 +258,7 @@ main                 : 1
 programa             : 0
 programa1            : 1 2
 programa2            : 1 4
+puntoAndOr           : 111 112
 puntoChangeDimension : 15
 puntoChangeStateFuncion : 45
 puntoChangeStateLocal : 1
@@ -281,31 +283,31 @@ puntoEndWhileQuad    : 103
 puntoFillIfQuad      : 82
 puntoFillMainQuad    : 1
 puntoFinalFuncQuad   : 45
-puntoMultDivide      : 128 129 130
-puntoOperacionRelacional : 115 116 117 118 119 120
-puntoPopFondoFalso   : 93 134
+puntoMultDivide      : 129 130 131
+puntoOperacionRelacional : 116 117 118 119 120 121
+puntoPopFondoFalso   : 93 135
 puntoPrintFinal      : 1
 puntoPushBool        : 30
 puntoPushChar        : 31
 puntoPushFloat       : 29
-puntoPushFondoFalso  : 93 134
+puntoPushFondoFalso  : 93 135
 puntoPushID          : 32
 puntoPushInt         : 28
-puntoPushOperador    : 115 116 117 118 119 120 124 125 129 130
+puntoPushOperador    : 111 112 116 117 118 119 120 121 125 126 130 131
 puntoPushParam       : 48 50
 puntoPushSaltoDoWhile : 107
 puntoPushSaltoWhile  : 103
 puntoReturnQuad      : 101
 puntoReturnType      : 47
 puntoSaveIDAsignacion : 74
-puntoSumaResta       : 123 124 125
+puntoSumaResta       : 124 125 126
 puntoVerifyArgumento : 94 96
 puntoVerifyLlamada   : 93
 return               : 70
-termino              : 123 124 125
-termino1             : 128 129 130
+termino              : 124 125 126
+termino1             : 129 130 131
 tipo                 : 13 47 48 50
-tipo_cte             : 135 136 137
+tipo_cte             : 136 137 138
 tipo_cte1            : 32
 tipo_graph           : 14
 vars                 : 2 60
@@ -382,11 +384,11 @@ state 7
     (2) programa1 -> . vars programa1
     (3) programa1 -> . empty
     (10) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
 
     VAR             shift and go to state 11
-    FUNC            reduce using rule 151 (empty -> .)
-    VOID            reduce using rule 151 (empty -> .)
+    FUNC            reduce using rule 152 (empty -> .)
+    VOID            reduce using rule 152 (empty -> .)
 
     programa1                      shift and go to state 8
     vars                           shift and go to state 9
@@ -398,10 +400,10 @@ state 8
     (4) programa2 -> . funciones programa2
     (5) programa2 -> . empty
     (45) funciones -> . FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN puntoCreateParamTable funciones2 RPAREN puntoCreateParamCount bloque_modular puntoFinalFuncQuad
-    (151) empty -> .
+    (152) empty -> .
 
     FUNC            shift and go to state 15
-    VOID            reduce using rule 151 (empty -> .)
+    VOID            reduce using rule 152 (empty -> .)
 
     programa2                      shift and go to state 12
     funciones                      shift and go to state 13
@@ -413,11 +415,11 @@ state 9
     (2) programa1 -> . vars programa1
     (3) programa1 -> . empty
     (10) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
 
     VAR             shift and go to state 11
-    FUNC            reduce using rule 151 (empty -> .)
-    VOID            reduce using rule 151 (empty -> .)
+    FUNC            reduce using rule 152 (empty -> .)
+    VOID            reduce using rule 152 (empty -> .)
 
     vars                           shift and go to state 9
     programa1                      shift and go to state 16
@@ -453,10 +455,10 @@ state 13
     (4) programa2 -> . funciones programa2
     (5) programa2 -> . empty
     (45) funciones -> . FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN puntoCreateParamTable funciones2 RPAREN puntoCreateParamCount bloque_modular puntoFinalFuncQuad
-    (151) empty -> .
+    (152) empty -> .
 
     FUNC            shift and go to state 15
-    VOID            reduce using rule 151 (empty -> .)
+    VOID            reduce using rule 152 (empty -> .)
 
     funciones                      shift and go to state 13
     programa2                      shift and go to state 19
@@ -594,10 +596,10 @@ state 27
     (10) vars -> VAR ID puntoCreateVar . vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
     (11) vars1 -> . COMMA ID puntoCreateVar vars1
     (12) vars1 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     COMMA           shift and go to state 36
-    AS              reduce using rule 151 (empty -> .)
+    AS              reduce using rule 152 (empty -> .)
 
     vars1                          shift and go to state 35
     empty                          shift and go to state 37
@@ -765,10 +767,10 @@ state 45
     (10) vars -> VAR ID puntoCreateVar vars1 AS vars2 . vars3 puntoCreateDimension SEMICOLON
     (15) vars3 -> . LBRACKET CTE_INT puntoChangeDimension RBRACKET
     (16) vars3 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     LBRACKET        shift and go to state 56
-    SEMICOLON       reduce using rule 151 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
 
     vars3                          shift and go to state 55
     empty                          shift and go to state 57
@@ -820,10 +822,10 @@ state 51
     (11) vars1 -> COMMA ID puntoCreateVar . vars1
     (11) vars1 -> . COMMA ID puntoCreateVar vars1
     (12) vars1 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     COMMA           shift and go to state 36
-    AS              reduce using rule 151 (empty -> .)
+    AS              reduce using rule 152 (empty -> .)
 
     vars1                          shift and go to state 59
     empty                          shift and go to state 37
@@ -909,13 +911,13 @@ state 61
     (24) tipo -> . FLOAT puntoCurrentType
     (25) tipo -> . BOOL puntoCurrentType
     (26) tipo -> . CHAR puntoCurrentType
-    (151) empty -> .
+    (152) empty -> .
 
     INT             shift and go to state 23
     FLOAT           shift and go to state 24
     BOOL            shift and go to state 25
     CHAR            shift and go to state 26
-    RPAREN          reduce using rule 151 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
 
     funciones2                     shift and go to state 65
     tipo                           shift and go to state 66
@@ -1004,17 +1006,17 @@ state 71
     (60) bloque_modular1 -> . vars bloque_modular1
     (61) bloque_modular1 -> . empty
     (10) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
 
     VAR             shift and go to state 11
-    ID              reduce using rule 151 (empty -> .)
-    IF              reduce using rule 151 (empty -> .)
-    PRINT           reduce using rule 151 (empty -> .)
-    RETURN          reduce using rule 151 (empty -> .)
-    WHILE           reduce using rule 151 (empty -> .)
-    DO              reduce using rule 151 (empty -> .)
-    CALL            reduce using rule 151 (empty -> .)
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    ID              reduce using rule 152 (empty -> .)
+    IF              reduce using rule 152 (empty -> .)
+    PRINT           reduce using rule 152 (empty -> .)
+    RETURN          reduce using rule 152 (empty -> .)
+    WHILE           reduce using rule 152 (empty -> .)
+    DO              reduce using rule 152 (empty -> .)
+    CALL            reduce using rule 152 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
 
     bloque_modular1                shift and go to state 75
     vars                           shift and go to state 76
@@ -1058,7 +1060,7 @@ state 75
     (71) estatuto -> . while
     (72) estatuto -> . do_while
     (73) estatuto -> . llamada SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
     (74) asignacion -> . ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON
     (82) condicion -> . IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad
     (88) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
@@ -1067,7 +1069,7 @@ state 75
     (107) do_while -> . DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad
     (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
     ID              shift and go to state 90
     IF              shift and go to state 91
     PRINT           shift and go to state 92
@@ -1093,17 +1095,17 @@ state 76
     (60) bloque_modular1 -> . vars bloque_modular1
     (61) bloque_modular1 -> . empty
     (10) vars -> . VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
 
     VAR             shift and go to state 11
-    ID              reduce using rule 151 (empty -> .)
-    IF              reduce using rule 151 (empty -> .)
-    PRINT           reduce using rule 151 (empty -> .)
-    RETURN          reduce using rule 151 (empty -> .)
-    WHILE           reduce using rule 151 (empty -> .)
-    DO              reduce using rule 151 (empty -> .)
-    CALL            reduce using rule 151 (empty -> .)
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    ID              reduce using rule 152 (empty -> .)
+    IF              reduce using rule 152 (empty -> .)
+    PRINT           reduce using rule 152 (empty -> .)
+    RETURN          reduce using rule 152 (empty -> .)
+    WHILE           reduce using rule 152 (empty -> .)
+    DO              reduce using rule 152 (empty -> .)
+    CALL            reduce using rule 152 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
 
     vars                           shift and go to state 76
     bloque_modular1                shift and go to state 97
@@ -1161,7 +1163,7 @@ state 81
     (71) estatuto -> . while
     (72) estatuto -> . do_while
     (73) estatuto -> . llamada SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
     (74) asignacion -> . ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON
     (82) condicion -> . IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad
     (88) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
@@ -1170,7 +1172,7 @@ state 81
     (107) do_while -> . DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad
     (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
     ID              shift and go to state 90
     IF              shift and go to state 91
     PRINT           shift and go to state 92
@@ -1316,13 +1318,13 @@ state 93
 
     (101) return -> RETURN . expresion puntoReturnQuad SEMICOLON
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -1443,10 +1445,10 @@ state 103
     (74) asignacion -> ID puntoSaveIDAsignacion . asignacion1 EQUALS asignacion2 SEMICOLON
     (75) asignacion1 -> . LBRACKET expresion RBRACKET
     (76) asignacion1 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     LBRACKET        shift and go to state 127
-    EQUALS          reduce using rule 151 (empty -> .)
+    EQUALS          reduce using rule 152 (empty -> .)
 
     asignacion1                    shift and go to state 126
     empty                          shift and go to state 128
@@ -1455,13 +1457,13 @@ state 104
 
     (82) condicion -> IF LPAREN . expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -1494,13 +1496,13 @@ state 105
     (89) escritura1 -> . expresion puntoCreatePrintQuad
     (90) escritura1 -> . CTE_STRING puntoCreatePrintConstantQuad
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -1541,32 +1543,32 @@ state 106
 state 107
 
     (110) expresion -> compare . expresion2
-    (111) expresion2 -> . AND compare
-    (112) expresion2 -> . OR compare
+    (111) expresion2 -> . AND puntoPushOperador compare puntoAndOr
+    (112) expresion2 -> . OR puntoPushOperador compare puntoAndOr
     (113) expresion2 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     AND             shift and go to state 135
     OR              shift and go to state 136
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
     expresion2                     shift and go to state 134
     empty                          shift and go to state 137
 
 state 108
 
-    (114) compare -> exp . compare1
-    (115) compare1 -> . GREATERTHAN puntoPushOperador exp puntoOperacionRelacional
-    (116) compare1 -> . LESSTHAN puntoPushOperador exp puntoOperacionRelacional
-    (117) compare1 -> . GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
-    (118) compare1 -> . LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
-    (119) compare1 -> . EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional
-    (120) compare1 -> . NOTEQUAL puntoPushOperador exp puntoOperacionRelacional
-    (121) compare1 -> . empty
-    (151) empty -> .
+    (115) compare -> exp . compare1
+    (116) compare1 -> . GREATERTHAN puntoPushOperador exp puntoOperacionRelacional
+    (117) compare1 -> . LESSTHAN puntoPushOperador exp puntoOperacionRelacional
+    (118) compare1 -> . GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+    (119) compare1 -> . LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional
+    (120) compare1 -> . EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional
+    (121) compare1 -> . NOTEQUAL puntoPushOperador exp puntoOperacionRelacional
+    (122) compare1 -> . empty
+    (152) empty -> .
 
     GREATERTHAN     shift and go to state 139
     LESSTHAN        shift and go to state 140
@@ -1574,104 +1576,104 @@ state 108
     LESSTHANEQUAL   shift and go to state 142
     EQUALEQUAL      shift and go to state 143
     NOTEQUAL        shift and go to state 144
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
     compare1                       shift and go to state 138
     empty                          shift and go to state 145
 
 state 109
 
-    (123) exp -> termino . puntoSumaResta exp1
-    (127) puntoSumaResta -> .
+    (124) exp -> termino . puntoSumaResta exp1
+    (128) puntoSumaResta -> .
 
-    PLUS            reduce using rule 127 (puntoSumaResta -> .)
-    MINUS           reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHAN     reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHAN        reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHANEQUAL reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHANEQUAL   reduce using rule 127 (puntoSumaResta -> .)
-    EQUALEQUAL      reduce using rule 127 (puntoSumaResta -> .)
-    NOTEQUAL        reduce using rule 127 (puntoSumaResta -> .)
-    AND             reduce using rule 127 (puntoSumaResta -> .)
-    OR              reduce using rule 127 (puntoSumaResta -> .)
-    SEMICOLON       reduce using rule 127 (puntoSumaResta -> .)
-    RPAREN          reduce using rule 127 (puntoSumaResta -> .)
-    RBRACKET        reduce using rule 127 (puntoSumaResta -> .)
-    COMMA           reduce using rule 127 (puntoSumaResta -> .)
+    PLUS            reduce using rule 128 (puntoSumaResta -> .)
+    MINUS           reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHAN     reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHAN        reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHANEQUAL reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHANEQUAL   reduce using rule 128 (puntoSumaResta -> .)
+    EQUALEQUAL      reduce using rule 128 (puntoSumaResta -> .)
+    NOTEQUAL        reduce using rule 128 (puntoSumaResta -> .)
+    AND             reduce using rule 128 (puntoSumaResta -> .)
+    OR              reduce using rule 128 (puntoSumaResta -> .)
+    SEMICOLON       reduce using rule 128 (puntoSumaResta -> .)
+    RPAREN          reduce using rule 128 (puntoSumaResta -> .)
+    RBRACKET        reduce using rule 128 (puntoSumaResta -> .)
+    COMMA           reduce using rule 128 (puntoSumaResta -> .)
 
     puntoSumaResta                 shift and go to state 146
 
 state 110
 
-    (128) termino -> factor . puntoMultDivide termino1
-    (132) puntoMultDivide -> .
+    (129) termino -> factor . puntoMultDivide termino1
+    (133) puntoMultDivide -> .
 
-    TIMES           reduce using rule 132 (puntoMultDivide -> .)
-    DIVIDE          reduce using rule 132 (puntoMultDivide -> .)
-    PLUS            reduce using rule 132 (puntoMultDivide -> .)
-    MINUS           reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHAN     reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHAN        reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHANEQUAL reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHANEQUAL   reduce using rule 132 (puntoMultDivide -> .)
-    EQUALEQUAL      reduce using rule 132 (puntoMultDivide -> .)
-    NOTEQUAL        reduce using rule 132 (puntoMultDivide -> .)
-    AND             reduce using rule 132 (puntoMultDivide -> .)
-    OR              reduce using rule 132 (puntoMultDivide -> .)
-    SEMICOLON       reduce using rule 132 (puntoMultDivide -> .)
-    RPAREN          reduce using rule 132 (puntoMultDivide -> .)
-    RBRACKET        reduce using rule 132 (puntoMultDivide -> .)
-    COMMA           reduce using rule 132 (puntoMultDivide -> .)
+    TIMES           reduce using rule 133 (puntoMultDivide -> .)
+    DIVIDE          reduce using rule 133 (puntoMultDivide -> .)
+    PLUS            reduce using rule 133 (puntoMultDivide -> .)
+    MINUS           reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHAN     reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHAN        reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHANEQUAL reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHANEQUAL   reduce using rule 133 (puntoMultDivide -> .)
+    EQUALEQUAL      reduce using rule 133 (puntoMultDivide -> .)
+    NOTEQUAL        reduce using rule 133 (puntoMultDivide -> .)
+    AND             reduce using rule 133 (puntoMultDivide -> .)
+    OR              reduce using rule 133 (puntoMultDivide -> .)
+    SEMICOLON       reduce using rule 133 (puntoMultDivide -> .)
+    RPAREN          reduce using rule 133 (puntoMultDivide -> .)
+    RBRACKET        reduce using rule 133 (puntoMultDivide -> .)
+    COMMA           reduce using rule 133 (puntoMultDivide -> .)
 
     puntoMultDivide                shift and go to state 147
 
 state 111
 
-    (134) factor -> LPAREN . puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (138) puntoPushFondoFalso -> .
+    (135) factor -> LPAREN . puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (139) puntoPushFondoFalso -> .
 
-    LPAREN          reduce using rule 138 (puntoPushFondoFalso -> .)
-    MINUS           reduce using rule 138 (puntoPushFondoFalso -> .)
-    NOT             reduce using rule 138 (puntoPushFondoFalso -> .)
-    CTE_INT         reduce using rule 138 (puntoPushFondoFalso -> .)
-    CTE_FLOAT       reduce using rule 138 (puntoPushFondoFalso -> .)
-    CTE_BOOL        reduce using rule 138 (puntoPushFondoFalso -> .)
-    CTE_CHAR        reduce using rule 138 (puntoPushFondoFalso -> .)
-    ID              reduce using rule 138 (puntoPushFondoFalso -> .)
-    CALL            reduce using rule 138 (puntoPushFondoFalso -> .)
+    LPAREN          reduce using rule 139 (puntoPushFondoFalso -> .)
+    MINUS           reduce using rule 139 (puntoPushFondoFalso -> .)
+    NOT             reduce using rule 139 (puntoPushFondoFalso -> .)
+    CTE_INT         reduce using rule 139 (puntoPushFondoFalso -> .)
+    CTE_FLOAT       reduce using rule 139 (puntoPushFondoFalso -> .)
+    CTE_BOOL        reduce using rule 139 (puntoPushFondoFalso -> .)
+    CTE_CHAR        reduce using rule 139 (puntoPushFondoFalso -> .)
+    ID              reduce using rule 139 (puntoPushFondoFalso -> .)
+    CALL            reduce using rule 139 (puntoPushFondoFalso -> .)
 
     puntoPushFondoFalso            shift and go to state 148
 
 state 112
 
-    (135) factor -> tipo_cte .
+    (136) factor -> tipo_cte .
 
-    TIMES           reduce using rule 135 (factor -> tipo_cte .)
-    DIVIDE          reduce using rule 135 (factor -> tipo_cte .)
-    PLUS            reduce using rule 135 (factor -> tipo_cte .)
-    MINUS           reduce using rule 135 (factor -> tipo_cte .)
-    GREATERTHAN     reduce using rule 135 (factor -> tipo_cte .)
-    LESSTHAN        reduce using rule 135 (factor -> tipo_cte .)
-    GREATERTHANEQUAL reduce using rule 135 (factor -> tipo_cte .)
-    LESSTHANEQUAL   reduce using rule 135 (factor -> tipo_cte .)
-    EQUALEQUAL      reduce using rule 135 (factor -> tipo_cte .)
-    NOTEQUAL        reduce using rule 135 (factor -> tipo_cte .)
-    AND             reduce using rule 135 (factor -> tipo_cte .)
-    OR              reduce using rule 135 (factor -> tipo_cte .)
-    SEMICOLON       reduce using rule 135 (factor -> tipo_cte .)
-    RPAREN          reduce using rule 135 (factor -> tipo_cte .)
-    RBRACKET        reduce using rule 135 (factor -> tipo_cte .)
-    COMMA           reduce using rule 135 (factor -> tipo_cte .)
+    TIMES           reduce using rule 136 (factor -> tipo_cte .)
+    DIVIDE          reduce using rule 136 (factor -> tipo_cte .)
+    PLUS            reduce using rule 136 (factor -> tipo_cte .)
+    MINUS           reduce using rule 136 (factor -> tipo_cte .)
+    GREATERTHAN     reduce using rule 136 (factor -> tipo_cte .)
+    LESSTHAN        reduce using rule 136 (factor -> tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 136 (factor -> tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 136 (factor -> tipo_cte .)
+    EQUALEQUAL      reduce using rule 136 (factor -> tipo_cte .)
+    NOTEQUAL        reduce using rule 136 (factor -> tipo_cte .)
+    AND             reduce using rule 136 (factor -> tipo_cte .)
+    OR              reduce using rule 136 (factor -> tipo_cte .)
+    SEMICOLON       reduce using rule 136 (factor -> tipo_cte .)
+    RPAREN          reduce using rule 136 (factor -> tipo_cte .)
+    RBRACKET        reduce using rule 136 (factor -> tipo_cte .)
+    COMMA           reduce using rule 136 (factor -> tipo_cte .)
 
 
 state 113
 
-    (136) factor -> MINUS . tipo_cte
+    (137) factor -> MINUS . tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -1692,7 +1694,7 @@ state 113
 
 state 114
 
-    (137) factor -> NOT . tipo_cte
+    (138) factor -> NOT . tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -1874,9 +1876,9 @@ state 122
 state 123
 
     (93) llamada -> CALL PUNTO . puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
-    (138) puntoPushFondoFalso -> .
+    (139) puntoPushFondoFalso -> .
 
-    ID              reduce using rule 138 (puntoPushFondoFalso -> .)
+    ID              reduce using rule 139 (puntoPushFondoFalso -> .)
 
     puntoPushFondoFalso            shift and go to state 159
 
@@ -1893,10 +1895,10 @@ state 125
     (48) funciones2 -> tipo ID puntoCreateVar puntoCreateVarType puntoPushParam . funciones3
     (50) funciones3 -> . COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     (51) funciones3 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     COMMA           shift and go to state 161
-    RPAREN          reduce using rule 151 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
 
     funciones3                     shift and go to state 160
     empty                          shift and go to state 162
@@ -1912,13 +1914,13 @@ state 127
 
     (75) asignacion1 -> LBRACKET . expresion RBRACKET
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2003,73 +2005,37 @@ state 134
 
 state 135
 
-    (111) expresion2 -> AND . compare
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+    (111) expresion2 -> AND . puntoPushOperador compare puntoAndOr
+    (134) puntoPushOperador -> .
 
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    compare                        shift and go to state 170
-    exp                            shift and go to state 108
-    termino                        shift and go to state 109
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
+    puntoPushOperador              shift and go to state 170
 
 state 136
 
-    (112) expresion2 -> OR . compare
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+    (112) expresion2 -> OR . puntoPushOperador compare puntoAndOr
+    (134) puntoPushOperador -> .
 
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    compare                        shift and go to state 171
-    exp                            shift and go to state 108
-    termino                        shift and go to state 109
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
+    puntoPushOperador              shift and go to state 171
 
 state 137
 
@@ -2083,195 +2049,195 @@ state 137
 
 state 138
 
-    (114) compare -> exp compare1 .
+    (115) compare -> exp compare1 .
 
-    AND             reduce using rule 114 (compare -> exp compare1 .)
-    OR              reduce using rule 114 (compare -> exp compare1 .)
-    SEMICOLON       reduce using rule 114 (compare -> exp compare1 .)
-    RPAREN          reduce using rule 114 (compare -> exp compare1 .)
-    RBRACKET        reduce using rule 114 (compare -> exp compare1 .)
-    COMMA           reduce using rule 114 (compare -> exp compare1 .)
+    AND             reduce using rule 115 (compare -> exp compare1 .)
+    OR              reduce using rule 115 (compare -> exp compare1 .)
+    SEMICOLON       reduce using rule 115 (compare -> exp compare1 .)
+    RPAREN          reduce using rule 115 (compare -> exp compare1 .)
+    RBRACKET        reduce using rule 115 (compare -> exp compare1 .)
+    COMMA           reduce using rule 115 (compare -> exp compare1 .)
 
 
 state 139
 
-    (115) compare1 -> GREATERTHAN . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (116) compare1 -> GREATERTHAN . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 172
 
 state 140
 
-    (116) compare1 -> LESSTHAN . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (117) compare1 -> LESSTHAN . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 173
 
 state 141
 
-    (117) compare1 -> GREATERTHANEQUAL . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (118) compare1 -> GREATERTHANEQUAL . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 174
 
 state 142
 
-    (118) compare1 -> LESSTHANEQUAL . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (119) compare1 -> LESSTHANEQUAL . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 175
 
 state 143
 
-    (119) compare1 -> EQUALEQUAL . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (120) compare1 -> EQUALEQUAL . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 176
 
 state 144
 
-    (120) compare1 -> NOTEQUAL . puntoPushOperador exp puntoOperacionRelacional
-    (133) puntoPushOperador -> .
+    (121) compare1 -> NOTEQUAL . puntoPushOperador exp puntoOperacionRelacional
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
     puntoPushOperador              shift and go to state 177
 
 state 145
 
-    (121) compare1 -> empty .
+    (122) compare1 -> empty .
 
-    AND             reduce using rule 121 (compare1 -> empty .)
-    OR              reduce using rule 121 (compare1 -> empty .)
-    SEMICOLON       reduce using rule 121 (compare1 -> empty .)
-    RPAREN          reduce using rule 121 (compare1 -> empty .)
-    RBRACKET        reduce using rule 121 (compare1 -> empty .)
-    COMMA           reduce using rule 121 (compare1 -> empty .)
+    AND             reduce using rule 122 (compare1 -> empty .)
+    OR              reduce using rule 122 (compare1 -> empty .)
+    SEMICOLON       reduce using rule 122 (compare1 -> empty .)
+    RPAREN          reduce using rule 122 (compare1 -> empty .)
+    RBRACKET        reduce using rule 122 (compare1 -> empty .)
+    COMMA           reduce using rule 122 (compare1 -> empty .)
 
 
 state 146
 
-    (123) exp -> termino puntoSumaResta . exp1
-    (124) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
-    (125) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
-    (126) exp1 -> . empty
-    (151) empty -> .
+    (124) exp -> termino puntoSumaResta . exp1
+    (125) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
+    (126) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
+    (127) exp1 -> . empty
+    (152) empty -> .
 
     PLUS            shift and go to state 179
     MINUS           shift and go to state 180
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
     exp1                           shift and go to state 178
     empty                          shift and go to state 181
 
 state 147
 
-    (128) termino -> factor puntoMultDivide . termino1
-    (129) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
-    (130) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
-    (131) termino1 -> . empty
-    (151) empty -> .
+    (129) termino -> factor puntoMultDivide . termino1
+    (130) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
+    (131) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
+    (132) termino1 -> . empty
+    (152) empty -> .
 
     TIMES           shift and go to state 183
     DIVIDE          shift and go to state 184
-    PLUS            reduce using rule 151 (empty -> .)
-    MINUS           reduce using rule 151 (empty -> .)
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
+    PLUS            reduce using rule 152 (empty -> .)
+    MINUS           reduce using rule 152 (empty -> .)
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
     termino1                       shift and go to state 182
     empty                          shift and go to state 185
 
 state 148
 
-    (134) factor -> LPAREN puntoPushFondoFalso . expresion RPAREN puntoPopFondoFalso
+    (135) factor -> LPAREN puntoPushFondoFalso . expresion RPAREN puntoPopFondoFalso
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2300,46 +2266,46 @@ state 148
 
 state 149
 
-    (136) factor -> MINUS tipo_cte .
+    (137) factor -> MINUS tipo_cte .
 
-    TIMES           reduce using rule 136 (factor -> MINUS tipo_cte .)
-    DIVIDE          reduce using rule 136 (factor -> MINUS tipo_cte .)
-    PLUS            reduce using rule 136 (factor -> MINUS tipo_cte .)
-    MINUS           reduce using rule 136 (factor -> MINUS tipo_cte .)
-    GREATERTHAN     reduce using rule 136 (factor -> MINUS tipo_cte .)
-    LESSTHAN        reduce using rule 136 (factor -> MINUS tipo_cte .)
-    GREATERTHANEQUAL reduce using rule 136 (factor -> MINUS tipo_cte .)
-    LESSTHANEQUAL   reduce using rule 136 (factor -> MINUS tipo_cte .)
-    EQUALEQUAL      reduce using rule 136 (factor -> MINUS tipo_cte .)
-    NOTEQUAL        reduce using rule 136 (factor -> MINUS tipo_cte .)
-    AND             reduce using rule 136 (factor -> MINUS tipo_cte .)
-    OR              reduce using rule 136 (factor -> MINUS tipo_cte .)
-    SEMICOLON       reduce using rule 136 (factor -> MINUS tipo_cte .)
-    RPAREN          reduce using rule 136 (factor -> MINUS tipo_cte .)
-    RBRACKET        reduce using rule 136 (factor -> MINUS tipo_cte .)
-    COMMA           reduce using rule 136 (factor -> MINUS tipo_cte .)
+    TIMES           reduce using rule 137 (factor -> MINUS tipo_cte .)
+    DIVIDE          reduce using rule 137 (factor -> MINUS tipo_cte .)
+    PLUS            reduce using rule 137 (factor -> MINUS tipo_cte .)
+    MINUS           reduce using rule 137 (factor -> MINUS tipo_cte .)
+    GREATERTHAN     reduce using rule 137 (factor -> MINUS tipo_cte .)
+    LESSTHAN        reduce using rule 137 (factor -> MINUS tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 137 (factor -> MINUS tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 137 (factor -> MINUS tipo_cte .)
+    EQUALEQUAL      reduce using rule 137 (factor -> MINUS tipo_cte .)
+    NOTEQUAL        reduce using rule 137 (factor -> MINUS tipo_cte .)
+    AND             reduce using rule 137 (factor -> MINUS tipo_cte .)
+    OR              reduce using rule 137 (factor -> MINUS tipo_cte .)
+    SEMICOLON       reduce using rule 137 (factor -> MINUS tipo_cte .)
+    RPAREN          reduce using rule 137 (factor -> MINUS tipo_cte .)
+    RBRACKET        reduce using rule 137 (factor -> MINUS tipo_cte .)
+    COMMA           reduce using rule 137 (factor -> MINUS tipo_cte .)
 
 
 state 150
 
-    (137) factor -> NOT tipo_cte .
+    (138) factor -> NOT tipo_cte .
 
-    TIMES           reduce using rule 137 (factor -> NOT tipo_cte .)
-    DIVIDE          reduce using rule 137 (factor -> NOT tipo_cte .)
-    PLUS            reduce using rule 137 (factor -> NOT tipo_cte .)
-    MINUS           reduce using rule 137 (factor -> NOT tipo_cte .)
-    GREATERTHAN     reduce using rule 137 (factor -> NOT tipo_cte .)
-    LESSTHAN        reduce using rule 137 (factor -> NOT tipo_cte .)
-    GREATERTHANEQUAL reduce using rule 137 (factor -> NOT tipo_cte .)
-    LESSTHANEQUAL   reduce using rule 137 (factor -> NOT tipo_cte .)
-    EQUALEQUAL      reduce using rule 137 (factor -> NOT tipo_cte .)
-    NOTEQUAL        reduce using rule 137 (factor -> NOT tipo_cte .)
-    AND             reduce using rule 137 (factor -> NOT tipo_cte .)
-    OR              reduce using rule 137 (factor -> NOT tipo_cte .)
-    SEMICOLON       reduce using rule 137 (factor -> NOT tipo_cte .)
-    RPAREN          reduce using rule 137 (factor -> NOT tipo_cte .)
-    RBRACKET        reduce using rule 137 (factor -> NOT tipo_cte .)
-    COMMA           reduce using rule 137 (factor -> NOT tipo_cte .)
+    TIMES           reduce using rule 138 (factor -> NOT tipo_cte .)
+    DIVIDE          reduce using rule 138 (factor -> NOT tipo_cte .)
+    PLUS            reduce using rule 138 (factor -> NOT tipo_cte .)
+    MINUS           reduce using rule 138 (factor -> NOT tipo_cte .)
+    GREATERTHAN     reduce using rule 138 (factor -> NOT tipo_cte .)
+    LESSTHAN        reduce using rule 138 (factor -> NOT tipo_cte .)
+    GREATERTHANEQUAL reduce using rule 138 (factor -> NOT tipo_cte .)
+    LESSTHANEQUAL   reduce using rule 138 (factor -> NOT tipo_cte .)
+    EQUALEQUAL      reduce using rule 138 (factor -> NOT tipo_cte .)
+    NOTEQUAL        reduce using rule 138 (factor -> NOT tipo_cte .)
+    AND             reduce using rule 138 (factor -> NOT tipo_cte .)
+    OR              reduce using rule 138 (factor -> NOT tipo_cte .)
+    SEMICOLON       reduce using rule 138 (factor -> NOT tipo_cte .)
+    RPAREN          reduce using rule 138 (factor -> NOT tipo_cte .)
+    RBRACKET        reduce using rule 138 (factor -> NOT tipo_cte .)
+    COMMA           reduce using rule 138 (factor -> NOT tipo_cte .)
 
 
 state 151
@@ -2436,27 +2402,27 @@ state 155
     (34) tipo_cte1 -> . LBRACKET CTE_INT RBRACKET
     (35) tipo_cte1 -> . funciones_arr
     (36) tipo_cte1 -> . empty
-    (140) funciones_arr -> . PUNTO funciones_arr1 LPAREN RPAREN
-    (151) empty -> .
+    (141) funciones_arr -> . PUNTO funciones_arr1 LPAREN RPAREN
+    (152) empty -> .
 
     LBRACKET        shift and go to state 188
     PUNTO           shift and go to state 191
-    TIMES           reduce using rule 151 (empty -> .)
-    DIVIDE          reduce using rule 151 (empty -> .)
-    PLUS            reduce using rule 151 (empty -> .)
-    MINUS           reduce using rule 151 (empty -> .)
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
+    TIMES           reduce using rule 152 (empty -> .)
+    DIVIDE          reduce using rule 152 (empty -> .)
+    PLUS            reduce using rule 152 (empty -> .)
+    MINUS           reduce using rule 152 (empty -> .)
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
     tipo_cte1                      shift and go to state 187
     funciones_arr                  shift and go to state 189
@@ -2466,13 +2432,13 @@ state 156
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN . expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2518,7 +2484,7 @@ state 158
     (71) estatuto -> . while
     (72) estatuto -> . do_while
     (73) estatuto -> . llamada SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
     (74) asignacion -> . ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON
     (82) condicion -> . IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad
     (88) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
@@ -2527,7 +2493,7 @@ state 158
     (107) do_while -> . DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad
     (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
     ID              shift and go to state 90
     IF              shift and go to state 91
     PRINT           shift and go to state 92
@@ -2590,13 +2556,13 @@ state 163
     (78) asignacion2 -> . leida
     (110) expresion -> . compare expresion2
     (81) leida -> . INPUT LPAREN RPAREN
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2679,99 +2645,83 @@ state 169
 
 state 170
 
-    (111) expresion2 -> AND compare .
+    (111) expresion2 -> AND puntoPushOperador . compare puntoAndOr
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    SEMICOLON       reduce using rule 111 (expresion2 -> AND compare .)
-    RPAREN          reduce using rule 111 (expresion2 -> AND compare .)
-    RBRACKET        reduce using rule 111 (expresion2 -> AND compare .)
-    COMMA           reduce using rule 111 (expresion2 -> AND compare .)
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
 
+    compare                        shift and go to state 206
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
 
 state 171
 
-    (112) expresion2 -> OR compare .
+    (112) expresion2 -> OR puntoPushOperador . compare puntoAndOr
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    SEMICOLON       reduce using rule 112 (expresion2 -> OR compare .)
-    RPAREN          reduce using rule 112 (expresion2 -> OR compare .)
-    RBRACKET        reduce using rule 112 (expresion2 -> OR compare .)
-    COMMA           reduce using rule 112 (expresion2 -> OR compare .)
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
 
+    compare                        shift and go to state 207
+    exp                            shift and go to state 108
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
 
 state 172
 
-    (115) compare1 -> GREATERTHAN puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
-
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
-
-    exp                            shift and go to state 206
-    termino                        shift and go to state 109
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
-
-state 173
-
-    (116) compare1 -> LESSTHAN puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
-
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
-
-    exp                            shift and go to state 207
-    termino                        shift and go to state 109
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
-
-state 174
-
-    (117) compare1 -> GREATERTHANEQUAL puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (116) compare1 -> GREATERTHAN puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2796,15 +2746,15 @@ state 174
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 175
+state 173
 
-    (118) compare1 -> LESSTHANEQUAL puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (117) compare1 -> LESSTHAN puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2829,15 +2779,15 @@ state 175
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 176
+state 174
 
-    (119) compare1 -> EQUALEQUAL puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (118) compare1 -> GREATERTHANEQUAL puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2862,15 +2812,15 @@ state 176
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 177
+state 175
 
-    (120) compare1 -> NOTEQUAL puntoPushOperador . exp puntoOperacionRelacional
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (119) compare1 -> LESSTHANEQUAL puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -2895,155 +2845,221 @@ state 177
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
+state 176
+
+    (120) compare1 -> EQUALEQUAL puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
+
+    exp                            shift and go to state 212
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
+state 177
+
+    (121) compare1 -> NOTEQUAL puntoPushOperador . exp puntoOperacionRelacional
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
+
+    exp                            shift and go to state 213
+    termino                        shift and go to state 109
+    factor                         shift and go to state 110
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
+
 state 178
 
-    (123) exp -> termino puntoSumaResta exp1 .
+    (124) exp -> termino puntoSumaResta exp1 .
 
-    GREATERTHAN     reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    LESSTHAN        reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    GREATERTHANEQUAL reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    LESSTHANEQUAL   reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    EQUALEQUAL      reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    NOTEQUAL        reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    AND             reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    OR              reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    SEMICOLON       reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    RPAREN          reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    RBRACKET        reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
-    COMMA           reduce using rule 123 (exp -> termino puntoSumaResta exp1 .)
+    GREATERTHAN     reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    LESSTHAN        reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    GREATERTHANEQUAL reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    LESSTHANEQUAL   reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    EQUALEQUAL      reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    NOTEQUAL        reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    AND             reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    OR              reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    SEMICOLON       reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    RPAREN          reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    RBRACKET        reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
+    COMMA           reduce using rule 124 (exp -> termino puntoSumaResta exp1 .)
 
 
 state 179
 
-    (124) exp1 -> PLUS . puntoPushOperador termino puntoSumaResta exp1
-    (133) puntoPushOperador -> .
+    (125) exp1 -> PLUS . puntoPushOperador termino puntoSumaResta exp1
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    puntoPushOperador              shift and go to state 212
+    puntoPushOperador              shift and go to state 214
 
 state 180
 
-    (125) exp1 -> MINUS . puntoPushOperador termino puntoSumaResta exp1
-    (133) puntoPushOperador -> .
+    (126) exp1 -> MINUS . puntoPushOperador termino puntoSumaResta exp1
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    puntoPushOperador              shift and go to state 213
+    puntoPushOperador              shift and go to state 215
 
 state 181
 
-    (126) exp1 -> empty .
+    (127) exp1 -> empty .
 
-    GREATERTHAN     reduce using rule 126 (exp1 -> empty .)
-    LESSTHAN        reduce using rule 126 (exp1 -> empty .)
-    GREATERTHANEQUAL reduce using rule 126 (exp1 -> empty .)
-    LESSTHANEQUAL   reduce using rule 126 (exp1 -> empty .)
-    EQUALEQUAL      reduce using rule 126 (exp1 -> empty .)
-    NOTEQUAL        reduce using rule 126 (exp1 -> empty .)
-    AND             reduce using rule 126 (exp1 -> empty .)
-    OR              reduce using rule 126 (exp1 -> empty .)
-    SEMICOLON       reduce using rule 126 (exp1 -> empty .)
-    RPAREN          reduce using rule 126 (exp1 -> empty .)
-    RBRACKET        reduce using rule 126 (exp1 -> empty .)
-    COMMA           reduce using rule 126 (exp1 -> empty .)
+    GREATERTHAN     reduce using rule 127 (exp1 -> empty .)
+    LESSTHAN        reduce using rule 127 (exp1 -> empty .)
+    GREATERTHANEQUAL reduce using rule 127 (exp1 -> empty .)
+    LESSTHANEQUAL   reduce using rule 127 (exp1 -> empty .)
+    EQUALEQUAL      reduce using rule 127 (exp1 -> empty .)
+    NOTEQUAL        reduce using rule 127 (exp1 -> empty .)
+    AND             reduce using rule 127 (exp1 -> empty .)
+    OR              reduce using rule 127 (exp1 -> empty .)
+    SEMICOLON       reduce using rule 127 (exp1 -> empty .)
+    RPAREN          reduce using rule 127 (exp1 -> empty .)
+    RBRACKET        reduce using rule 127 (exp1 -> empty .)
+    COMMA           reduce using rule 127 (exp1 -> empty .)
 
 
 state 182
 
-    (128) termino -> factor puntoMultDivide termino1 .
+    (129) termino -> factor puntoMultDivide termino1 .
 
-    PLUS            reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    MINUS           reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    GREATERTHAN     reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    LESSTHAN        reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    GREATERTHANEQUAL reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    LESSTHANEQUAL   reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    EQUALEQUAL      reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    NOTEQUAL        reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    AND             reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    OR              reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    SEMICOLON       reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    RPAREN          reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    RBRACKET        reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
-    COMMA           reduce using rule 128 (termino -> factor puntoMultDivide termino1 .)
+    PLUS            reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    MINUS           reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    GREATERTHAN     reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    LESSTHAN        reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    GREATERTHANEQUAL reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    LESSTHANEQUAL   reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    EQUALEQUAL      reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    NOTEQUAL        reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    AND             reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    OR              reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    SEMICOLON       reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    RPAREN          reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    RBRACKET        reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
+    COMMA           reduce using rule 129 (termino -> factor puntoMultDivide termino1 .)
 
 
 state 183
 
-    (129) termino1 -> TIMES . puntoPushOperador factor puntoMultDivide termino1
-    (133) puntoPushOperador -> .
+    (130) termino1 -> TIMES . puntoPushOperador factor puntoMultDivide termino1
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    puntoPushOperador              shift and go to state 214
+    puntoPushOperador              shift and go to state 216
 
 state 184
 
-    (130) termino1 -> DIVIDE . puntoPushOperador factor puntoMultDivide termino1
-    (133) puntoPushOperador -> .
+    (131) termino1 -> DIVIDE . puntoPushOperador factor puntoMultDivide termino1
+    (134) puntoPushOperador -> .
 
-    LPAREN          reduce using rule 133 (puntoPushOperador -> .)
-    MINUS           reduce using rule 133 (puntoPushOperador -> .)
-    NOT             reduce using rule 133 (puntoPushOperador -> .)
-    CTE_INT         reduce using rule 133 (puntoPushOperador -> .)
-    CTE_FLOAT       reduce using rule 133 (puntoPushOperador -> .)
-    CTE_BOOL        reduce using rule 133 (puntoPushOperador -> .)
-    CTE_CHAR        reduce using rule 133 (puntoPushOperador -> .)
-    ID              reduce using rule 133 (puntoPushOperador -> .)
-    CALL            reduce using rule 133 (puntoPushOperador -> .)
+    LPAREN          reduce using rule 134 (puntoPushOperador -> .)
+    MINUS           reduce using rule 134 (puntoPushOperador -> .)
+    NOT             reduce using rule 134 (puntoPushOperador -> .)
+    CTE_INT         reduce using rule 134 (puntoPushOperador -> .)
+    CTE_FLOAT       reduce using rule 134 (puntoPushOperador -> .)
+    CTE_BOOL        reduce using rule 134 (puntoPushOperador -> .)
+    CTE_CHAR        reduce using rule 134 (puntoPushOperador -> .)
+    ID              reduce using rule 134 (puntoPushOperador -> .)
+    CALL            reduce using rule 134 (puntoPushOperador -> .)
 
-    puntoPushOperador              shift and go to state 215
+    puntoPushOperador              shift and go to state 217
 
 state 185
 
-    (131) termino1 -> empty .
+    (132) termino1 -> empty .
 
-    PLUS            reduce using rule 131 (termino1 -> empty .)
-    MINUS           reduce using rule 131 (termino1 -> empty .)
-    GREATERTHAN     reduce using rule 131 (termino1 -> empty .)
-    LESSTHAN        reduce using rule 131 (termino1 -> empty .)
-    GREATERTHANEQUAL reduce using rule 131 (termino1 -> empty .)
-    LESSTHANEQUAL   reduce using rule 131 (termino1 -> empty .)
-    EQUALEQUAL      reduce using rule 131 (termino1 -> empty .)
-    NOTEQUAL        reduce using rule 131 (termino1 -> empty .)
-    AND             reduce using rule 131 (termino1 -> empty .)
-    OR              reduce using rule 131 (termino1 -> empty .)
-    SEMICOLON       reduce using rule 131 (termino1 -> empty .)
-    RPAREN          reduce using rule 131 (termino1 -> empty .)
-    RBRACKET        reduce using rule 131 (termino1 -> empty .)
-    COMMA           reduce using rule 131 (termino1 -> empty .)
+    PLUS            reduce using rule 132 (termino1 -> empty .)
+    MINUS           reduce using rule 132 (termino1 -> empty .)
+    GREATERTHAN     reduce using rule 132 (termino1 -> empty .)
+    LESSTHAN        reduce using rule 132 (termino1 -> empty .)
+    GREATERTHANEQUAL reduce using rule 132 (termino1 -> empty .)
+    LESSTHANEQUAL   reduce using rule 132 (termino1 -> empty .)
+    EQUALEQUAL      reduce using rule 132 (termino1 -> empty .)
+    NOTEQUAL        reduce using rule 132 (termino1 -> empty .)
+    AND             reduce using rule 132 (termino1 -> empty .)
+    OR              reduce using rule 132 (termino1 -> empty .)
+    SEMICOLON       reduce using rule 132 (termino1 -> empty .)
+    RPAREN          reduce using rule 132 (termino1 -> empty .)
+    RBRACKET        reduce using rule 132 (termino1 -> empty .)
+    COMMA           reduce using rule 132 (termino1 -> empty .)
 
 
 state 186
 
-    (134) factor -> LPAREN puntoPushFondoFalso expresion . RPAREN puntoPopFondoFalso
+    (135) factor -> LPAREN puntoPushFondoFalso expresion . RPAREN puntoPopFondoFalso
 
-    RPAREN          shift and go to state 216
+    RPAREN          shift and go to state 218
 
 
 state 187
@@ -3072,7 +3088,7 @@ state 188
 
     (34) tipo_cte1 -> LBRACKET . CTE_INT RBRACKET
 
-    CTE_INT         shift and go to state 217
+    CTE_INT         shift and go to state 219
 
 
 state 189
@@ -3121,50 +3137,50 @@ state 190
 
 state 191
 
-    (140) funciones_arr -> PUNTO . funciones_arr1 LPAREN RPAREN
-    (141) funciones_arr1 -> . MAX
-    (142) funciones_arr1 -> . MIN
-    (143) funciones_arr1 -> . RANGE
-    (144) funciones_arr1 -> . MEDIAN
-    (145) funciones_arr1 -> . AVERAGE
-    (146) funciones_arr1 -> . IQRANGE
-    (147) funciones_arr1 -> . STDEV
-    (148) funciones_arr1 -> . VARIANCE
-    (149) funciones_arr1 -> . MODIFY
-    (150) funciones_arr1 -> . DRAW
+    (141) funciones_arr -> PUNTO . funciones_arr1 LPAREN RPAREN
+    (142) funciones_arr1 -> . MAX
+    (143) funciones_arr1 -> . MIN
+    (144) funciones_arr1 -> . RANGE
+    (145) funciones_arr1 -> . MEDIAN
+    (146) funciones_arr1 -> . AVERAGE
+    (147) funciones_arr1 -> . IQRANGE
+    (148) funciones_arr1 -> . STDEV
+    (149) funciones_arr1 -> . VARIANCE
+    (150) funciones_arr1 -> . MODIFY
+    (151) funciones_arr1 -> . DRAW
 
-    MAX             shift and go to state 219
-    MIN             shift and go to state 220
-    RANGE           shift and go to state 221
-    MEDIAN          shift and go to state 222
-    AVERAGE         shift and go to state 223
-    IQRANGE         shift and go to state 224
-    STDEV           shift and go to state 225
-    VARIANCE        shift and go to state 226
-    MODIFY          shift and go to state 227
-    DRAW            shift and go to state 228
+    MAX             shift and go to state 221
+    MIN             shift and go to state 222
+    RANGE           shift and go to state 223
+    MEDIAN          shift and go to state 224
+    AVERAGE         shift and go to state 225
+    IQRANGE         shift and go to state 226
+    STDEV           shift and go to state 227
+    VARIANCE        shift and go to state 228
+    MODIFY          shift and go to state 229
+    DRAW            shift and go to state 230
 
-    funciones_arr1                 shift and go to state 218
+    funciones_arr1                 shift and go to state 220
 
 state 192
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN expresion . RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad
 
-    RPAREN          shift and go to state 229
+    RPAREN          shift and go to state 231
 
 
 state 193
 
     (107) do_while -> DO puntoPushSaltoDoWhile bloque WHILE . LPAREN expresion RPAREN puntoCreateDoWhileQuad
 
-    LPAREN          shift and go to state 230
+    LPAREN          shift and go to state 232
 
 
 state 194
 
     (64) bloque -> LBLOQUE bloque1 . RBLOQUE
 
-    RBLOQUE         shift and go to state 231
+    RBLOQUE         shift and go to state 233
 
 
 state 195
@@ -3179,7 +3195,7 @@ state 195
     (71) estatuto -> . while
     (72) estatuto -> . do_while
     (73) estatuto -> . llamada SEMICOLON
-    (151) empty -> .
+    (152) empty -> .
     (74) asignacion -> . ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON
     (82) condicion -> . IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad
     (88) escritura -> . PRINT LPAREN escritura1 RPAREN SEMICOLON
@@ -3188,7 +3204,7 @@ state 195
     (107) do_while -> . DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad
     (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RBLOQUE         reduce using rule 151 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
     ID              shift and go to state 90
     IF              shift and go to state 91
     PRINT           shift and go to state 92
@@ -3198,7 +3214,7 @@ state 195
     CALL            shift and go to state 96
 
     estatuto                       shift and go to state 195
-    bloque1                        shift and go to state 232
+    bloque1                        shift and go to state 234
     empty                          shift and go to state 196
     asignacion                     shift and go to state 83
     condicion                      shift and go to state 84
@@ -3222,20 +3238,20 @@ state 197
 
     LPAREN          reduce using rule 98 (puntoVerifyLlamada -> .)
 
-    puntoVerifyLlamada             shift and go to state 233
+    puntoVerifyLlamada             shift and go to state 235
 
 state 198
 
     (50) funciones3 -> COMMA tipo . ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
 
-    ID              shift and go to state 234
+    ID              shift and go to state 236
 
 
 state 199
 
     (74) asignacion -> ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 . SEMICOLON
 
-    SEMICOLON       shift and go to state 235
+    SEMICOLON       shift and go to state 237
 
 
 state 200
@@ -3245,7 +3261,7 @@ state 200
 
     SEMICOLON       reduce using rule 80 (puntoCreateAsignacionQuad -> .)
 
-    puntoCreateAsignacionQuad      shift and go to state 236
+    puntoCreateAsignacionQuad      shift and go to state 238
 
 state 201
 
@@ -3258,7 +3274,7 @@ state 202
 
     (81) leida -> INPUT . LPAREN RPAREN
 
-    LPAREN          shift and go to state 237
+    LPAREN          shift and go to state 239
 
 
 state 203
@@ -3275,7 +3291,7 @@ state 204
 
     LBLOQUE         shift and go to state 158
 
-    bloque                         shift and go to state 238
+    bloque                         shift and go to state 240
 
 state 205
 
@@ -3293,157 +3309,120 @@ state 205
 
 state 206
 
-    (115) compare1 -> GREATERTHAN puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
+    (111) expresion2 -> AND puntoPushOperador compare . puntoAndOr
+    (114) puntoAndOr -> .
 
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 114 (puntoAndOr -> .)
+    RPAREN          reduce using rule 114 (puntoAndOr -> .)
+    RBRACKET        reduce using rule 114 (puntoAndOr -> .)
+    COMMA           reduce using rule 114 (puntoAndOr -> .)
 
-    puntoOperacionRelacional       shift and go to state 239
+    puntoAndOr                     shift and go to state 241
 
 state 207
 
-    (116) compare1 -> LESSTHAN puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
+    (112) expresion2 -> OR puntoPushOperador compare . puntoAndOr
+    (114) puntoAndOr -> .
 
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 114 (puntoAndOr -> .)
+    RPAREN          reduce using rule 114 (puntoAndOr -> .)
+    RBRACKET        reduce using rule 114 (puntoAndOr -> .)
+    COMMA           reduce using rule 114 (puntoAndOr -> .)
 
-    puntoOperacionRelacional       shift and go to state 240
+    puntoAndOr                     shift and go to state 242
 
 state 208
 
-    (117) compare1 -> GREATERTHANEQUAL puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
+    (116) compare1 -> GREATERTHAN puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
 
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
-
-    puntoOperacionRelacional       shift and go to state 241
-
-state 209
-
-    (118) compare1 -> LESSTHANEQUAL puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
-
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
-
-    puntoOperacionRelacional       shift and go to state 242
-
-state 210
-
-    (119) compare1 -> EQUALEQUAL puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
-
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
 
     puntoOperacionRelacional       shift and go to state 243
 
-state 211
+state 209
 
-    (120) compare1 -> NOTEQUAL puntoPushOperador exp . puntoOperacionRelacional
-    (122) puntoOperacionRelacional -> .
+    (117) compare1 -> LESSTHAN puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
 
-    AND             reduce using rule 122 (puntoOperacionRelacional -> .)
-    OR              reduce using rule 122 (puntoOperacionRelacional -> .)
-    SEMICOLON       reduce using rule 122 (puntoOperacionRelacional -> .)
-    RPAREN          reduce using rule 122 (puntoOperacionRelacional -> .)
-    RBRACKET        reduce using rule 122 (puntoOperacionRelacional -> .)
-    COMMA           reduce using rule 122 (puntoOperacionRelacional -> .)
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
 
     puntoOperacionRelacional       shift and go to state 244
 
+state 210
+
+    (118) compare1 -> GREATERTHANEQUAL puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
+
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
+
+    puntoOperacionRelacional       shift and go to state 245
+
+state 211
+
+    (119) compare1 -> LESSTHANEQUAL puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
+
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
+
+    puntoOperacionRelacional       shift and go to state 246
+
 state 212
 
-    (124) exp1 -> PLUS puntoPushOperador . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+    (120) compare1 -> EQUALEQUAL puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
 
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
 
-    termino                        shift and go to state 245
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
+    puntoOperacionRelacional       shift and go to state 247
 
 state 213
 
-    (125) exp1 -> MINUS puntoPushOperador . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
-    (28) tipo_cte -> . CTE_INT puntoPushInt
-    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
-    (30) tipo_cte -> . CTE_BOOL puntoPushBool
-    (31) tipo_cte -> . CTE_CHAR puntoPushChar
-    (32) tipo_cte -> . ID puntoPushID tipo_cte1
-    (33) tipo_cte -> . llamada
-    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
+    (121) compare1 -> NOTEQUAL puntoPushOperador exp . puntoOperacionRelacional
+    (123) puntoOperacionRelacional -> .
 
-    LPAREN          shift and go to state 111
-    MINUS           shift and go to state 113
-    NOT             shift and go to state 114
-    CTE_INT         shift and go to state 115
-    CTE_FLOAT       shift and go to state 116
-    CTE_BOOL        shift and go to state 117
-    CTE_CHAR        shift and go to state 118
-    ID              shift and go to state 119
-    CALL            shift and go to state 96
+    AND             reduce using rule 123 (puntoOperacionRelacional -> .)
+    OR              reduce using rule 123 (puntoOperacionRelacional -> .)
+    SEMICOLON       reduce using rule 123 (puntoOperacionRelacional -> .)
+    RPAREN          reduce using rule 123 (puntoOperacionRelacional -> .)
+    RBRACKET        reduce using rule 123 (puntoOperacionRelacional -> .)
+    COMMA           reduce using rule 123 (puntoOperacionRelacional -> .)
 
-    termino                        shift and go to state 246
-    factor                         shift and go to state 110
-    tipo_cte                       shift and go to state 112
-    llamada                        shift and go to state 120
+    puntoOperacionRelacional       shift and go to state 248
 
 state 214
 
-    (129) termino1 -> TIMES puntoPushOperador . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (125) exp1 -> PLUS puntoPushOperador . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -3462,17 +3441,19 @@ state 214
     ID              shift and go to state 119
     CALL            shift and go to state 96
 
-    factor                         shift and go to state 247
+    termino                        shift and go to state 249
+    factor                         shift and go to state 110
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
 state 215
 
-    (130) termino1 -> DIVIDE puntoPushOperador . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (126) exp1 -> MINUS puntoPushOperador . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -3491,138 +3472,197 @@ state 215
     ID              shift and go to state 119
     CALL            shift and go to state 96
 
-    factor                         shift and go to state 248
+    termino                        shift and go to state 250
+    factor                         shift and go to state 110
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
 state 216
 
-    (134) factor -> LPAREN puntoPushFondoFalso expresion RPAREN . puntoPopFondoFalso
-    (139) puntoPopFondoFalso -> .
+    (130) termino1 -> TIMES puntoPushOperador . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    TIMES           reduce using rule 139 (puntoPopFondoFalso -> .)
-    DIVIDE          reduce using rule 139 (puntoPopFondoFalso -> .)
-    PLUS            reduce using rule 139 (puntoPopFondoFalso -> .)
-    MINUS           reduce using rule 139 (puntoPopFondoFalso -> .)
-    GREATERTHAN     reduce using rule 139 (puntoPopFondoFalso -> .)
-    LESSTHAN        reduce using rule 139 (puntoPopFondoFalso -> .)
-    GREATERTHANEQUAL reduce using rule 139 (puntoPopFondoFalso -> .)
-    LESSTHANEQUAL   reduce using rule 139 (puntoPopFondoFalso -> .)
-    EQUALEQUAL      reduce using rule 139 (puntoPopFondoFalso -> .)
-    NOTEQUAL        reduce using rule 139 (puntoPopFondoFalso -> .)
-    AND             reduce using rule 139 (puntoPopFondoFalso -> .)
-    OR              reduce using rule 139 (puntoPopFondoFalso -> .)
-    SEMICOLON       reduce using rule 139 (puntoPopFondoFalso -> .)
-    RPAREN          reduce using rule 139 (puntoPopFondoFalso -> .)
-    RBRACKET        reduce using rule 139 (puntoPopFondoFalso -> .)
-    COMMA           reduce using rule 139 (puntoPopFondoFalso -> .)
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
 
-    puntoPopFondoFalso             shift and go to state 249
+    factor                         shift and go to state 251
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
 
 state 217
 
-    (34) tipo_cte1 -> LBRACKET CTE_INT . RBRACKET
+    (131) termino1 -> DIVIDE puntoPushOperador . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RBRACKET        shift and go to state 250
+    LPAREN          shift and go to state 111
+    MINUS           shift and go to state 113
+    NOT             shift and go to state 114
+    CTE_INT         shift and go to state 115
+    CTE_FLOAT       shift and go to state 116
+    CTE_BOOL        shift and go to state 117
+    CTE_CHAR        shift and go to state 118
+    ID              shift and go to state 119
+    CALL            shift and go to state 96
 
+    factor                         shift and go to state 252
+    tipo_cte                       shift and go to state 112
+    llamada                        shift and go to state 120
 
 state 218
 
-    (140) funciones_arr -> PUNTO funciones_arr1 . LPAREN RPAREN
+    (135) factor -> LPAREN puntoPushFondoFalso expresion RPAREN . puntoPopFondoFalso
+    (140) puntoPopFondoFalso -> .
 
-    LPAREN          shift and go to state 251
+    TIMES           reduce using rule 140 (puntoPopFondoFalso -> .)
+    DIVIDE          reduce using rule 140 (puntoPopFondoFalso -> .)
+    PLUS            reduce using rule 140 (puntoPopFondoFalso -> .)
+    MINUS           reduce using rule 140 (puntoPopFondoFalso -> .)
+    GREATERTHAN     reduce using rule 140 (puntoPopFondoFalso -> .)
+    LESSTHAN        reduce using rule 140 (puntoPopFondoFalso -> .)
+    GREATERTHANEQUAL reduce using rule 140 (puntoPopFondoFalso -> .)
+    LESSTHANEQUAL   reduce using rule 140 (puntoPopFondoFalso -> .)
+    EQUALEQUAL      reduce using rule 140 (puntoPopFondoFalso -> .)
+    NOTEQUAL        reduce using rule 140 (puntoPopFondoFalso -> .)
+    AND             reduce using rule 140 (puntoPopFondoFalso -> .)
+    OR              reduce using rule 140 (puntoPopFondoFalso -> .)
+    SEMICOLON       reduce using rule 140 (puntoPopFondoFalso -> .)
+    RPAREN          reduce using rule 140 (puntoPopFondoFalso -> .)
+    RBRACKET        reduce using rule 140 (puntoPopFondoFalso -> .)
+    COMMA           reduce using rule 140 (puntoPopFondoFalso -> .)
 
+    puntoPopFondoFalso             shift and go to state 253
 
 state 219
 
-    (141) funciones_arr1 -> MAX .
+    (34) tipo_cte1 -> LBRACKET CTE_INT . RBRACKET
 
-    LPAREN          reduce using rule 141 (funciones_arr1 -> MAX .)
+    RBRACKET        shift and go to state 254
 
 
 state 220
 
-    (142) funciones_arr1 -> MIN .
+    (141) funciones_arr -> PUNTO funciones_arr1 . LPAREN RPAREN
 
-    LPAREN          reduce using rule 142 (funciones_arr1 -> MIN .)
+    LPAREN          shift and go to state 255
 
 
 state 221
 
-    (143) funciones_arr1 -> RANGE .
+    (142) funciones_arr1 -> MAX .
 
-    LPAREN          reduce using rule 143 (funciones_arr1 -> RANGE .)
+    LPAREN          reduce using rule 142 (funciones_arr1 -> MAX .)
 
 
 state 222
 
-    (144) funciones_arr1 -> MEDIAN .
+    (143) funciones_arr1 -> MIN .
 
-    LPAREN          reduce using rule 144 (funciones_arr1 -> MEDIAN .)
+    LPAREN          reduce using rule 143 (funciones_arr1 -> MIN .)
 
 
 state 223
 
-    (145) funciones_arr1 -> AVERAGE .
+    (144) funciones_arr1 -> RANGE .
 
-    LPAREN          reduce using rule 145 (funciones_arr1 -> AVERAGE .)
+    LPAREN          reduce using rule 144 (funciones_arr1 -> RANGE .)
 
 
 state 224
 
-    (146) funciones_arr1 -> IQRANGE .
+    (145) funciones_arr1 -> MEDIAN .
 
-    LPAREN          reduce using rule 146 (funciones_arr1 -> IQRANGE .)
+    LPAREN          reduce using rule 145 (funciones_arr1 -> MEDIAN .)
 
 
 state 225
 
-    (147) funciones_arr1 -> STDEV .
+    (146) funciones_arr1 -> AVERAGE .
 
-    LPAREN          reduce using rule 147 (funciones_arr1 -> STDEV .)
+    LPAREN          reduce using rule 146 (funciones_arr1 -> AVERAGE .)
 
 
 state 226
 
-    (148) funciones_arr1 -> VARIANCE .
+    (147) funciones_arr1 -> IQRANGE .
 
-    LPAREN          reduce using rule 148 (funciones_arr1 -> VARIANCE .)
+    LPAREN          reduce using rule 147 (funciones_arr1 -> IQRANGE .)
 
 
 state 227
 
-    (149) funciones_arr1 -> MODIFY .
+    (148) funciones_arr1 -> STDEV .
 
-    LPAREN          reduce using rule 149 (funciones_arr1 -> MODIFY .)
+    LPAREN          reduce using rule 148 (funciones_arr1 -> STDEV .)
 
 
 state 228
 
-    (150) funciones_arr1 -> DRAW .
+    (149) funciones_arr1 -> VARIANCE .
 
-    LPAREN          reduce using rule 150 (funciones_arr1 -> DRAW .)
+    LPAREN          reduce using rule 149 (funciones_arr1 -> VARIANCE .)
 
 
 state 229
+
+    (150) funciones_arr1 -> MODIFY .
+
+    LPAREN          reduce using rule 150 (funciones_arr1 -> MODIFY .)
+
+
+state 230
+
+    (151) funciones_arr1 -> DRAW .
+
+    LPAREN          reduce using rule 151 (funciones_arr1 -> DRAW .)
+
+
+state 231
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN . puntoCreateWhileQuad bloque puntoEndWhileQuad
     (105) puntoCreateWhileQuad -> .
 
     LBLOQUE         reduce using rule 105 (puntoCreateWhileQuad -> .)
 
-    puntoCreateWhileQuad           shift and go to state 252
+    puntoCreateWhileQuad           shift and go to state 256
 
-state 230
+state 232
 
     (107) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN . expresion RPAREN puntoCreateDoWhileQuad
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -3641,7 +3681,7 @@ state 230
     ID              shift and go to state 119
     CALL            shift and go to state 96
 
-    expresion                      shift and go to state 253
+    expresion                      shift and go to state 257
     compare                        shift and go to state 107
     exp                            shift and go to state 108
     termino                        shift and go to state 109
@@ -3649,7 +3689,7 @@ state 230
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 231
+state 233
 
     (64) bloque -> LBLOQUE bloque1 RBLOQUE .
 
@@ -3664,21 +3704,21 @@ state 231
     RBLOQUE         reduce using rule 64 (bloque -> LBLOQUE bloque1 RBLOQUE .)
 
 
-state 232
+state 234
 
     (65) bloque1 -> estatuto bloque1 .
 
     RBLOQUE         reduce using rule 65 (bloque1 -> estatuto bloque1 .)
 
 
-state 233
+state 235
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada . LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    LPAREN          shift and go to state 254
+    LPAREN          shift and go to state 258
 
 
-state 234
+state 236
 
     (50) funciones3 -> COMMA tipo ID . puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     (20) puntoCreateVar -> .
@@ -3686,9 +3726,9 @@ state 234
     COMMA           reduce using rule 20 (puntoCreateVar -> .)
     RPAREN          reduce using rule 20 (puntoCreateVar -> .)
 
-    puntoCreateVar                 shift and go to state 255
+    puntoCreateVar                 shift and go to state 259
 
-state 235
+state 237
 
     (74) asignacion -> ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON .
 
@@ -3702,227 +3742,247 @@ state 235
     RBLOQUE         reduce using rule 74 (asignacion -> ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON .)
 
 
-state 236
+state 238
 
     (77) asignacion2 -> expresion puntoCreateAsignacionQuad .
 
     SEMICOLON       reduce using rule 77 (asignacion2 -> expresion puntoCreateAsignacionQuad .)
 
 
-state 237
+state 239
 
     (81) leida -> INPUT LPAREN . RPAREN
 
-    RPAREN          shift and go to state 256
-
-
-state 238
-
-    (82) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque . condicion1 puntoFillIfQuad
-    (83) condicion1 -> . ELSE puntoCreateElseQuad bloque
-    (84) condicion1 -> . empty
-    (151) empty -> .
-
-    ELSE            shift and go to state 258
-    ID              reduce using rule 151 (empty -> .)
-    IF              reduce using rule 151 (empty -> .)
-    PRINT           reduce using rule 151 (empty -> .)
-    RETURN          reduce using rule 151 (empty -> .)
-    WHILE           reduce using rule 151 (empty -> .)
-    DO              reduce using rule 151 (empty -> .)
-    CALL            reduce using rule 151 (empty -> .)
-    RBLOQUE         reduce using rule 151 (empty -> .)
-
-    condicion1                     shift and go to state 257
-    empty                          shift and go to state 259
-
-state 239
-
-    (115) compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .
-
-    AND             reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 115 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          shift and go to state 260
 
 
 state 240
 
-    (116) compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .
+    (82) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque . condicion1 puntoFillIfQuad
+    (83) condicion1 -> . ELSE puntoCreateElseQuad bloque
+    (84) condicion1 -> . empty
+    (152) empty -> .
 
-    AND             reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 116 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    ELSE            shift and go to state 262
+    ID              reduce using rule 152 (empty -> .)
+    IF              reduce using rule 152 (empty -> .)
+    PRINT           reduce using rule 152 (empty -> .)
+    RETURN          reduce using rule 152 (empty -> .)
+    WHILE           reduce using rule 152 (empty -> .)
+    DO              reduce using rule 152 (empty -> .)
+    CALL            reduce using rule 152 (empty -> .)
+    RBLOQUE         reduce using rule 152 (empty -> .)
 
+    condicion1                     shift and go to state 261
+    empty                          shift and go to state 263
 
 state 241
 
-    (117) compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .
+    (111) expresion2 -> AND puntoPushOperador compare puntoAndOr .
 
-    AND             reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 117 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 111 (expresion2 -> AND puntoPushOperador compare puntoAndOr .)
+    RPAREN          reduce using rule 111 (expresion2 -> AND puntoPushOperador compare puntoAndOr .)
+    RBRACKET        reduce using rule 111 (expresion2 -> AND puntoPushOperador compare puntoAndOr .)
+    COMMA           reduce using rule 111 (expresion2 -> AND puntoPushOperador compare puntoAndOr .)
 
 
 state 242
 
-    (118) compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .
+    (112) expresion2 -> OR puntoPushOperador compare puntoAndOr .
 
-    AND             reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 118 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 112 (expresion2 -> OR puntoPushOperador compare puntoAndOr .)
+    RPAREN          reduce using rule 112 (expresion2 -> OR puntoPushOperador compare puntoAndOr .)
+    RBRACKET        reduce using rule 112 (expresion2 -> OR puntoPushOperador compare puntoAndOr .)
+    COMMA           reduce using rule 112 (expresion2 -> OR puntoPushOperador compare puntoAndOr .)
 
 
 state 243
 
-    (119) compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .
+    (116) compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .
 
-    AND             reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 119 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    AND             reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 116 (compare1 -> GREATERTHAN puntoPushOperador exp puntoOperacionRelacional .)
 
 
 state 244
 
-    (120) compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .
+    (117) compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .
 
-    AND             reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    OR              reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    SEMICOLON       reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RPAREN          reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    RBRACKET        reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
-    COMMA           reduce using rule 120 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    AND             reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 117 (compare1 -> LESSTHAN puntoPushOperador exp puntoOperacionRelacional .)
 
 
 state 245
 
-    (124) exp1 -> PLUS puntoPushOperador termino . puntoSumaResta exp1
-    (127) puntoSumaResta -> .
+    (118) compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .
 
-    PLUS            reduce using rule 127 (puntoSumaResta -> .)
-    MINUS           reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHAN     reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHAN        reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHANEQUAL reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHANEQUAL   reduce using rule 127 (puntoSumaResta -> .)
-    EQUALEQUAL      reduce using rule 127 (puntoSumaResta -> .)
-    NOTEQUAL        reduce using rule 127 (puntoSumaResta -> .)
-    AND             reduce using rule 127 (puntoSumaResta -> .)
-    OR              reduce using rule 127 (puntoSumaResta -> .)
-    SEMICOLON       reduce using rule 127 (puntoSumaResta -> .)
-    RPAREN          reduce using rule 127 (puntoSumaResta -> .)
-    RBRACKET        reduce using rule 127 (puntoSumaResta -> .)
-    COMMA           reduce using rule 127 (puntoSumaResta -> .)
+    AND             reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 118 (compare1 -> GREATERTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
 
-    puntoSumaResta                 shift and go to state 260
 
 state 246
 
-    (125) exp1 -> MINUS puntoPushOperador termino . puntoSumaResta exp1
-    (127) puntoSumaResta -> .
+    (119) compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .
 
-    PLUS            reduce using rule 127 (puntoSumaResta -> .)
-    MINUS           reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHAN     reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHAN        reduce using rule 127 (puntoSumaResta -> .)
-    GREATERTHANEQUAL reduce using rule 127 (puntoSumaResta -> .)
-    LESSTHANEQUAL   reduce using rule 127 (puntoSumaResta -> .)
-    EQUALEQUAL      reduce using rule 127 (puntoSumaResta -> .)
-    NOTEQUAL        reduce using rule 127 (puntoSumaResta -> .)
-    AND             reduce using rule 127 (puntoSumaResta -> .)
-    OR              reduce using rule 127 (puntoSumaResta -> .)
-    SEMICOLON       reduce using rule 127 (puntoSumaResta -> .)
-    RPAREN          reduce using rule 127 (puntoSumaResta -> .)
-    RBRACKET        reduce using rule 127 (puntoSumaResta -> .)
-    COMMA           reduce using rule 127 (puntoSumaResta -> .)
+    AND             reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 119 (compare1 -> LESSTHANEQUAL puntoPushOperador exp puntoOperacionRelacional .)
 
-    puntoSumaResta                 shift and go to state 261
 
 state 247
 
-    (129) termino1 -> TIMES puntoPushOperador factor . puntoMultDivide termino1
-    (132) puntoMultDivide -> .
+    (120) compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .
 
-    TIMES           reduce using rule 132 (puntoMultDivide -> .)
-    DIVIDE          reduce using rule 132 (puntoMultDivide -> .)
-    PLUS            reduce using rule 132 (puntoMultDivide -> .)
-    MINUS           reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHAN     reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHAN        reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHANEQUAL reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHANEQUAL   reduce using rule 132 (puntoMultDivide -> .)
-    EQUALEQUAL      reduce using rule 132 (puntoMultDivide -> .)
-    NOTEQUAL        reduce using rule 132 (puntoMultDivide -> .)
-    AND             reduce using rule 132 (puntoMultDivide -> .)
-    OR              reduce using rule 132 (puntoMultDivide -> .)
-    SEMICOLON       reduce using rule 132 (puntoMultDivide -> .)
-    RPAREN          reduce using rule 132 (puntoMultDivide -> .)
-    RBRACKET        reduce using rule 132 (puntoMultDivide -> .)
-    COMMA           reduce using rule 132 (puntoMultDivide -> .)
+    AND             reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 120 (compare1 -> EQUALEQUAL puntoPushOperador exp puntoOperacionRelacional .)
 
-    puntoMultDivide                shift and go to state 262
 
 state 248
 
-    (130) termino1 -> DIVIDE puntoPushOperador factor . puntoMultDivide termino1
-    (132) puntoMultDivide -> .
+    (121) compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .
 
-    TIMES           reduce using rule 132 (puntoMultDivide -> .)
-    DIVIDE          reduce using rule 132 (puntoMultDivide -> .)
-    PLUS            reduce using rule 132 (puntoMultDivide -> .)
-    MINUS           reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHAN     reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHAN        reduce using rule 132 (puntoMultDivide -> .)
-    GREATERTHANEQUAL reduce using rule 132 (puntoMultDivide -> .)
-    LESSTHANEQUAL   reduce using rule 132 (puntoMultDivide -> .)
-    EQUALEQUAL      reduce using rule 132 (puntoMultDivide -> .)
-    NOTEQUAL        reduce using rule 132 (puntoMultDivide -> .)
-    AND             reduce using rule 132 (puntoMultDivide -> .)
-    OR              reduce using rule 132 (puntoMultDivide -> .)
-    SEMICOLON       reduce using rule 132 (puntoMultDivide -> .)
-    RPAREN          reduce using rule 132 (puntoMultDivide -> .)
-    RBRACKET        reduce using rule 132 (puntoMultDivide -> .)
-    COMMA           reduce using rule 132 (puntoMultDivide -> .)
+    AND             reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    OR              reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    SEMICOLON       reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RPAREN          reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    RBRACKET        reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
+    COMMA           reduce using rule 121 (compare1 -> NOTEQUAL puntoPushOperador exp puntoOperacionRelacional .)
 
-    puntoMultDivide                shift and go to state 263
 
 state 249
 
-    (134) factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .
+    (125) exp1 -> PLUS puntoPushOperador termino . puntoSumaResta exp1
+    (128) puntoSumaResta -> .
 
-    TIMES           reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    DIVIDE          reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    PLUS            reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    MINUS           reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    GREATERTHAN     reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    LESSTHAN        reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    GREATERTHANEQUAL reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    LESSTHANEQUAL   reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    EQUALEQUAL      reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    NOTEQUAL        reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    AND             reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    OR              reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    SEMICOLON       reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    RPAREN          reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    RBRACKET        reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
-    COMMA           reduce using rule 134 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    PLUS            reduce using rule 128 (puntoSumaResta -> .)
+    MINUS           reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHAN     reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHAN        reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHANEQUAL reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHANEQUAL   reduce using rule 128 (puntoSumaResta -> .)
+    EQUALEQUAL      reduce using rule 128 (puntoSumaResta -> .)
+    NOTEQUAL        reduce using rule 128 (puntoSumaResta -> .)
+    AND             reduce using rule 128 (puntoSumaResta -> .)
+    OR              reduce using rule 128 (puntoSumaResta -> .)
+    SEMICOLON       reduce using rule 128 (puntoSumaResta -> .)
+    RPAREN          reduce using rule 128 (puntoSumaResta -> .)
+    RBRACKET        reduce using rule 128 (puntoSumaResta -> .)
+    COMMA           reduce using rule 128 (puntoSumaResta -> .)
 
+    puntoSumaResta                 shift and go to state 264
 
 state 250
+
+    (126) exp1 -> MINUS puntoPushOperador termino . puntoSumaResta exp1
+    (128) puntoSumaResta -> .
+
+    PLUS            reduce using rule 128 (puntoSumaResta -> .)
+    MINUS           reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHAN     reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHAN        reduce using rule 128 (puntoSumaResta -> .)
+    GREATERTHANEQUAL reduce using rule 128 (puntoSumaResta -> .)
+    LESSTHANEQUAL   reduce using rule 128 (puntoSumaResta -> .)
+    EQUALEQUAL      reduce using rule 128 (puntoSumaResta -> .)
+    NOTEQUAL        reduce using rule 128 (puntoSumaResta -> .)
+    AND             reduce using rule 128 (puntoSumaResta -> .)
+    OR              reduce using rule 128 (puntoSumaResta -> .)
+    SEMICOLON       reduce using rule 128 (puntoSumaResta -> .)
+    RPAREN          reduce using rule 128 (puntoSumaResta -> .)
+    RBRACKET        reduce using rule 128 (puntoSumaResta -> .)
+    COMMA           reduce using rule 128 (puntoSumaResta -> .)
+
+    puntoSumaResta                 shift and go to state 265
+
+state 251
+
+    (130) termino1 -> TIMES puntoPushOperador factor . puntoMultDivide termino1
+    (133) puntoMultDivide -> .
+
+    TIMES           reduce using rule 133 (puntoMultDivide -> .)
+    DIVIDE          reduce using rule 133 (puntoMultDivide -> .)
+    PLUS            reduce using rule 133 (puntoMultDivide -> .)
+    MINUS           reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHAN     reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHAN        reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHANEQUAL reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHANEQUAL   reduce using rule 133 (puntoMultDivide -> .)
+    EQUALEQUAL      reduce using rule 133 (puntoMultDivide -> .)
+    NOTEQUAL        reduce using rule 133 (puntoMultDivide -> .)
+    AND             reduce using rule 133 (puntoMultDivide -> .)
+    OR              reduce using rule 133 (puntoMultDivide -> .)
+    SEMICOLON       reduce using rule 133 (puntoMultDivide -> .)
+    RPAREN          reduce using rule 133 (puntoMultDivide -> .)
+    RBRACKET        reduce using rule 133 (puntoMultDivide -> .)
+    COMMA           reduce using rule 133 (puntoMultDivide -> .)
+
+    puntoMultDivide                shift and go to state 266
+
+state 252
+
+    (131) termino1 -> DIVIDE puntoPushOperador factor . puntoMultDivide termino1
+    (133) puntoMultDivide -> .
+
+    TIMES           reduce using rule 133 (puntoMultDivide -> .)
+    DIVIDE          reduce using rule 133 (puntoMultDivide -> .)
+    PLUS            reduce using rule 133 (puntoMultDivide -> .)
+    MINUS           reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHAN     reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHAN        reduce using rule 133 (puntoMultDivide -> .)
+    GREATERTHANEQUAL reduce using rule 133 (puntoMultDivide -> .)
+    LESSTHANEQUAL   reduce using rule 133 (puntoMultDivide -> .)
+    EQUALEQUAL      reduce using rule 133 (puntoMultDivide -> .)
+    NOTEQUAL        reduce using rule 133 (puntoMultDivide -> .)
+    AND             reduce using rule 133 (puntoMultDivide -> .)
+    OR              reduce using rule 133 (puntoMultDivide -> .)
+    SEMICOLON       reduce using rule 133 (puntoMultDivide -> .)
+    RPAREN          reduce using rule 133 (puntoMultDivide -> .)
+    RBRACKET        reduce using rule 133 (puntoMultDivide -> .)
+    COMMA           reduce using rule 133 (puntoMultDivide -> .)
+
+    puntoMultDivide                shift and go to state 267
+
+state 253
+
+    (135) factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .
+
+    TIMES           reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    DIVIDE          reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    PLUS            reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    MINUS           reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    GREATERTHAN     reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    LESSTHAN        reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    GREATERTHANEQUAL reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    LESSTHANEQUAL   reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    EQUALEQUAL      reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    NOTEQUAL        reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    AND             reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    OR              reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    SEMICOLON       reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    RPAREN          reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    RBRACKET        reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+    COMMA           reduce using rule 135 (factor -> LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso .)
+
+
+state 254
 
     (34) tipo_cte1 -> LBRACKET CTE_INT RBRACKET .
 
@@ -3944,43 +4004,43 @@ state 250
     COMMA           reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT RBRACKET .)
 
 
-state 251
+state 255
 
-    (140) funciones_arr -> PUNTO funciones_arr1 LPAREN . RPAREN
+    (141) funciones_arr -> PUNTO funciones_arr1 LPAREN . RPAREN
 
-    RPAREN          shift and go to state 264
+    RPAREN          shift and go to state 268
 
 
-state 252
+state 256
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad . bloque puntoEndWhileQuad
     (64) bloque -> . LBLOQUE bloque1 RBLOQUE
 
     LBLOQUE         shift and go to state 158
 
-    bloque                         shift and go to state 265
+    bloque                         shift and go to state 269
 
-state 253
+state 257
 
     (107) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion . RPAREN puntoCreateDoWhileQuad
 
-    RPAREN          shift and go to state 266
+    RPAREN          shift and go to state 270
 
 
-state 254
+state 258
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN . llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
     (94) llamada1 -> . expresion puntoVerifyArgumento llamada2
     (95) llamada1 -> . empty
     (110) expresion -> . compare expresion2
-    (151) empty -> .
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (152) empty -> .
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -3989,7 +4049,7 @@ state 254
     (33) tipo_cte -> . llamada
     (93) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RPAREN          reduce using rule 151 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
     LPAREN          shift and go to state 111
     MINUS           shift and go to state 113
     NOT             shift and go to state 114
@@ -4000,9 +4060,9 @@ state 254
     ID              shift and go to state 119
     CALL            shift and go to state 96
 
-    llamada1                       shift and go to state 267
-    expresion                      shift and go to state 268
-    empty                          shift and go to state 269
+    llamada1                       shift and go to state 271
+    expresion                      shift and go to state 272
+    empty                          shift and go to state 273
     compare                        shift and go to state 107
     exp                            shift and go to state 108
     termino                        shift and go to state 109
@@ -4010,7 +4070,7 @@ state 254
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 255
+state 259
 
     (50) funciones3 -> COMMA tipo ID puntoCreateVar . puntoCreateVarType puntoPushParam funciones3
     (21) puntoCreateVarType -> .
@@ -4018,16 +4078,16 @@ state 255
     COMMA           reduce using rule 21 (puntoCreateVarType -> .)
     RPAREN          reduce using rule 21 (puntoCreateVarType -> .)
 
-    puntoCreateVarType             shift and go to state 270
+    puntoCreateVarType             shift and go to state 274
 
-state 256
+state 260
 
     (81) leida -> INPUT LPAREN RPAREN .
 
     SEMICOLON       reduce using rule 81 (leida -> INPUT LPAREN RPAREN .)
 
 
-state 257
+state 261
 
     (82) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 . puntoFillIfQuad
     (86) puntoFillIfQuad -> .
@@ -4041,18 +4101,18 @@ state 257
     CALL            reduce using rule 86 (puntoFillIfQuad -> .)
     RBLOQUE         reduce using rule 86 (puntoFillIfQuad -> .)
 
-    puntoFillIfQuad                shift and go to state 271
+    puntoFillIfQuad                shift and go to state 275
 
-state 258
+state 262
 
     (83) condicion1 -> ELSE . puntoCreateElseQuad bloque
     (87) puntoCreateElseQuad -> .
 
     LBLOQUE         reduce using rule 87 (puntoCreateElseQuad -> .)
 
-    puntoCreateElseQuad            shift and go to state 272
+    puntoCreateElseQuad            shift and go to state 276
 
-state 259
+state 263
 
     (84) condicion1 -> empty .
 
@@ -4066,137 +4126,137 @@ state 259
     RBLOQUE         reduce using rule 84 (condicion1 -> empty .)
 
 
-state 260
-
-    (124) exp1 -> PLUS puntoPushOperador termino puntoSumaResta . exp1
-    (124) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
-    (125) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
-    (126) exp1 -> . empty
-    (151) empty -> .
-
-    PLUS            shift and go to state 179
-    MINUS           shift and go to state 180
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
-
-    exp1                           shift and go to state 273
-    empty                          shift and go to state 181
-
-state 261
-
-    (125) exp1 -> MINUS puntoPushOperador termino puntoSumaResta . exp1
-    (124) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
-    (125) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
-    (126) exp1 -> . empty
-    (151) empty -> .
-
-    PLUS            shift and go to state 179
-    MINUS           shift and go to state 180
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
-
-    exp1                           shift and go to state 274
-    empty                          shift and go to state 181
-
-state 262
-
-    (129) termino1 -> TIMES puntoPushOperador factor puntoMultDivide . termino1
-    (129) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
-    (130) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
-    (131) termino1 -> . empty
-    (151) empty -> .
-
-    TIMES           shift and go to state 183
-    DIVIDE          shift and go to state 184
-    PLUS            reduce using rule 151 (empty -> .)
-    MINUS           reduce using rule 151 (empty -> .)
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
-
-    termino1                       shift and go to state 275
-    empty                          shift and go to state 185
-
-state 263
-
-    (130) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide . termino1
-    (129) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
-    (130) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
-    (131) termino1 -> . empty
-    (151) empty -> .
-
-    TIMES           shift and go to state 183
-    DIVIDE          shift and go to state 184
-    PLUS            reduce using rule 151 (empty -> .)
-    MINUS           reduce using rule 151 (empty -> .)
-    GREATERTHAN     reduce using rule 151 (empty -> .)
-    LESSTHAN        reduce using rule 151 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 151 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 151 (empty -> .)
-    EQUALEQUAL      reduce using rule 151 (empty -> .)
-    NOTEQUAL        reduce using rule 151 (empty -> .)
-    AND             reduce using rule 151 (empty -> .)
-    OR              reduce using rule 151 (empty -> .)
-    SEMICOLON       reduce using rule 151 (empty -> .)
-    RPAREN          reduce using rule 151 (empty -> .)
-    RBRACKET        reduce using rule 151 (empty -> .)
-    COMMA           reduce using rule 151 (empty -> .)
-
-    termino1                       shift and go to state 276
-    empty                          shift and go to state 185
-
 state 264
 
-    (140) funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .
+    (125) exp1 -> PLUS puntoPushOperador termino puntoSumaResta . exp1
+    (125) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
+    (126) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
+    (127) exp1 -> . empty
+    (152) empty -> .
 
-    TIMES           reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    DIVIDE          reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    PLUS            reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    MINUS           reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    GREATERTHAN     reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    LESSTHAN        reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    GREATERTHANEQUAL reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    LESSTHANEQUAL   reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    EQUALEQUAL      reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    NOTEQUAL        reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    AND             reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    OR              reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    SEMICOLON       reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    RPAREN          reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    RBRACKET        reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
-    COMMA           reduce using rule 140 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    PLUS            shift and go to state 179
+    MINUS           shift and go to state 180
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
 
+    exp1                           shift and go to state 277
+    empty                          shift and go to state 181
 
 state 265
+
+    (126) exp1 -> MINUS puntoPushOperador termino puntoSumaResta . exp1
+    (125) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
+    (126) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
+    (127) exp1 -> . empty
+    (152) empty -> .
+
+    PLUS            shift and go to state 179
+    MINUS           shift and go to state 180
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
+
+    exp1                           shift and go to state 278
+    empty                          shift and go to state 181
+
+state 266
+
+    (130) termino1 -> TIMES puntoPushOperador factor puntoMultDivide . termino1
+    (130) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
+    (131) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
+    (132) termino1 -> . empty
+    (152) empty -> .
+
+    TIMES           shift and go to state 183
+    DIVIDE          shift and go to state 184
+    PLUS            reduce using rule 152 (empty -> .)
+    MINUS           reduce using rule 152 (empty -> .)
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
+
+    termino1                       shift and go to state 279
+    empty                          shift and go to state 185
+
+state 267
+
+    (131) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide . termino1
+    (130) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
+    (131) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
+    (132) termino1 -> . empty
+    (152) empty -> .
+
+    TIMES           shift and go to state 183
+    DIVIDE          shift and go to state 184
+    PLUS            reduce using rule 152 (empty -> .)
+    MINUS           reduce using rule 152 (empty -> .)
+    GREATERTHAN     reduce using rule 152 (empty -> .)
+    LESSTHAN        reduce using rule 152 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 152 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 152 (empty -> .)
+    EQUALEQUAL      reduce using rule 152 (empty -> .)
+    NOTEQUAL        reduce using rule 152 (empty -> .)
+    AND             reduce using rule 152 (empty -> .)
+    OR              reduce using rule 152 (empty -> .)
+    SEMICOLON       reduce using rule 152 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
+    RBRACKET        reduce using rule 152 (empty -> .)
+    COMMA           reduce using rule 152 (empty -> .)
+
+    termino1                       shift and go to state 280
+    empty                          shift and go to state 185
+
+state 268
+
+    (141) funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .
+
+    TIMES           reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    DIVIDE          reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    PLUS            reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    MINUS           reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    GREATERTHAN     reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    LESSTHAN        reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    GREATERTHANEQUAL reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    LESSTHANEQUAL   reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    EQUALEQUAL      reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    NOTEQUAL        reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    AND             reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    OR              reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    SEMICOLON       reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    RPAREN          reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    RBRACKET        reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+    COMMA           reduce using rule 141 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
+
+
+state 269
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque . puntoEndWhileQuad
     (106) puntoEndWhileQuad -> .
@@ -4210,9 +4270,9 @@ state 265
     CALL            reduce using rule 106 (puntoEndWhileQuad -> .)
     RBLOQUE         reduce using rule 106 (puntoEndWhileQuad -> .)
 
-    puntoEndWhileQuad              shift and go to state 277
+    puntoEndWhileQuad              shift and go to state 281
 
-state 266
+state 270
 
     (107) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN . puntoCreateDoWhileQuad
     (109) puntoCreateDoWhileQuad -> .
@@ -4226,16 +4286,16 @@ state 266
     CALL            reduce using rule 109 (puntoCreateDoWhileQuad -> .)
     RBLOQUE         reduce using rule 109 (puntoCreateDoWhileQuad -> .)
 
-    puntoCreateDoWhileQuad         shift and go to state 278
+    puntoCreateDoWhileQuad         shift and go to state 282
 
-state 267
+state 271
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 . RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RPAREN          shift and go to state 279
+    RPAREN          shift and go to state 283
 
 
-state 268
+state 272
 
     (94) llamada1 -> expresion . puntoVerifyArgumento llamada2
     (99) puntoVerifyArgumento -> .
@@ -4243,16 +4303,16 @@ state 268
     COMMA           reduce using rule 99 (puntoVerifyArgumento -> .)
     RPAREN          reduce using rule 99 (puntoVerifyArgumento -> .)
 
-    puntoVerifyArgumento           shift and go to state 280
+    puntoVerifyArgumento           shift and go to state 284
 
-state 269
+state 273
 
     (95) llamada1 -> empty .
 
     RPAREN          reduce using rule 95 (llamada1 -> empty .)
 
 
-state 270
+state 274
 
     (50) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType . puntoPushParam funciones3
     (55) puntoPushParam -> .
@@ -4260,9 +4320,9 @@ state 270
     COMMA           reduce using rule 55 (puntoPushParam -> .)
     RPAREN          reduce using rule 55 (puntoPushParam -> .)
 
-    puntoPushParam                 shift and go to state 281
+    puntoPushParam                 shift and go to state 285
 
-state 271
+state 275
 
     (82) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad .
 
@@ -4276,92 +4336,92 @@ state 271
     RBLOQUE         reduce using rule 82 (condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad .)
 
 
-state 272
+state 276
 
     (83) condicion1 -> ELSE puntoCreateElseQuad . bloque
     (64) bloque -> . LBLOQUE bloque1 RBLOQUE
 
     LBLOQUE         shift and go to state 158
 
-    bloque                         shift and go to state 282
-
-state 273
-
-    (124) exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .
-
-    GREATERTHAN     reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    LESSTHAN        reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    GREATERTHANEQUAL reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    LESSTHANEQUAL   reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    EQUALEQUAL      reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    NOTEQUAL        reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    AND             reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    OR              reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    SEMICOLON       reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    RPAREN          reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    RBRACKET        reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-    COMMA           reduce using rule 124 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
-
-
-state 274
-
-    (125) exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .
-
-    GREATERTHAN     reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    LESSTHAN        reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    GREATERTHANEQUAL reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    LESSTHANEQUAL   reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    EQUALEQUAL      reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    NOTEQUAL        reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    AND             reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    OR              reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    SEMICOLON       reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    RPAREN          reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    RBRACKET        reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-    COMMA           reduce using rule 125 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
-
-
-state 275
-
-    (129) termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .
-
-    PLUS            reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    MINUS           reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    GREATERTHAN     reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    LESSTHAN        reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    GREATERTHANEQUAL reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    LESSTHANEQUAL   reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    EQUALEQUAL      reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    NOTEQUAL        reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    AND             reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    OR              reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    SEMICOLON       reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    RPAREN          reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    RBRACKET        reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-    COMMA           reduce using rule 129 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
-
-
-state 276
-
-    (130) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .
-
-    PLUS            reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    MINUS           reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    GREATERTHAN     reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    LESSTHAN        reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    GREATERTHANEQUAL reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    LESSTHANEQUAL   reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    EQUALEQUAL      reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    NOTEQUAL        reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    AND             reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    OR              reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    SEMICOLON       reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    RPAREN          reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    RBRACKET        reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-    COMMA           reduce using rule 130 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
-
+    bloque                         shift and go to state 286
 
 state 277
+
+    (125) exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .
+
+    GREATERTHAN     reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    LESSTHAN        reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    GREATERTHANEQUAL reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    LESSTHANEQUAL   reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    EQUALEQUAL      reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    NOTEQUAL        reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    AND             reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    OR              reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    SEMICOLON       reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    RPAREN          reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    RBRACKET        reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+    COMMA           reduce using rule 125 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
+
+
+state 278
+
+    (126) exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .
+
+    GREATERTHAN     reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    LESSTHAN        reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    GREATERTHANEQUAL reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    LESSTHANEQUAL   reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    EQUALEQUAL      reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    NOTEQUAL        reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    AND             reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    OR              reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    SEMICOLON       reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    RPAREN          reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    RBRACKET        reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+    COMMA           reduce using rule 126 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
+
+
+state 279
+
+    (130) termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .
+
+    PLUS            reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    MINUS           reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    GREATERTHAN     reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    LESSTHAN        reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    GREATERTHANEQUAL reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    LESSTHANEQUAL   reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    EQUALEQUAL      reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    NOTEQUAL        reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    AND             reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    OR              reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    SEMICOLON       reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    RPAREN          reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    RBRACKET        reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+    COMMA           reduce using rule 130 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
+
+
+state 280
+
+    (131) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .
+
+    PLUS            reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    MINUS           reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    GREATERTHAN     reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    LESSTHAN        reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    GREATERTHANEQUAL reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    LESSTHANEQUAL   reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    EQUALEQUAL      reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    NOTEQUAL        reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    AND             reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    OR              reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    SEMICOLON       reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    RPAREN          reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    RBRACKET        reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+    COMMA           reduce using rule 131 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
+
+
+state 281
 
     (103) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad .
 
@@ -4375,7 +4435,7 @@ state 277
     RBLOQUE         reduce using rule 103 (while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad .)
 
 
-state 278
+state 282
 
     (107) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad .
 
@@ -4389,57 +4449,57 @@ state 278
     RBLOQUE         reduce using rule 107 (do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad .)
 
 
-state 279
+state 283
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN . puntoPopFondoFalso puntoCreateGoSubQuad
-    (139) puntoPopFondoFalso -> .
+    (140) puntoPopFondoFalso -> .
 
-    SEMICOLON       reduce using rule 139 (puntoPopFondoFalso -> .)
-    TIMES           reduce using rule 139 (puntoPopFondoFalso -> .)
-    DIVIDE          reduce using rule 139 (puntoPopFondoFalso -> .)
-    PLUS            reduce using rule 139 (puntoPopFondoFalso -> .)
-    MINUS           reduce using rule 139 (puntoPopFondoFalso -> .)
-    GREATERTHAN     reduce using rule 139 (puntoPopFondoFalso -> .)
-    LESSTHAN        reduce using rule 139 (puntoPopFondoFalso -> .)
-    GREATERTHANEQUAL reduce using rule 139 (puntoPopFondoFalso -> .)
-    LESSTHANEQUAL   reduce using rule 139 (puntoPopFondoFalso -> .)
-    EQUALEQUAL      reduce using rule 139 (puntoPopFondoFalso -> .)
-    NOTEQUAL        reduce using rule 139 (puntoPopFondoFalso -> .)
-    AND             reduce using rule 139 (puntoPopFondoFalso -> .)
-    OR              reduce using rule 139 (puntoPopFondoFalso -> .)
-    RPAREN          reduce using rule 139 (puntoPopFondoFalso -> .)
-    RBRACKET        reduce using rule 139 (puntoPopFondoFalso -> .)
-    COMMA           reduce using rule 139 (puntoPopFondoFalso -> .)
+    SEMICOLON       reduce using rule 140 (puntoPopFondoFalso -> .)
+    TIMES           reduce using rule 140 (puntoPopFondoFalso -> .)
+    DIVIDE          reduce using rule 140 (puntoPopFondoFalso -> .)
+    PLUS            reduce using rule 140 (puntoPopFondoFalso -> .)
+    MINUS           reduce using rule 140 (puntoPopFondoFalso -> .)
+    GREATERTHAN     reduce using rule 140 (puntoPopFondoFalso -> .)
+    LESSTHAN        reduce using rule 140 (puntoPopFondoFalso -> .)
+    GREATERTHANEQUAL reduce using rule 140 (puntoPopFondoFalso -> .)
+    LESSTHANEQUAL   reduce using rule 140 (puntoPopFondoFalso -> .)
+    EQUALEQUAL      reduce using rule 140 (puntoPopFondoFalso -> .)
+    NOTEQUAL        reduce using rule 140 (puntoPopFondoFalso -> .)
+    AND             reduce using rule 140 (puntoPopFondoFalso -> .)
+    OR              reduce using rule 140 (puntoPopFondoFalso -> .)
+    RPAREN          reduce using rule 140 (puntoPopFondoFalso -> .)
+    RBRACKET        reduce using rule 140 (puntoPopFondoFalso -> .)
+    COMMA           reduce using rule 140 (puntoPopFondoFalso -> .)
 
-    puntoPopFondoFalso             shift and go to state 283
+    puntoPopFondoFalso             shift and go to state 287
 
-state 280
+state 284
 
     (94) llamada1 -> expresion puntoVerifyArgumento . llamada2
     (96) llamada2 -> . COMMA expresion puntoVerifyArgumento llamada2
     (97) llamada2 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
-    COMMA           shift and go to state 285
-    RPAREN          reduce using rule 151 (empty -> .)
+    COMMA           shift and go to state 289
+    RPAREN          reduce using rule 152 (empty -> .)
 
-    llamada2                       shift and go to state 284
-    empty                          shift and go to state 286
+    llamada2                       shift and go to state 288
+    empty                          shift and go to state 290
 
-state 281
+state 285
 
     (50) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam . funciones3
     (50) funciones3 -> . COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     (51) funciones3 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
     COMMA           shift and go to state 161
-    RPAREN          reduce using rule 151 (empty -> .)
+    RPAREN          reduce using rule 152 (empty -> .)
 
-    funciones3                     shift and go to state 287
+    funciones3                     shift and go to state 291
     empty                          shift and go to state 162
 
-state 282
+state 286
 
     (83) condicion1 -> ELSE puntoCreateElseQuad bloque .
 
@@ -4453,7 +4513,7 @@ state 282
     RBLOQUE         reduce using rule 83 (condicion1 -> ELSE puntoCreateElseQuad bloque .)
 
 
-state 283
+state 287
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso . puntoCreateGoSubQuad
     (100) puntoCreateGoSubQuad -> .
@@ -4475,26 +4535,26 @@ state 283
     RBRACKET        reduce using rule 100 (puntoCreateGoSubQuad -> .)
     COMMA           reduce using rule 100 (puntoCreateGoSubQuad -> .)
 
-    puntoCreateGoSubQuad           shift and go to state 288
+    puntoCreateGoSubQuad           shift and go to state 292
 
-state 284
+state 288
 
     (94) llamada1 -> expresion puntoVerifyArgumento llamada2 .
 
     RPAREN          reduce using rule 94 (llamada1 -> expresion puntoVerifyArgumento llamada2 .)
 
 
-state 285
+state 289
 
     (96) llamada2 -> COMMA . expresion puntoVerifyArgumento llamada2
     (110) expresion -> . compare expresion2
-    (114) compare -> . exp compare1
-    (123) exp -> . termino puntoSumaResta exp1
-    (128) termino -> . factor puntoMultDivide termino1
-    (134) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
-    (135) factor -> . tipo_cte
-    (136) factor -> . MINUS tipo_cte
-    (137) factor -> . NOT tipo_cte
+    (115) compare -> . exp compare1
+    (124) exp -> . termino puntoSumaResta exp1
+    (129) termino -> . factor puntoMultDivide termino1
+    (135) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (136) factor -> . tipo_cte
+    (137) factor -> . MINUS tipo_cte
+    (138) factor -> . NOT tipo_cte
     (28) tipo_cte -> . CTE_INT puntoPushInt
     (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
     (30) tipo_cte -> . CTE_BOOL puntoPushBool
@@ -4513,7 +4573,7 @@ state 285
     ID              shift and go to state 119
     CALL            shift and go to state 96
 
-    expresion                      shift and go to state 289
+    expresion                      shift and go to state 293
     compare                        shift and go to state 107
     exp                            shift and go to state 108
     termino                        shift and go to state 109
@@ -4521,21 +4581,21 @@ state 285
     tipo_cte                       shift and go to state 112
     llamada                        shift and go to state 120
 
-state 286
+state 290
 
     (97) llamada2 -> empty .
 
     RPAREN          reduce using rule 97 (llamada2 -> empty .)
 
 
-state 287
+state 291
 
     (50) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3 .
 
     RPAREN          reduce using rule 50 (funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3 .)
 
 
-state 288
+state 292
 
     (93) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad .
 
@@ -4557,7 +4617,7 @@ state 288
     COMMA           reduce using rule 93 (llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad .)
 
 
-state 289
+state 293
 
     (96) llamada2 -> COMMA expresion . puntoVerifyArgumento llamada2
     (99) puntoVerifyArgumento -> .
@@ -4565,22 +4625,22 @@ state 289
     COMMA           reduce using rule 99 (puntoVerifyArgumento -> .)
     RPAREN          reduce using rule 99 (puntoVerifyArgumento -> .)
 
-    puntoVerifyArgumento           shift and go to state 290
+    puntoVerifyArgumento           shift and go to state 294
 
-state 290
+state 294
 
     (96) llamada2 -> COMMA expresion puntoVerifyArgumento . llamada2
     (96) llamada2 -> . COMMA expresion puntoVerifyArgumento llamada2
     (97) llamada2 -> . empty
-    (151) empty -> .
+    (152) empty -> .
 
-    COMMA           shift and go to state 285
-    RPAREN          reduce using rule 151 (empty -> .)
+    COMMA           shift and go to state 289
+    RPAREN          reduce using rule 152 (empty -> .)
 
-    llamada2                       shift and go to state 291
-    empty                          shift and go to state 286
+    llamada2                       shift and go to state 295
+    empty                          shift and go to state 290
 
-state 291
+state 295
 
     (96) llamada2 -> COMMA expresion puntoVerifyArgumento llamada2 .
 

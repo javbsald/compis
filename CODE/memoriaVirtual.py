@@ -24,10 +24,12 @@ temp_char_start = 23000
 temp_bool_start = 24000
 
 # Memoria Constante
-const_int_start = 25000
-const_float_start = 27000
-const_char_start = 28000
-const_bool_start = 29000
+memoriaConstante = dict()
+memoriaConstanteDir = dict()
+constant_int_start = 25000
+constant_float_start = 27000
+constant_char_start = 28000
+constant_bool_start = 29000
 
 def getGlobalDir(dir_type):
     if dir_type == "int":
@@ -82,6 +84,24 @@ def getTempDir(dir_type):
         global temp_bool_start
         temp_bool_start += 1
         return temp_bool_start
+
+def getConstantDir(dir_type):
+    if dir_type == "int":
+        global constant_int_start
+        constant_int_start += 1
+        return constant_int_start
+    elif dir_type == "float":
+        global constant_float_start
+        constant_float_start += 1
+        return constant_float_start
+    elif dir_type == "char":
+        global constant_char_start
+        constant_char_start += 1
+        return constant_char_start
+    elif dir_type == "bool":
+        global constant_bool_start
+        constant_bool_start += 1
+        return constant_bool_start
 
 def resetLocal():
     global local_int_counter
