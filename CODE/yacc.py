@@ -26,10 +26,11 @@ pilaOper = []
 pilaTipos = []
 pilaQuads = []
 pilaSaltos = []
-currentIDAsignacion = None # Para guardar el ID al que se le va a asignar
+pilaAsignacion = [] # Para guardar el ID al que se le va a asignar
 
 # Variables globales para llamadas de funciones
 llamadaIDExists = False
+returnFlag = False
 paramFlag = False
 paramCounterToSend = 0
 funcToCall = None
@@ -216,16 +217,14 @@ def p_puntoPushID(p):
     if currentID in globalProgram[programID][currentState]['varTable']:
         tempDir = globalProgram[programID][currentState]['varTable'][currentID]['Direccion']
         vectorPolaco.append(tempDir)
-        memoriaLocal[currentID] = tempDir
         pilaTipos.append(globalProgram[programID][currentState]['varTable'][currentID]['Type'])
     elif currentID in globalProgram[programID]['global']['varTable']:
         tempDir = globalProgram[programID]['global']['varTable'][currentID]['Direccion']
         vectorPolaco.append(tempDir)
-        memoriaGlobal[currentID] = tempDir
         pilaTipos.append(globalProgram[programID]['global']['varTable'][currentID]['Type'])
     else:
         print("not found in varTable, does not exist o es constante")
-        #print(globalProgram[programID][currentState]['varTable'][currentID])
+        print(globalProgram[programID][currentState]['varTable'][currentID])
 
 def p_tipo_graph(p):
     '''
@@ -247,7 +246,7 @@ def p_funciones(p):
 def p_funciones1(p):
     '''
     funciones1 : VOID
-    | tipo
+    | tipo puntoReturnType
     '''
 def p_funciones2(p):
     '''
@@ -259,6 +258,10 @@ def p_funciones3(p):
     funciones3 : COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     | empty
     '''
+def p_puntoReturnType(p):
+    'puntoReturnType : '
+    global returnFlag
+    returnFlag = True
 def p_puntoChangeStateFuncion(p):
     'puntoChangeStateFuncion : '
     global currentState
@@ -268,8 +271,17 @@ def p_puntoChangeStateFuncion(p):
 def p_puntoCreateParamTable(p):
     'puntoCreateParamTable : '
     global paramFlag
+    global returnFlag
     paramFlag = True;
     globalProgram[programID][currentState]['paramTable'] = dict()
+    if returnFlag == True:
+        globalProgram[programID][currentState]['returnType'] = currentType
+        globalProgram[programID]['global']['varTable'][currentState] = dict()
+        globalProgram[programID]['global']['varTable'][currentState]['Direccion'] = getGlobalDir(currentType)
+        globalProgram[programID]['global']['varTable'][currentState]['Type'] = currentType
+    else:
+        globalProgram[programID][currentState]['returnType'] = "void"
+    returnFlag = False
 def p_puntoPushParam(p):
     'puntoPushParam : '
     paramListTypes.append(currentType)
@@ -279,7 +291,6 @@ def p_puntoCreateParamCount(p):
     globalProgram[programID][currentState]['paramTable']['count'] = len(paramList)
     globalProgram[programID][currentState]['paramTable']['parametros'] = dict()
     globalProgram[programID][currentState]['paramTable']['types'] = dict()
-    globalProgram[programID][currentState]['currentQuadCount'] = len(pilaQuads)
 
     while (len(paramList) > 0):
         #print("paramList - ", paramList.pop())
@@ -342,27 +353,24 @@ def p_asignacion2(p):
     '''
 def p_puntoSaveIDAsignacion(p):
     'puntoSaveIDAsignacion :'
-    global currentIDAsignacion
     currentIDAsignacion = p[-1]
+    pilaAsignacion.append(currentIDAsignacion)
     if currentIDAsignacion in globalProgram[programID][currentState]['varTable']:
         tempDir = globalProgram[programID][currentState]['varTable'][currentIDAsignacion]['Direccion']
         vectorPolaco.append(tempDir)
-        memoriaLocal[currentIDAsignacion] = tempDir
         currentIDAsignacion = tempDir
     elif currentIDAsignacion in globalProgram[programID]['global']['varTable']:
         tempDir = globalProgram[programID]['global']['varTable'][currentIDAsignacion]['Direccion']
         vectorPolaco.append(tempDir)
-        memoriaGlobal[currentIDAsignacion] = tempDir
         currentIDAsignacion = tempDir
     else:
         print("not found in varTable, does not exist o es constante")
 def p_puntoCreateAsignacionQuad(p):
     'puntoCreateAsignacionQuad : '
-    global currentIDAsignacion
+    currentIDAsignacion = pilaAsignacion.pop()
     assignTo = vectorPolaco.pop()
     quad = ("=", assignTo, None, currentIDAsignacion)
     pilaQuads.append(quad)
-    currentIDAsignacion = None
 
 def p_leida(p):
     'leida : INPUT LPAREN RPAREN'
@@ -421,7 +429,7 @@ def p_puntoCreatePrintConstantQuad(p):
     pilaQuads.append(quad)
 
 def p_llamada(p):
-    'llamada : CALL PUNTO ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoCreateGoSubQuad'
+    'llamada : CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad'
 def p_llamada1(p):
     '''
     llamada1 : expresion puntoVerifyArgumento llamada2
@@ -465,9 +473,24 @@ def p_puntoCreateGoSubQuad(p):
     'puntoCreateGoSubQuad : '
     quad = ("GOSUB", funcToCall, None, "direccion")
     pilaQuads.append(quad)
+    # Assign return
+    if(globalProgram[programID][funcToCall]['returnType'] != "void"):
+        tempDir = globalProgram[programID]['global']['varTable'][funcToCall]['Direccion']
+        tempType = globalProgram[programID]['global']['varTable'][funcToCall]['Type']
+        nextTempDir = getTempDir(tempType)
+        quad = ("=", tempDir, None, nextTempDir)
+        pilaQuads.append(quad)
+        #print(funcToCall)
+        #print(tempDir)
 
 def p_return(p):
-    'return : RETURN expresion SEMICOLON'
+    'return : RETURN expresion puntoReturnQuad SEMICOLON'
+def p_puntoReturnQuad(p):
+    'puntoReturnQuad : '
+    returnTemp = vectorPolaco.pop()
+    returnDir = globalProgram[programID]['global']['varTable'][currentState]['Direccion']
+    quad = ("RETURN", returnTemp, None, returnDir)
+    pilaQuads.append(quad)
 
 def p_while(p):
     'while : WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad'

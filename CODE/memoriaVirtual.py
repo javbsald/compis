@@ -1,7 +1,6 @@
 # Mapa de Memoria
 
 # Memoria Global
-memoriaGlobal = dict()
 global_int_start = 1000
 global_float_start = 5000
 global_char_start = 7000
