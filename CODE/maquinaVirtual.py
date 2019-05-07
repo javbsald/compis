@@ -50,6 +50,31 @@ def assignToMemory(result, resultDir):
     #elif resultDir >= 25000 and resultDir < 30000:  # Const
         #memoriaConstante[resultDir] = result
 
+def verifyQuadDirections(quadRecieved):
+    #print("Quad Recieved")
+    #print(quadRecieved)
+    #print(isinstance(quadRecieved[1], int))
+    #print(isinstance(quadRecieved[2], int))
+    #print(isinstance(quadRecieved[3], int))
+    newDir1=quadRecieved[1]
+    newDir2=quadRecieved[2]
+    newDir3=quadRecieved[3]
+    if(isinstance(quadRecieved[1], int) == False):
+        if quadRecieved[1] != None:
+            #print(quadRecieved[1], "NOT INT")
+            newDir1 = memoryToValue(quadRecieved[1][0])
+    if(isinstance(quadRecieved[2], int) == False):
+        if quadRecieved[2] != None:
+            #print(quadRecieved[2], "NOT INT")
+            newDir2 = memoryToValue(quadRecieved[2][0])
+    if(isinstance(quadRecieved[3], int) == False):
+        if quadRecieved[3] != None:
+            #print(quadRecieved[3], "NOT INT")
+            newDir3 = memoryToValue(quadRecieved[3][0])
+    newQuad = (quadRecieved[0], newDir1, newDir2, newDir3)
+    #print("Quad Converted", newQuad)
+    return newQuad
+
 while True:
     if pilaQuads[quadCounterList[currentquadCounter]][0] == "GOTO":
         quadCounterList[currentquadCounter] = pilaQuads[quadCounterList[currentquadCounter]][3]-1
@@ -111,110 +136,139 @@ while True:
             resultValue = memoryToValue(toPrint)
             print("Print ", resultValue)
         quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "VER":
+        print("VER", pilaQuads[quadCounterList[currentquadCounter]])
+        toVerifyDir = pilaQuads[quadCounterList[currentquadCounter]][1]
+        toVerify = memoryToValue(toVerifyDir)
+        limiteInferior = pilaQuads[quadCounterList[currentquadCounter]][2]
+        limiteSuperior = pilaQuads[quadCounterList[currentquadCounter]][3]
+        if toVerify > limiteInferior and toVerify <= limiteSuperior:
+            quadCounterList[currentquadCounter] += 1
+        else:
+            print("Error: Array out of Bounds")
+            sys.exit(0)
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "=":
-        print(pilaQuads[quadCounterList[currentquadCounter]])
-        result = pilaQuads[quadCounterList[currentquadCounter]][1]
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        #print("MAQUINA VIRTUAL ASIGNACION")
+        #print(pilaQuads[quadCounterList[currentquadCounter]])
+        #print("to")
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        #print(quadToWork)
+        result = quadToWork[1]
+        resultDir = quadToWork[3]
         #print(resultDir, " = ", result)
+        # Checar si a lo que vas a asignar es apuntador
+        #print("Checar si realmente es Direccion", resultDir)
         resultValue = memoryToValue(result)
         assignToMemory(resultValue, resultDir)
         print(resultDir, " = ", resultValue)
         #print(memoriaGlobal, memoriaLocal, memoriaTemporal)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "+":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " + ", operador2)
         result = operador1 + operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "-":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " - ", operador2)
         result = operador1 - operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "*":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " * ", operador2)
         result = operador1 * operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "/":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " / ", operador2)
         result = operador1 / operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "<":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " < ", operador2)
         result = operador1 < operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == ">":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " > ", operador2)
         result = operador1 > operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "<=":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " <= ", operador2)
         result = operador1 <= operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == ">=":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         print(operador1, " >= ", operador2)
         result = operador1 >= operador2
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "==":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         result = operador1 == operador2
         print(operador1, " == ", operador2, " => ", result)
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "!=":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         result = operador1 != operador2
         print(operador1, " != ", operador2, " => ", result)
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "&&":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         result = operador1 and operador2
         print(operador1, " && ", operador2, " => ", result)
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "||":
-        operador1 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][1])
-        operador2 = memoryToValue(pilaQuads[quadCounterList[currentquadCounter]][2])
+        quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+        operador1 = memoryToValue(quadToWork[1])
+        operador2 = memoryToValue(quadToWork[2])
         result = operador1 or operador2
         print(operador1, " ||", operador2, " => ", result)
-        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+        resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
     else:

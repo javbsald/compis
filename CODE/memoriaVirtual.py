@@ -52,19 +52,19 @@ def getGlobalDir(dir_type):
 def setGlobalArr(dir_type, dimension):
     if dir_type == "int":
         global global_int_start
-        global_int_start += dimension-1
+        global_int_start += dimension
         return global_int_start
     elif dir_type == "float":
         global global_float_start
-        global_float_start += dimension-1
+        global_float_start += dimension
         return global_float_start
     elif dir_type == "char":
         global global_char_start
-        global_char_start += dimension-1
+        global_char_start += dimension
         return global_char_start
     elif dir_type == "bool":
         global global_bool_start
-        global_bool_start += dimension-1
+        global_bool_start += dimension
         return global_bool_start
 
 def getLocalDir(dir_type):
@@ -75,7 +75,7 @@ def getLocalDir(dir_type):
     elif dir_type == "float":
         global local_float_counter
         local_int_counter += 1
-        return local_int_counter
+        return local_float_counter
     elif dir_type == "char":
         global local_char_counter
         local_char_counter += 1
@@ -88,19 +88,19 @@ def getLocalDir(dir_type):
 def setLocalArr(dir_type, dimension):
     if dir_type == "int":
         global local_int_counter
-        local_int_counter += dimension-1
+        local_int_counter += dimension
         return local_int_counter
     elif dir_type == "float":
         global local_float_counter
-        local_int_counter += dimension-1
-        return local_int_counter
+        local_float_counter += dimension
+        return local_float_counter
     elif dir_type == "char":
         global local_char_counter
-        local_char_counter += dimension-1
+        local_char_counter += dimension
         return local_char_counter
     elif dir_type == "bool":
         global local_bool_counter
-        local_bool_counter += dimension-1
+        local_bool_counter += dimension
         return local_bool_counter
 
 def getTempDir(dir_type):

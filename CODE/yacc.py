@@ -127,9 +127,11 @@ def p_puntoCreateVarType(p):
         if(currentState=="global"):
             currentDireccion = getGlobalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
+            print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
         else:
             currentDireccion = getLocalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
+            print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
         #else:
             #look in param table
             #print(globalProgram[programID][currentState])
@@ -178,7 +180,7 @@ def p_tipo_cte(p):
     '''
 def p_tipo_cte1(p):
     '''
-    tipo_cte1 : LBRACKET CTE_INT RBRACKET
+    tipo_cte1 : LBRACKET CTE_INT puntoCreateArrQuad RBRACKET
     | funciones_arr
     | empty
     '''
@@ -377,7 +379,7 @@ def p_asignacion(p):
     'asignacion : ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON'
 def p_asignacion1(p):
     '''
-    asignacion1 : LBRACKET expresion puntoCreateArrQuad RBRACKET
+    asignacion1 : LBRACKET puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
     | empty
     '''
 def p_asignacion2(p):
@@ -420,10 +422,31 @@ def p_puntoCreateArrQuad(p):
     pilaQuads.append(quad)
     typeTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
     tempDir = getTempDir(typeTemp)
-    quad = ("+", aux1, aux2, tempDir)
-    print("En la ", tempDir, "no contiene un valor, contiene una direccion")
+    print(memoriaConstante)
+    #print(memoriaConstanteDir)
+    # Hacer aux1 constante porque se le sumara la posicion del arreglo
+    if aux1 in memoriaConstante:
+        #print("10000 exists")
+        tempInt = memoriaConstante[aux1]
+    else:
+        #print("10000 does NOT exist")
+        tempInt = getConstantDir("int")
+        memoriaConstante[aux1] =  tempInt
+        memoriaConstanteDir[tempInt] = aux1
+        print("Assign", aux1, "a", tempInt)
+    #quad = ("+", aux1, aux2, tempDir)
+    #print("AUX1 = ", aux1)
+    #dirBase = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Direccion']
+    #print("DIR BASE = ", aux2)
+    quad = ("+", tempInt, aux2, tempDir)
+    #print("En la ", tempDir, "no contiene un valor, contiene una direccion")
     pilaQuads.append(quad)
-    vectorPolaco.append(tempDir)
+    # Hacer la tempDir lista para meterlo como (tempDir)
+    tempListDir = []
+    tempListDir.append(tempDir)
+    print(tempListDir)
+    vectorPolaco.append(tempListDir)
+    pilaAsignacion.append(tempListDir)
 def p_puntoCreateAsignacionQuad(p):
     'puntoCreateAsignacionQuad : '
     currentIDAsignacion = pilaAsignacion.pop()
@@ -755,13 +778,21 @@ s = '''
 program arrays;
 void main()
 {
-    var arr as int[10];
+    var arr as int[5];
+    var pi as float;
+
+    pi = 1+3.14*2/4;
 
     print("Array created");
 
     arr[1] = 7;
+    arr[2] = 13;
+    arr[3] = 4;
+    arr[4] = 1;
+    arr[5] = 2;
 
-    print(arr[1]);
+    //print(arr[1]);
+    //print(arr[2]);
 }
 '''
 
