@@ -106,13 +106,13 @@ def getConstantDir(dir_type):
 def resetLocal():
     global local_int_counter
     global local_int_start
-    local_int_counter = local_int_start
+    local_int_counter = local_int_start-1
     global local_float_counter
     global local_float_start
-    local_float_counter = local_float_start
+    local_float_counter = local_float_start-1
     global local_char_counter
     global local_char_start
-    local_char_counter = local_char_start
+    local_char_counter = local_char_start-1
     global local_bool_counter
     global local_bool_start
-    local_bool_counter = local_bool_start
+    local_bool_counter = local_bool_start-1

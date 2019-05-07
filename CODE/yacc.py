@@ -27,6 +27,7 @@ pilaTipos = []
 pilaQuads = []
 pilaSaltos = []
 pilaAsignacion = [] # Para guardar el ID al que se le va a asignar
+goSubFunciones = dict() # Sostiene el currentQuad para hacer el salto (GOSUB)
 
 # Variables globales para llamadas de funciones
 llamadaIDExists = False
@@ -120,9 +121,15 @@ def p_puntoCreateVarType(p):
         globalProgram[programID][currentState]['varTable'][x]["Type"] = currentType
         if(currentState=="global"):
             currentDireccion = getGlobalDir(currentType)
+            globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
         else:
+            resetLocal()
             currentDireccion = getLocalDir(currentType)
-        globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
+            globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
+        #else:
+            #look in param table
+            #print(globalProgram[programID][currentState])
+            #currentDireccion = globalProgram[programID][currentState]['paramTable'][x]["direccion"]
         #varList.pop(0)
     #pprint.pprint(globalProgram)
 
@@ -270,6 +277,7 @@ def p_puntoChangeStateFuncion(p):
     'puntoChangeStateFuncion : '
     global currentState
     currentState = p[-1]
+    goSubFunciones[currentState] = len(pilaQuads)+1
     #print("reset funcion local")
     resetLocal()
 def p_puntoCreateParamTable(p):
@@ -295,18 +303,23 @@ def p_puntoCreateParamCount(p):
     globalProgram[programID][currentState]['paramTable']['count'] = len(paramList)
     globalProgram[programID][currentState]['paramTable']['parametros'] = dict()
     globalProgram[programID][currentState]['paramTable']['types'] = dict()
-
+    globalProgram[programID][currentState]['paramTable']['direccion'] = dict()
+    resetLocal()
     while (len(paramList) > 0):
         #print("paramList - ", paramList.pop())
         globalProgram[programID][currentState]['paramTable']['parametros'][len(paramList)+1] = paramList.pop()
     while (len(paramListTypes) > 0):
         #print("paramListTypes - ", paramListTypes.pop())
-        globalProgram[programID][currentState]['paramTable']['types'][len(paramListTypes)+1] = paramListTypes.pop()
+        paramType = paramListTypes.pop()
+        globalProgram[programID][currentState]['paramTable']['types'][len(paramListTypes)+1] = paramType
+        globalProgram[programID][currentState]['paramTable']['direccion'][len(paramListTypes)+1] = getLocalDir(paramType)
     paramFlag = False
 def p_puntoFinalFuncQuad(p):
     'puntoFinalFuncQuad : '
     quad = ("ENDPROC", None, None, None)
     pilaQuads.append(quad)
+    # Reset memoria local porque termino la funcion
+    resetLocal()
 
 def p_main(p):
     'main : VOID MAIN LPAREN RPAREN bloque_modular'
@@ -358,6 +371,14 @@ def p_asignacion2(p):
 def p_puntoSaveIDAsignacion(p):
     'puntoSaveIDAsignacion :'
     currentIDAsignacion = p[-1]
+    #if currentState != "main" and currentState != "global":
+    #    print("AQUIII", currentState, paramCounterToSend)
+    #    print(globalProgram[programID][currentState]['paramTable'])
+
+    #    tempDir = globalProgram[programID][currentState]['varTable'][currentIDAsignacion]['Direccion']
+    #    vectorPolaco.append(tempDir)
+    #    currentIDAsignacion = tempDir
+    #    pilaAsignacion.append(currentIDAsignacion)
     if currentIDAsignacion in globalProgram[programID][currentState]['varTable']:
         tempDir = globalProgram[programID][currentState]['varTable'][currentIDAsignacion]['Direccion']
         vectorPolaco.append(tempDir)
@@ -469,14 +490,16 @@ def p_puntoVerifyArgumento(p):
     #print("Comparing ", argumento, " - ", argumentoType, " vs. ")
     #print(globalProgram[programID][funcToCall]['paramTable']['types'][paramCounterToSend+1])
     if(argumentoType == globalProgram[programID][funcToCall]['paramTable']['types'][paramCounterToSend+1]):
-        quad = ("PARAM", argumento, None, "argumentoDir")
+        argumentoDir = globalProgram[programID][funcToCall]['paramTable']['direccion'][paramCounterToSend+1]
+        quad = ("PARAM", argumento, None, argumentoDir)
         pilaQuads.append(quad)
     else:
         print("Error: Parameter Type mismatch")
     paramCounterToSend += 1
 def p_puntoCreateGoSubQuad(p):
     'puntoCreateGoSubQuad : '
-    quad = ("GOSUB", funcToCall, None, "direccion")
+    jumpTo = goSubFunciones[funcToCall]
+    quad = ("GOSUB", funcToCall, None, jumpTo)
     pilaQuads.append(quad)
     # Assign return
     if(globalProgram[programID][funcToCall]['returnType'] != "void"):
@@ -694,21 +717,39 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program patito;
-var i, j as int;
+program moduloLlamadas;
+var a, b as int;
+var f as float;
+func void uno(int a)
+{
+    a=a+b*a;
+    print(a);
+    print(b);
+    print(a+b);
+}
+func void dos(int a, int b, float g)
+{
+    var i as int;
+    i=b;
+    while(i>0)
+    {
+        a=a+b*i+b;
+        call.uno(i*2);
+        print(a);
+        i=i-1;
+    }
+}
 void main()
 {
-    var try as bool;
-    i=2+3;
-    j=i*2-1;
-    i=j/1;
-
-    if(i!=9 && j==9)
-    {
-        print("Pog");
-    }
-
-    //print(1);
+    a=3;
+    b=a+1;
+    print(a);
+    print(b);
+    f=3.14;
+    call.dos(a+b*2, b, f*3);
+    print(a);
+    print(b);
+    print(f*2+1);
 }
 '''
 
