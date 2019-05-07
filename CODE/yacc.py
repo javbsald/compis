@@ -117,13 +117,13 @@ def p_puntoCreateVar(p):
 
 def p_puntoCreateVarType(p):
     'puntoCreateVarType : '
+    resetLocal()
     for x in varList:
         globalProgram[programID][currentState]['varTable'][x]["Type"] = currentType
         if(currentState=="global"):
             currentDireccion = getGlobalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
         else:
-            resetLocal()
             currentDireccion = getLocalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
         #else:
@@ -507,6 +507,8 @@ def p_puntoCreateGoSubQuad(p):
         tempType = globalProgram[programID]['global']['varTable'][funcToCall]['Type']
         nextTempDir = getTempDir(tempType)
         quad = ("=", tempDir, None, nextTempDir)
+        vectorPolaco.append(nextTempDir)
+        pilaTipos.append(tempType)
         pilaQuads.append(quad)
         #print(funcToCall)
         #print(tempDir)
@@ -720,33 +722,19 @@ s = '''
 program moduloLlamadas;
 var a, b as int;
 var f as float;
-func void uno(int a)
+func int uno(int a)
 {
-    a=a+b*a;
+    print("UNO");
+    f=3.14;
     print(a);
-    print(b);
-    print(a+b);
-}
-func void dos(int a, int b, float g)
-{
-    var i as int;
-    i=b;
-    while(i>0)
-    {
-        a=a+b*i+b;
-        call.uno(i*2);
-        print(a);
-        i=i-1;
-    }
+    return b*b;
 }
 void main()
 {
     a=3;
     b=a+1;
-    print(a);
-    print(b);
-    f=3.14;
-    call.dos(a+b*2, b, f*3);
+    print("llamando");
+    print(call.uno(a+b*2));
     print(a);
     print(b);
     print(f*2+1);
