@@ -19,6 +19,8 @@ programID = None
 currentState = "global"
 currentType = None
 currentDimension = 0
+currentIDGlobal = None
+arrBool = False
 
 # Varibles globales para Cuadruplos
 vectorPolaco = []
@@ -92,6 +94,8 @@ def p_vars3(p):
 def p_puntoChangeDimension(p):
     'puntoChangeDimension : '
     global currentDimension
+    global arrBool
+    arrBool = True
     currentDimension = p[-1]
 
 # Punto crear var table
@@ -136,10 +140,20 @@ def p_puntoCreateVarType(p):
 def p_puntoCreateDimension(p):
     'puntoCreateDimension : '
     global currentDimension
+    global arrBool
+    localAcum = currentDimension-1
     while (len(varList) > 0):
         globalProgram[programID][currentState]['varTable'][varList[0]]["Dimension"] = currentDimension
+        tempType = globalProgram[programID][currentState]['varTable'][varList[0]]["Type"]
         varList.pop(0)
+        if arrBool == True:
+            if len(varList) > 0:
+                print(globalProgram[programID][currentState]['varTable'][varList[0]])
+                tempDireccion = globalProgram[programID][currentState]['varTable'][varList[0]]["Direccion"]
+                globalProgram[programID][currentState]['varTable'][varList[0]]["Direccion"] = tempDireccion+localAcum
+                localAcum += currentDimension-1
     currentDimension = 0
+    arrBool = False;
 
 def p_tipo(p):
     '''
@@ -253,7 +267,7 @@ def p_tipo_graph(p):
 #    '''
 
 def p_funciones(p):
-    'funciones : FUNC funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN puntoCreateParamTable funciones2 RPAREN puntoCreateParamCount bloque_modular puntoFinalFuncQuad'
+    'funciones : FUNC puntoResetMemoria funciones1 ID puntoChangeStateFuncion puntoCreateVarTableState LPAREN puntoCreateParamTable funciones2 RPAREN puntoCreateParamCount bloque_modular puntoFinalFuncQuad'
 def p_funciones1(p):
     '''
     funciones1 : VOID
@@ -269,6 +283,9 @@ def p_funciones3(p):
     funciones3 : COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     | empty
     '''
+def p_puntoResetMemoria(p):
+    'puntoResetMemoria : '
+    resetLocal()
 def p_puntoReturnType(p):
     'puntoReturnType : '
     global returnFlag
@@ -279,7 +296,7 @@ def p_puntoChangeStateFuncion(p):
     currentState = p[-1]
     goSubFunciones[currentState] = len(pilaQuads)+1
     #print("reset funcion local")
-    resetLocal()
+    #resetLocal()
 def p_puntoCreateParamTable(p):
     'puntoCreateParamTable : '
     global paramFlag
@@ -360,7 +377,7 @@ def p_asignacion(p):
     'asignacion : ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON'
 def p_asignacion1(p):
     '''
-    asignacion1 : LBRACKET expresion RBRACKET
+    asignacion1 : LBRACKET expresion puntoCreateArrQuad RBRACKET
     | empty
     '''
 def p_asignacion2(p):
@@ -370,7 +387,9 @@ def p_asignacion2(p):
     '''
 def p_puntoSaveIDAsignacion(p):
     'puntoSaveIDAsignacion :'
+    global currentIDGlobal
     currentIDAsignacion = p[-1]
+    currentIDGlobal = currentIDAsignacion
     #if currentState != "main" and currentState != "global":
     #    print("AQUIII", currentState, paramCounterToSend)
     #    print(globalProgram[programID][currentState]['paramTable'])
@@ -391,6 +410,20 @@ def p_puntoSaveIDAsignacion(p):
         pilaAsignacion.append(currentIDAsignacion)
     else:
         print("not found in varTable, does not exist o es constante")
+def p_puntoCreateArrQuad(p):
+    'puntoCreateArrQuad : '
+    aux2 = vectorPolaco.pop()
+    aux1 = vectorPolaco.pop()
+    #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal])
+    dimensionTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Dimension']
+    quad = ("VER", aux2, 0, dimensionTemp)
+    pilaQuads.append(quad)
+    typeTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
+    tempDir = getTempDir(typeTemp)
+    quad = ("+", aux1, aux2, tempDir)
+    print("En la ", tempDir, "no contiene un valor, contiene una direccion")
+    pilaQuads.append(quad)
+    vectorPolaco.append(tempDir)
 def p_puntoCreateAsignacionQuad(p):
     'puntoCreateAsignacionQuad : '
     currentIDAsignacion = pilaAsignacion.pop()
@@ -719,25 +752,16 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program moduloLlamadas;
-var a, b as int;
-var f as float;
-func int uno(int a)
-{
-    print("UNO");
-    f=3.14;
-    print(a);
-    return b*b;
-}
+program arrays;
 void main()
 {
-    a=3;
-    b=a+1;
-    print("llamando");
-    print(call.uno(a+b*2));
-    print(a);
-    print(b);
-    print(f*2+1);
+    var arr as int[10];
+
+    print("Array created");
+
+    arr[1] = 7;
+
+    print(arr[1]);
 }
 '''
 
