@@ -70,8 +70,8 @@ def p_puntoChangeStateLocal(p):
 
 def p_puntoPrintFinal(p):
     'puntoPrintFinal : '
-    pprint.pprint(globalProgram)
-    pprint.pprint(pilaQuads)
+    #pprint.pprint(globalProgram)
+    #pprint.pprint(pilaQuads)
 
 def p_vars(p):
     'vars : VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON'
@@ -127,11 +127,11 @@ def p_puntoCreateVarType(p):
         if(currentState=="global"):
             currentDireccion = getGlobalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
-            print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
+            #print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
         else:
             currentDireccion = getLocalDir(currentType)
             globalProgram[programID][currentState]['varTable'][x]["Direccion"] = currentDireccion
-            print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
+            #print("Assign Dir", currentDireccion, "to", x, " as ", currentType)
         #else:
             #look in param table
             #print(globalProgram[programID][currentState])
@@ -150,7 +150,7 @@ def p_puntoCreateDimension(p):
         varList.pop(0)
         if arrBool == True:
             if len(varList) > 0:
-                print(globalProgram[programID][currentState]['varTable'][varList[0]])
+                #print(globalProgram[programID][currentState]['varTable'][varList[0]])
                 tempDireccion = globalProgram[programID][currentState]['varTable'][varList[0]]["Direccion"]
                 globalProgram[programID][currentState]['varTable'][varList[0]]["Direccion"] = tempDireccion+localAcum
                 localAcum += currentDimension-1
@@ -238,7 +238,9 @@ def p_puntoPushChar(p):
 
 def p_puntoPushID(p):
     'puntoPushID : '
+    global currentIDGlobal
     currentID = p[-1]
+    currentIDGlobal = currentID
     #vectorPolaco.append(currentID)
     #print("Push  ID ", currentID, " - ", globalProgram[programID][currentState]['varTable'][currentID]['Direccion'])
     if currentID in globalProgram[programID][currentState]['varTable']:
@@ -250,8 +252,9 @@ def p_puntoPushID(p):
         vectorPolaco.append(tempDir)
         pilaTipos.append(globalProgram[programID]['global']['varTable'][currentID]['Type'])
     else:
-        print("not found in varTable, does not exist o es constante")
-        print(globalProgram[programID][currentState]['varTable'][currentID])
+        print("ERROR: Variable not declared", str(p.lexer.lineno))
+        sys.exit(0)
+        #print(globalProgram[programID][currentState]['varTable'][currentID])
 
 def p_tipo_graph(p):
     '''
@@ -411,7 +414,8 @@ def p_puntoSaveIDAsignacion(p):
         currentIDAsignacion = tempDir
         pilaAsignacion.append(currentIDAsignacion)
     else:
-        print("not found in varTable, does not exist o es constante")
+        print("ERROR: Variable not declared", str(p.lexer.lineno))
+        sys.exit(0)
 def p_puntoCreateArrQuad(p):
     'puntoCreateArrQuad : '
     aux2 = vectorPolaco.pop()
@@ -422,7 +426,7 @@ def p_puntoCreateArrQuad(p):
     pilaQuads.append(quad)
     typeTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
     tempDir = getTempDir(typeTemp)
-    print(memoriaConstante)
+    #print(memoriaConstante)
     #print(memoriaConstanteDir)
     # Hacer aux1 constante porque se le sumara la posicion del arreglo
     if aux1 in memoriaConstante:
@@ -433,7 +437,7 @@ def p_puntoCreateArrQuad(p):
         tempInt = getConstantDir("int")
         memoriaConstante[aux1] =  tempInt
         memoriaConstanteDir[tempInt] = aux1
-        print("Assign", aux1, "a", tempInt)
+        #print("Assign", aux1, "a", tempInt)
     #quad = ("+", aux1, aux2, tempDir)
     #print("AUX1 = ", aux1)
     #dirBase = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Direccion']
@@ -444,7 +448,7 @@ def p_puntoCreateArrQuad(p):
     # Hacer la tempDir lista para meterlo como (tempDir)
     tempListDir = []
     tempListDir.append(tempDir)
-    print(tempListDir)
+    #print(tempListDir)
     vectorPolaco.append(tempListDir)
     pilaAsignacion.append(tempListDir)
 def p_puntoCreateAsignacionQuad(p):
@@ -468,7 +472,8 @@ def p_puntoCreateIfQuad(p):
     'puntoCreateIfQuad : '
     exp_type = pilaTipos.pop()
     if(exp_type != "bool"):
-        print("Error: Type mismatch")
+        print("Error: Type mismatch", str(p.lexer.lineno))
+        sys.exit(0)
     else:
         result = vectorPolaco.pop()
         quad = ("GOTOF", result, None, None)
@@ -536,7 +541,8 @@ def p_puntoVerifyLlamada(p):
         pilaQuads.append(quad)
         paramCounterToSend = 0
     else:
-        print("Error: Funcion ", llamadaID, " not found")
+        print("Error: Funcion ", llamadaID, " not found", str(p.lexer.lineno))
+        sys.exit(0)
         llamadaIDExists = False
 def p_puntoVerifyArgumento(p):
     'puntoVerifyArgumento : '
@@ -550,7 +556,8 @@ def p_puntoVerifyArgumento(p):
         quad = ("PARAM", argumento, None, argumentoDir)
         pilaQuads.append(quad)
     else:
-        print("Error: Parameter Type mismatch")
+        print("Error: Parameter Type mismatch", str(p.lexer.lineno))
+        sys.exit(0)
     paramCounterToSend += 1
 def p_puntoCreateGoSubQuad(p):
     'puntoCreateGoSubQuad : '
@@ -587,7 +594,8 @@ def p_puntoCreateWhileQuad(p):
     'puntoCreateWhileQuad : '
     exp_type = pilaTipos.pop()
     if exp_type != "bool":
-        print("Error: Type mismatch")
+        print("Error: Type mismatch", str(p.lexer.lineno))
+        sys.exit(0)
     else:
         result = vectorPolaco.pop()
         quad = ("GOTOF", result, None, None)
@@ -610,7 +618,8 @@ def p_puntoCreateDoWhileQuad(p):
     'puntoCreateDoWhileQuad : '
     exp_type = pilaTipos.pop()
     if exp_type != "bool":
-        print("Error: Type mismatch")
+        print("Error: Type mismatch", str(p.lexer.lineno))
+        sys.exit(0)
     else:
         result = vectorPolaco.pop()
         goBack = pilaSaltos.pop()
@@ -705,7 +714,8 @@ def createOperationQuad():
         vectorPolaco.append(result)
         pilaTipos.append(result_Type)
     else:
-        print("Error: Type mismatch")
+        print("Error: Type mismatch", str(p.lexer.lineno))
+        sys.exit(0)
 
 def p_termino(p):
     'termino : factor puntoMultDivide termino1'
@@ -749,7 +759,7 @@ def p_funciones_arr(p):
     'funciones_arr : PUNTO funciones_arr1 LPAREN RPAREN'
 def p_funciones_arr1(p):
     '''
-    funciones_arr1 : MAX
+    funciones_arr1 : MAX puntoCreateSpecial
     | MIN
     | RANGE
     | MEDIAN
@@ -760,6 +770,29 @@ def p_funciones_arr1(p):
     | MODIFY
     | DRAW
     '''
+def p_puntoCreateSpecial(p):
+    'puntoCreateSpecial : '
+    specialFuncToCall = p[-1]
+    arrToSend = vectorPolaco.pop()
+    #print(arrToSend)
+    #print(currentIDGlobal)
+    arrDimToSend = globalProgram[programID][currentState]['varTable'][currentIDGlobal]["Dimension"]
+    if specialFuncToCall in globalProgram[programID][currentState]['varTable']:
+        resultDir = globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion']
+    else:
+        globalProgram[programID][currentState]['varTable'][specialFuncToCall] = dict()
+        globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = dict()
+        resultDir = getLocalDir("int")
+        globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = resultDir
+
+    quad = (specialFuncToCall, arrDimToSend, arrToSend, resultDir)
+    pilaQuads.append(quad)
+
+    #nextTempDir = getTempDir("int")
+    #quad = ("=", nextTempDir, None, resultDir)
+    #vectorPolaco.append(nextTempDir)
+    #pilaTipos.append("int")
+    #pilaQuads.append(quad)
 
 def p_empty(p):
     'empty : '
@@ -775,24 +808,39 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program arrays;
+program moduloLlamadas;
+var a, b as int;
+var f as float;
+func void uno(int a)
+{
+    a=a+b*a;
+    print(a);
+    print(b);
+    print(a+b);
+}
+func void dos(int a, int b, float g)
+{
+    var i as int;
+    i=b;
+    while(i>0)
+    {
+        a=a+b*i+b;
+        call.uno(i*2);
+        print(a);
+        i=i-1;
+    }
+}
 void main()
 {
-    var arr as int[5];
-    var pi as float;
-
-    pi = 1+3.14*2/4;
-
-    print("Array created");
-
-    arr[1] = 7;
-    arr[2] = 13;
-    arr[3] = 4;
-    arr[4] = 1;
-    arr[5] = 2;
-
-    //print(arr[1]);
-    //print(arr[2]);
+    a=3;
+    b=a+1;
+    print(a);
+    print(b);
+    f=3.14;
+    call.dos(a+b*2, b, f*3);
+    print(a);
+    print(b);
+    print(f*2+1);
 }
 '''
 
