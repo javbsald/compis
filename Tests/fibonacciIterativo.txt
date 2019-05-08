@@ -1,0 +1,34 @@
+program fibonacciIterativo;
+func int fibonacci(int n)
+{
+    var t1, t2, nextTerm, i as int;
+
+    t1 = 0;
+    t2 = 1;
+    nextTerm = 0;
+    i = 1;
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    if (n == 1)
+    {
+        return 1;
+    }
+    while (i < n)
+    {
+        nextTerm = t1 + t2;
+        t1 = t2;
+        t2 = nextTerm;
+        i = i + 1;
+    }
+    return nextTerm;
+}
+
+void main()
+{
+    var x as int;
+    x = call.fibonacci(6);
+    print(x);
+}

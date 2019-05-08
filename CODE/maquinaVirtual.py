@@ -20,6 +20,7 @@ quadCounterList = []
 quadCounterList.append(quadCounter)
 currentquadCounter=len(quadCounterList)-1
 
+# Funcion que recibe una direccion de memoria y busca en la lista de memoria para conseguir el valor de esa direccion
 def memoryToValue(mem):
     if mem >= 1000 and mem < 10000:     # Global
         if mem in memoriaGlobal:
@@ -40,6 +41,7 @@ def memoryToValue(mem):
     elif mem >= 25000 and mem < 30000:  # Const
         return memoriaConstanteDir[mem]
 
+# Funcion que recibe result para asignar a la direccion de resultDir
 def assignToMemory(result, resultDir):
     if resultDir >= 1000 and resultDir < 10000:     # Global
         memoriaGlobal[resultDir] = result
@@ -50,6 +52,8 @@ def assignToMemory(result, resultDir):
     #elif resultDir >= 25000 and resultDir < 30000:  # Const
         #memoriaConstante[resultDir] = result
 
+# Como podemos tener direcciones de memoria que apuntan a otra direccion de memoria
+# esta funcion verifica que ninguna de los otros 3 que no es el inicial sea un apuntador
 def verifyQuadDirections(quadRecieved):
     #print("Quad Recieved")
     #print(quadRecieved)
@@ -87,6 +91,7 @@ def getArray(arr, dim):
         counter += 1
     # print("GET ARRAY", arrValues)
     return arrValues
+
 while True:
     if pilaQuads[quadCounterList[currentquadCounter]][0] == "GOTO":
         quadCounterList[currentquadCounter] = pilaQuads[quadCounterList[currentquadCounter]][3]-1

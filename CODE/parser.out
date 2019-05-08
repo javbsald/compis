@@ -36,7 +36,7 @@ Rule 30    tipo_cte -> CTE_BOOL puntoPushBool
 Rule 31    tipo_cte -> CTE_CHAR puntoPushChar
 Rule 32    tipo_cte -> ID puntoPushID tipo_cte1
 Rule 33    tipo_cte -> llamada
-Rule 34    tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET
+Rule 34    tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET
 Rule 35    tipo_cte1 -> funciones_arr
 Rule 36    tipo_cte1 -> empty
 Rule 37    puntoPushInt -> <empty>
@@ -172,7 +172,7 @@ COMMA                : 11 50 98
 CTE_BOOL             : 30
 CTE_CHAR             : 31
 CTE_FLOAT            : 29
-CTE_INT              : 15 28 34
+CTE_INT              : 15 28
 CTE_STRING           : 92
 DIVIDE               : 133
 DO                   : 109
@@ -244,7 +244,7 @@ escritura1           : 90
 estatuto             : 63 66
 exp                  : 117 118 119 120 121 122 123
 exp1                 : 126 127 128
-expresion            : 76 78 84 91 96 98 103 105 109 137
+expresion            : 34 76 78 84 91 96 98 103 105 109 137
 expresion2           : 112
 factor               : 131 132 133
 funciones            : 4
@@ -2377,7 +2377,7 @@ state 153
 state 154
 
     (32) tipo_cte -> ID puntoPushID . tipo_cte1
-    (34) tipo_cte1 -> . LBRACKET CTE_INT puntoCreateArrQuad RBRACKET
+    (34) tipo_cte1 -> . LBRACKET expresion puntoCreateArrQuad RBRACKET
     (35) tipo_cte1 -> . funciones_arr
     (36) tipo_cte1 -> . empty
     (143) funciones_arr -> . PUNTO funciones_arr1 LPAREN RPAREN
@@ -3086,10 +3086,40 @@ state 185
 
 state 186
 
-    (34) tipo_cte1 -> LBRACKET . CTE_INT puntoCreateArrQuad RBRACKET
+    (34) tipo_cte1 -> LBRACKET . expresion puntoCreateArrQuad RBRACKET
+    (112) expresion -> . compare expresion2
+    (117) compare -> . exp compare1
+    (126) exp -> . termino puntoSumaResta exp1
+    (131) termino -> . factor puntoMultDivide termino1
+    (137) factor -> . LPAREN puntoPushFondoFalso expresion RPAREN puntoPopFondoFalso
+    (138) factor -> . tipo_cte
+    (139) factor -> . MINUS tipo_cte
+    (140) factor -> . NOT tipo_cte
+    (28) tipo_cte -> . CTE_INT puntoPushInt
+    (29) tipo_cte -> . CTE_FLOAT puntoPushFloat
+    (30) tipo_cte -> . CTE_BOOL puntoPushBool
+    (31) tipo_cte -> . CTE_CHAR puntoPushChar
+    (32) tipo_cte -> . ID puntoPushID tipo_cte1
+    (33) tipo_cte -> . llamada
+    (95) llamada -> . CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    CTE_INT         shift and go to state 219
+    LPAREN          shift and go to state 110
+    MINUS           shift and go to state 112
+    NOT             shift and go to state 113
+    CTE_INT         shift and go to state 114
+    CTE_FLOAT       shift and go to state 115
+    CTE_BOOL        shift and go to state 116
+    CTE_CHAR        shift and go to state 117
+    ID              shift and go to state 118
+    CALL            shift and go to state 95
 
+    expresion                      shift and go to state 219
+    compare                        shift and go to state 106
+    exp                            shift and go to state 107
+    termino                        shift and go to state 108
+    factor                         shift and go to state 109
+    tipo_cte                       shift and go to state 111
+    llamada                        shift and go to state 119
 
 state 187
 
@@ -3585,7 +3615,7 @@ state 218
 
 state 219
 
-    (34) tipo_cte1 -> LBRACKET CTE_INT . puntoCreateArrQuad RBRACKET
+    (34) tipo_cte1 -> LBRACKET expresion . puntoCreateArrQuad RBRACKET
     (81) puntoCreateArrQuad -> .
 
     RBRACKET        reduce using rule 81 (puntoCreateArrQuad -> .)
@@ -4016,7 +4046,7 @@ state 254
 
 state 255
 
-    (34) tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad . RBRACKET
+    (34) tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad . RBRACKET
 
     RBRACKET        shift and go to state 271
 
@@ -4269,24 +4299,24 @@ state 270
 
 state 271
 
-    (34) tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .
+    (34) tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .
 
-    TIMES           reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    DIVIDE          reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    PLUS            reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    MINUS           reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    GREATERTHAN     reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    LESSTHAN        reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    GREATERTHANEQUAL reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    LESSTHANEQUAL   reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    EQUALEQUAL      reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    NOTEQUAL        reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    AND             reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    OR              reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    SEMICOLON       reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    RPAREN          reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    RBRACKET        reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
-    COMMA           reduce using rule 34 (tipo_cte1 -> LBRACKET CTE_INT puntoCreateArrQuad RBRACKET .)
+    TIMES           reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    DIVIDE          reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    PLUS            reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    MINUS           reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    GREATERTHAN     reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    LESSTHAN        reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    GREATERTHANEQUAL reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    LESSTHANEQUAL   reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    EQUALEQUAL      reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    NOTEQUAL        reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    AND             reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    OR              reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    SEMICOLON       reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    RPAREN          reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    RBRACKET        reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
+    COMMA           reduce using rule 34 (tipo_cte1 -> LBRACKET expresion puntoCreateArrQuad RBRACKET .)
 
 
 state 272

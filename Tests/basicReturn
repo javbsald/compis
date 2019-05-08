@@ -1,0 +1,17 @@
+program moduloLlamadas;
+var a as int;
+func void increment(int a)
+{
+    a=a+1;
+}
+void main()
+{
+    a=0;
+    print(a);
+    call.increment(a);
+    print(a);
+    print("end");
+    //sum = call.increment(a)
+    //print(a);
+    //print(sum);
+}

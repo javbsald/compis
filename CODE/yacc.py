@@ -70,8 +70,8 @@ def p_puntoChangeStateLocal(p):
 
 def p_puntoPrintFinal(p):
     'puntoPrintFinal : '
-    #pprint.pprint(globalProgram)
-    #pprint.pprint(pilaQuads)
+    pprint.pprint(globalProgram)
+    pprint.pprint(pilaQuads)
 
 def p_vars(p):
     'vars : VAR ID puntoCreateVar vars1 AS vars2 vars3 puntoCreateDimension SEMICOLON'
@@ -180,7 +180,7 @@ def p_tipo_cte(p):
     '''
 def p_tipo_cte1(p):
     '''
-    tipo_cte1 : LBRACKET CTE_INT puntoCreateArrQuad RBRACKET
+    tipo_cte1 : LBRACKET expresion puntoCreateArrQuad RBRACKET
     | funciones_arr
     | empty
     '''
@@ -690,6 +690,7 @@ def p_puntoSumaResta(p):
         elif pilaOper[length-1] == "-":
             createOperationQuad()
 
+# Se llama esta funcion cada vez que se uiere asignar alguna expresion aritmetica, logica o relacional
 def createOperationQuad():
     right_operand = vectorPolaco.pop()
     right_Type = pilaTipos.pop()
@@ -808,40 +809,23 @@ def p_error(p):
 parser = yacc.yacc()
 
 s = '''
-program moduloLlamadas;
-var a, b as int;
-var f as float;
-func void uno(int a)
+program factorialRecursivo;
+func int factorial(int x)
 {
-    a=a+b*a;
-    print(a);
-    print(b);
-    print(a+b);
-}
-func void dos(int a, int b, float g)
-{
-    var i as int;
-    i=b;
-    while(i>0)
+    if(x==1)
     {
-        a=a+b*i+b;
-        call.uno(i*2);
-        print(a);
-        i=i-1;
+        return 1;
+    }
+    else
+    {
+        return x * call.factorial(x-1);
     }
 }
 void main()
 {
-    a=3;
-    b=a+1;
-    print(a);
-    print(b);
-    f=3.14;
-    call.dos(a+b*2, b, f*3);
-    print(a);
-    print(b);
-    print(f*2+1);
+    print(call.factorial(3));
 }
+
 '''
 
 
