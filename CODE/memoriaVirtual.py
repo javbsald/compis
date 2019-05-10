@@ -74,7 +74,7 @@ def getLocalDir(dir_type):
         return local_int_counter
     elif dir_type == "float":
         global local_float_counter
-        local_int_counter += 1
+        local_float_counter += 1
         return local_float_counter
     elif dir_type == "char":
         global local_char_counter

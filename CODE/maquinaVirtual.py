@@ -26,7 +26,7 @@ def memoryToValue(mem):
         if mem in memoriaGlobal:
             return memoriaGlobal[mem]
         else:
-            print("Not found in Global Memory")
+            print(mem, "Not found in Global Memory")
     elif mem >= 10000 and mem < 20000:  # Local
         #print(mem, " in ", localList, " lengh=", localListLength)
         if mem in localList[localListLength-1]:
@@ -37,7 +37,7 @@ def memoryToValue(mem):
         if mem in memoriaTemporal:
             return memoriaTemporal[mem]
         else:
-            print("Not found in Temporal Memory")
+            print(mem, "Not found in Temporal Memory")
     elif mem >= 25000 and mem < 30000:  # Const
         return memoriaConstanteDir[mem]
 
@@ -93,6 +93,8 @@ def getArray(arr, dim):
     return arrValues
 
 while True:
+    print("doing", pilaQuads[quadCounterList[currentquadCounter]][0], pilaQuads[quadCounterList[currentquadCounter]])
+    print(memoriaLocal)
     if pilaQuads[quadCounterList[currentquadCounter]][0] == "GOTO":
         quadCounterList[currentquadCounter] = pilaQuads[quadCounterList[currentquadCounter]][3]-1
         #print("Jump to Quad ", quadCounterList[currentquadCounter])
@@ -147,19 +149,22 @@ while True:
         #print(quadCounterList)
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "write":
         toPrint = pilaQuads[quadCounterList[currentquadCounter]][3]
-        #print("Printing...")
         if type(toPrint) == str:
             print(toPrint)
         else:
+            quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
+            print(quadToWork)
+            toPrint = quadToWork[3]
+            print("Printing...", toPrint)
             resultValue = memoryToValue(toPrint)
             print(resultValue)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "VER":
         #print("VER", pilaQuads[quadCounterList[currentquadCounter]])
-        toVerifyDir = pilaQuads[quadCounterList[currentquadCounter]][1]
+        toVerifyDir = pilaQuads[quadCounterList[currentquadCounter]][3]
         toVerify = memoryToValue(toVerifyDir)
-        limiteInferior = pilaQuads[quadCounterList[currentquadCounter]][2]
-        limiteSuperior = pilaQuads[quadCounterList[currentquadCounter]][3]
+        limiteInferior = pilaQuads[quadCounterList[currentquadCounter]][1]
+        limiteSuperior = pilaQuads[quadCounterList[currentquadCounter]][2]
         if toVerify > limiteInferior and toVerify <= limiteSuperior:
             quadCounterList[currentquadCounter] += 1
         else:
@@ -173,8 +178,8 @@ while True:
         array=getArray(arrDir, arrDim)
         maxValue = max(array)
         print("Max from", array, " - ", maxValue)
-
-        #assignToMemory(maxValue, resultDir)
+        #print("Assign", maxValue, " a ", resultDir)
+        assignToMemory(maxValue, resultDir)
         #resultValue = memoryToValue(maxValue)
         #print("RETURN", resultDir, " = ", resultValue)
         # assignToMemory()

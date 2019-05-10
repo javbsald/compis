@@ -1,11 +1,17 @@
 program arrays;
 void main()
 {
-    var arr as int[10];
-
-    print("Array created");
+    var arr as int[5];
+    var result as float;
 
     arr[1] = 7;
+    arr[2] = 13;
+    arr[3] = 4;
+    arr[4] = 10;
+    arr[5] = 6;
 
-    print(arr[1]);
+    print(arr[3]);
+    result = arr.max();
+    print(result);
 }
+

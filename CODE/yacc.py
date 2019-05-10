@@ -10,6 +10,7 @@ from cuboSemantico import *
 # Import memoria Virtual
 from memoriaVirtual import *
 
+
 # Variables globales para crear la var table
 globalProgram = dict()
 varList = []
@@ -180,7 +181,7 @@ def p_tipo_cte(p):
     '''
 def p_tipo_cte1(p):
     '''
-    tipo_cte1 : LBRACKET expresion puntoCreateArrQuad RBRACKET
+    tipo_cte1 : LBRACKET puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
     | funciones_arr
     | empty
     '''
@@ -195,6 +196,7 @@ def p_puntoPushInt(p):
         memoriaConstante[constanteInt] =  tempInt
         memoriaConstanteDir[tempInt] = constanteInt
     #vectorPolaco.append(p[-1])
+    print("Push int", vectorPolaco)
     pilaTipos.append("int")
 
 def p_puntoPushFloat(p):
@@ -255,6 +257,7 @@ def p_puntoPushID(p):
         print("ERROR: Variable not declared", str(p.lexer.lineno))
         sys.exit(0)
         #print(globalProgram[programID][currentState]['varTable'][currentID])
+    print("Push", currentIDGlobal, vectorPolaco)
 
 def p_tipo_graph(p):
     '''
@@ -418,17 +421,20 @@ def p_puntoSaveIDAsignacion(p):
         sys.exit(0)
 def p_puntoCreateArrQuad(p):
     'puntoCreateArrQuad : '
+    #print(vectorPolaco)
     aux2 = vectorPolaco.pop()
     aux1 = vectorPolaco.pop()
     #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal])
     dimensionTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Dimension']
-    quad = ("VER", aux2, 0, dimensionTemp)
+    quad = ("VER", 0, dimensionTemp, aux2)
     pilaQuads.append(quad)
     typeTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
     tempDir = getTempDir(typeTemp)
     #print(memoriaConstante)
-    #print(memoriaConstanteDir)
+    print(memoriaConstanteDir)
     # Hacer aux1 constante porque se le sumara la posicion del arreglo
+    #quad = ("+", aux1, aux2, tempDir)
+    #pilaQuads.append(quad)
     if aux1 in memoriaConstante:
         #print("10000 exists")
         tempInt = memoriaConstante[aux1]
@@ -438,10 +444,6 @@ def p_puntoCreateArrQuad(p):
         memoriaConstante[aux1] =  tempInt
         memoriaConstanteDir[tempInt] = aux1
         #print("Assign", aux1, "a", tempInt)
-    #quad = ("+", aux1, aux2, tempDir)
-    #print("AUX1 = ", aux1)
-    #dirBase = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Direccion']
-    #print("DIR BASE = ", aux2)
     quad = ("+", tempInt, aux2, tempDir)
     #print("En la ", tempDir, "no contiene un valor, contiene una direccion")
     pilaQuads.append(quad)
@@ -497,7 +499,7 @@ def fillQuad(previousJump, nextQuad):
     pilaQuads[previousJump] = newQuad
 
 def p_escritura(p):
-    'escritura : PRINT LPAREN escritura1 RPAREN SEMICOLON'
+    'escritura : PRINT LPAREN puntoPushFondoFalso escritura1 RPAREN puntoPopFondoFalso SEMICOLON'
 def p_escritura1(p):
     '''
     escritura1 : expresion puntoCreatePrintQuad
@@ -783,17 +785,26 @@ def p_puntoCreateSpecial(p):
     else:
         globalProgram[programID][currentState]['varTable'][specialFuncToCall] = dict()
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = dict()
-        resultDir = getLocalDir("int")
+        globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type'] = dict()
+        arrType = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
+        #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type'])
+        resultDir = getTempDir(arrType)
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = resultDir
+        globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type'] = arrType
 
+    print("MAX TYPE", arrType, resultDir)
     quad = (specialFuncToCall, arrDimToSend, arrToSend, resultDir)
     pilaQuads.append(quad)
 
-    #nextTempDir = getTempDir("int")
-    #quad = ("=", nextTempDir, None, resultDir)
-    #vectorPolaco.append(nextTempDir)
-    #pilaTipos.append("int")
-    #pilaQuads.append(quad)
+    vectorPolaco.append(resultDir)
+    pilaTipos.append(arrType)
+    print(vectorPolaco)
+
+    nextTempDir = getTempDir(arrType)
+    quad = ("=", resultDir, None, nextTempDir)
+    pilaQuads.append(quad)
+    vectorPolaco.append(nextTempDir)
+    pilaTipos.append(arrType)
 
 def p_empty(p):
     'empty : '
@@ -802,32 +813,38 @@ def p_error(p):
     if p:
         print("Syntax error at token", p.type)
         print(p.lexer.lineno)
+        #sys.exit(0)
     else:
         print("Syntax error at EOF")
 
 # Build the parser
 parser = yacc.yacc()
 
+# Get text file to read and run
+#print("File to read (______.txt)")
+#fileToRead = input()
+#fileToRead += ".txt"
+# Open and Read file
+#file = open(fileToRead, "r")
+#s = file.read()
 s = '''
-program factorialRecursivo;
-func int factorial(int x)
-{
-    if(x==1)
-    {
-        return 1;
-    }
-    else
-    {
-        return x * call.factorial(x-1);
-    }
-}
+program arrays;
 void main()
 {
-    print(call.factorial(3));
+    var arr as int[5];
+    var result as float;
+
+    arr[1] = 7;
+    arr[2] = 13;
+    arr[3] = 4;
+    arr[4] = 10;
+    arr[5] = 6;
+
+    print(arr[3]);
+    result = arr.max();
+    print(result);
 }
-
 '''
-
 
 result = parser.parse(s)
 
