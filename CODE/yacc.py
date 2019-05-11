@@ -22,6 +22,7 @@ currentType = None
 currentDimension = 0
 currentIDGlobal = None
 arrBool = False
+globalArr = None
 
 # Varibles globales para Cuadruplos
 vectorPolaco = []
@@ -181,10 +182,14 @@ def p_tipo_cte(p):
     '''
 def p_tipo_cte1(p):
     '''
-    tipo_cte1 : LBRACKET puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
+    tipo_cte1 : LBRACKET puntoPushFondoFalso puntoGuardarArr expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
     | funciones_arr
     | empty
     '''
+def p_puntoGuardarArr(p):
+    'puntoGuardarArr : '
+    global globalArr
+    globalArr = currentIDGlobal;
 def p_puntoPushInt(p):
     'puntoPushInt : '
     constanteInt = p[-1]
@@ -196,7 +201,7 @@ def p_puntoPushInt(p):
         memoriaConstante[constanteInt] =  tempInt
         memoriaConstanteDir[tempInt] = constanteInt
     #vectorPolaco.append(p[-1])
-    print("Push int", vectorPolaco)
+    #print("Push int", vectorPolaco)
     pilaTipos.append("int")
 
 def p_puntoPushFloat(p):
@@ -257,7 +262,7 @@ def p_puntoPushID(p):
         print("ERROR: Variable not declared", str(p.lexer.lineno))
         sys.exit(0)
         #print(globalProgram[programID][currentState]['varTable'][currentID])
-    print("Push", currentIDGlobal, vectorPolaco)
+    #print("Push", currentIDGlobal, vectorPolaco)
 
 def p_tipo_graph(p):
     '''
@@ -385,7 +390,7 @@ def p_asignacion(p):
     'asignacion : ID puntoSaveIDAsignacion asignacion1 EQUALS asignacion2 SEMICOLON'
 def p_asignacion1(p):
     '''
-    asignacion1 : LBRACKET puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
+    asignacion1 : LBRACKET puntoGuardarArr puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso
     | empty
     '''
 def p_asignacion2(p):
@@ -425,13 +430,13 @@ def p_puntoCreateArrQuad(p):
     aux2 = vectorPolaco.pop()
     aux1 = vectorPolaco.pop()
     #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal])
-    dimensionTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Dimension']
+    dimensionTemp = globalProgram[programID][currentState]['varTable'][globalArr]['Dimension']
     quad = ("VER", 0, dimensionTemp, aux2)
     pilaQuads.append(quad)
-    typeTemp = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
+    typeTemp = globalProgram[programID][currentState]['varTable'][globalArr]['Type']
     tempDir = getTempDir(typeTemp)
     #print(memoriaConstante)
-    print(memoriaConstanteDir)
+    #print(memoriaConstanteDir)
     # Hacer aux1 constante porque se le sumara la posicion del arreglo
     #quad = ("+", aux1, aux2, tempDir)
     #pilaQuads.append(quad)
@@ -763,15 +768,16 @@ def p_funciones_arr(p):
 def p_funciones_arr1(p):
     '''
     funciones_arr1 : MAX puntoCreateSpecial
-    | MIN
-    | RANGE
-    | MEDIAN
-    | AVERAGE
+    | MIN puntoCreateSpecial
+    | RANGE puntoCreateSpecial
+    | MEDIAN puntoCreateSpecial
+    | AVERAGE puntoCreateSpecial
     | IQRANGE
-    | STDEV
-    | VARIANCE
+    | STDEV puntoCreateSpecial
+    | VARIANCE puntoCreateSpecial
     | MODIFY
     | DRAW
+    | SORT puntoCreateSpecial
     '''
 def p_puntoCreateSpecial(p):
     'puntoCreateSpecial : '
@@ -782,23 +788,30 @@ def p_puntoCreateSpecial(p):
     arrDimToSend = globalProgram[programID][currentState]['varTable'][currentIDGlobal]["Dimension"]
     if specialFuncToCall in globalProgram[programID][currentState]['varTable']:
         resultDir = globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion']
+        arrType = globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type']
     else:
         globalProgram[programID][currentState]['varTable'][specialFuncToCall] = dict()
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = dict()
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type'] = dict()
-        arrType = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
-        #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type'])
+        if specialFuncToCall == "max" or specialFuncToCall == "min":
+            arrType = globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type']
+            #print(globalProgram[programID][currentState]['varTable'][currentIDGlobal]['Type'])
+        else:
+            arrType = "float"
         resultDir = getTempDir(arrType)
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Direccion'] = resultDir
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type'] = arrType
 
-    print("MAX TYPE", arrType, resultDir)
-    quad = (specialFuncToCall, arrDimToSend, arrToSend, resultDir)
+    #print("MAX TYPE", arrType, resultDir)
+    if specialFuncToCall=="sort":
+        quad = (specialFuncToCall, arrDimToSend, arrToSend, arrToSend)
+    else:
+        quad = (specialFuncToCall, arrDimToSend, arrToSend, resultDir)
     pilaQuads.append(quad)
 
     vectorPolaco.append(resultDir)
     pilaTipos.append(arrType)
-    print(vectorPolaco)
+    #print(vectorPolaco)
 
     nextTempDir = getTempDir(arrType)
     quad = ("=", resultDir, None, nextTempDir)
@@ -832,18 +845,65 @@ program arrays;
 void main()
 {
     var arr as int[5];
-    var result as float;
+    var x, y, temp, result as float;
+
+    x=1;
 
     arr[1] = 7;
-    arr[2] = 13;
+    arr[2] = 12;
     arr[3] = 4;
     arr[4] = 10;
     arr[5] = 6;
+    print("Array Created");
 
-    print(arr[3]);
+    // Find de Array
+    //while(x<=5)
+    //{
+    //    if(arr[x]==10)
+    //    {
+    //        print("Found");
+    //        print (x);
+    //    }
+    //    x = x + 1;
+    //}
+
+    print("Sort");
+    result = arr.sort();
+
+    x=1;
+    while(x<=5)
+    {
+        print(arr[x]);
+        x=x+1;
+    }
+
+    print("Max");
     result = arr.max();
     print(result);
+
+    print("Min");
+    print(arr.min());
+
+    print("Range");
+    print(arr.range());
+
+    print("Median");
+    print(arr.median());
+
+    print("Average");
+    print(arr.average());
+
+    print("Standard Deviation");
+    print(arr.stdev());
+
+    print("Variance");
+    print(arr.variance());
+
+    //result = arr.max() + arr.average();
+    //print(result);
 }
+
+
 '''
 
 result = parser.parse(s)

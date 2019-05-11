@@ -32,7 +32,8 @@ reserved = {
     'stdev' : 'STDEV',
     'variance' : 'VARIANCE',
     'modify' : 'MODIFY',
-    'draw' : 'DRAW'
+    'draw' : 'DRAW',
+    'sort' : 'SORT'
  }
 
 # Tokens

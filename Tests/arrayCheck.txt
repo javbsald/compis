@@ -5,13 +5,22 @@ void main()
     var result as float;
 
     arr[1] = 7;
-    arr[2] = 13;
+    arr[2] = 12;
     arr[3] = 4;
     arr[4] = 10;
     arr[5] = 6;
 
     print(arr[3]);
+
     result = arr.max();
     print(result);
+
+    result = arr.average();
+    print(result);
+
+    result = arr.max() + arr.average();
+    print(result);
+
+    print(arr.average());
 }
 

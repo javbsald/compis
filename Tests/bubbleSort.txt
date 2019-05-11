@@ -1,0 +1,15 @@
+// Bubble Sort
+    while(y<5-1)
+    {
+        while(x<5)
+        {
+            if(arr[x]>arr[x+1])
+            {
+                temp=arr[x];
+                arr[x]=arr[x+1];
+                arr[x+1]=temp;
+            }
+            x=x+1;
+        }
+        y=y+1;
+    }

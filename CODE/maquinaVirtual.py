@@ -4,6 +4,8 @@ from yacc import pilaQuads
 
 import pprint
 
+import statistics
+
 #pprint.pprint(pilaQuads)
 
 # Variables Globales
@@ -93,8 +95,8 @@ def getArray(arr, dim):
     return arrValues
 
 while True:
-    print("doing", pilaQuads[quadCounterList[currentquadCounter]][0], pilaQuads[quadCounterList[currentquadCounter]])
-    print(memoriaLocal)
+    #print("doing", pilaQuads[quadCounterList[currentquadCounter]][0], pilaQuads[quadCounterList[currentquadCounter]])
+    #print(memoriaLocal)
     if pilaQuads[quadCounterList[currentquadCounter]][0] == "GOTO":
         quadCounterList[currentquadCounter] = pilaQuads[quadCounterList[currentquadCounter]][3]-1
         #print("Jump to Quad ", quadCounterList[currentquadCounter])
@@ -153,9 +155,9 @@ while True:
             print(toPrint)
         else:
             quadToWork = verifyQuadDirections(pilaQuads[quadCounterList[currentquadCounter]])
-            print(quadToWork)
+            #print(quadToWork)
             toPrint = quadToWork[3]
-            print("Printing...", toPrint)
+            #print("Printing...", toPrint)
             resultValue = memoryToValue(toPrint)
             print(resultValue)
         quadCounterList[currentquadCounter] += 1
@@ -177,12 +179,88 @@ while True:
 
         array=getArray(arrDir, arrDim)
         maxValue = max(array)
-        print("Max from", array, " - ", maxValue)
+        #print("Max from", array, " - ", maxValue)
         #print("Assign", maxValue, " a ", resultDir)
         assignToMemory(maxValue, resultDir)
         #resultValue = memoryToValue(maxValue)
         #print("RETURN", resultDir, " = ", resultValue)
         # assignToMemory()
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "min":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        minValue = min(array)
+        assignToMemory(minValue, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "range":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        maxValue = max(array)
+        minValue = min(array)
+        rangeValue = maxValue - minValue
+        assignToMemory(rangeValue, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "median":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        midValue = statistics.median(array)
+        assignToMemory(midValue, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "average":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        arrCounter=0
+        arrSum=0
+        while(arrCounter < arrDim):
+            arrSum += array[arrCounter]
+            #print(arrSum)
+            arrCounter += 1
+        arrSum /= arrDim
+        #print("Avg", arrSum)
+        assignToMemory(arrSum, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "stdev":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        stdevValue = statistics.stdev(array)
+        assignToMemory(stdevValue, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "variance":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        varianceValue = statistics.variance(array)
+        assignToMemory(varianceValue, resultDir)
+        quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "sort":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        array=getArray(arrDir, arrDim)
+        array.sort()
+        x=1
+        while x<=arrDim:
+            assignToMemory(array[x-1], resultDir+x)
+            x=x+1
+        #print(array)
         quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "=":
         #print("MAQUINA VIRTUAL ASIGNACION")
