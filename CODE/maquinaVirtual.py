@@ -3,8 +3,12 @@
 from yacc import pilaQuads
 
 import pprint
+import sys
 
 import statistics
+
+import numpy as np
+import matplotlib.pyplot as plt
 
 #pprint.pprint(pilaQuads)
 
@@ -93,6 +97,43 @@ def getArray(arr, dim):
         counter += 1
     # print("GET ARRAY", arrValues)
     return arrValues
+
+# Funciones necesarias para crear Regresion Lineal
+# Sacadas de: https://www.geeksforgeeks.org/linear-regression-python-implementation/
+def estimate_coef(x, y):
+    # number of observations/points
+    n = np.size(x)
+
+    # mean of x and y vector
+    m_x, m_y = np.mean(x), np.mean(y)
+
+    # calculating cross-deviation and deviation about x
+    SS_xy = np.sum(y*x) - n*m_y*m_x
+    SS_xx = np.sum(x*x) - n*m_x*m_x
+
+    # calculating regression coefficients
+    b_1 = SS_xy / SS_xx
+    b_0 = m_y - b_1*m_x
+
+    return(b_0, b_1)
+
+def plot_regression_line(x, y, b):
+    # plotting the actual points as scatter plot
+    plt.scatter(x, y, color = "m",
+               marker = "o", s = 30)
+
+    # predicted response vector
+    y_pred = b[0] + b[1]*x
+
+    # plotting the regression line
+    plt.plot(x, y_pred, color = "g")
+
+    # putting labels
+    plt.xlabel('x')
+    plt.ylabel('y')
+
+    # function to show plot
+    plt.show()
 
 while True:
     #print("doing", pilaQuads[quadCounterList[currentquadCounter]][0], pilaQuads[quadCounterList[currentquadCounter]])
@@ -249,6 +290,19 @@ while True:
         varianceValue = statistics.variance(array)
         assignToMemory(varianceValue, resultDir)
         quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "draw":
+        arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
+        arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
+        resultDir = pilaQuads[quadCounterList[currentquadCounter]][3]
+
+        halfPoint = arrDim/2
+        arrayX=getArray(arrDir, halfPoint)
+        arrayY=getArray(arrDir+halfPoint, halfPoint)
+        x=np.array(arrayX)
+        y=np.array(arrayY)
+        b = estimate_coef(x, y)
+        plot_regression_line(x, y, b)
+        quadCounterList[currentquadCounter] += 1
     elif pilaQuads[quadCounterList[currentquadCounter]][0] == "sort":
         arrDim = pilaQuads[quadCounterList[currentquadCounter]][1]
         arrDir = pilaQuads[quadCounterList[currentquadCounter]][2]
@@ -386,6 +440,8 @@ while True:
         resultDir = quadToWork[3]
         assignToMemory(result, resultDir)
         quadCounterList[currentquadCounter] += 1
+    elif pilaQuads[quadCounterList[currentquadCounter]][0] == "EOF":
+        sys.exit(0)
     else:
         sys.exit(0)
 #print(pilaQuads[quadCounterList[currentquadCounter]])

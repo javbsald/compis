@@ -3,6 +3,7 @@ from lex import tokens
 
 # Libreria pretty print
 import pprint
+import sys
 
 # Import cubo semantico
 from cuboSemantico import *
@@ -72,6 +73,8 @@ def p_puntoChangeStateLocal(p):
 
 def p_puntoPrintFinal(p):
     'puntoPrintFinal : '
+    quad = ("EOF", None, None, None)
+    pilaQuads.append(quad)
     pprint.pprint(globalProgram)
     pprint.pprint(pilaQuads)
 
@@ -776,7 +779,7 @@ def p_funciones_arr1(p):
     | STDEV puntoCreateSpecial
     | VARIANCE puntoCreateSpecial
     | MODIFY
-    | DRAW
+    | DRAW puntoCreateSpecial
     | SORT puntoCreateSpecial
     '''
 def p_puntoCreateSpecial(p):
@@ -803,6 +806,10 @@ def p_puntoCreateSpecial(p):
         globalProgram[programID][currentState]['varTable'][specialFuncToCall]['Type'] = arrType
 
     #print("MAX TYPE", arrType, resultDir)
+    if specialFuncToCall=="draw":
+        if arrDimToSend % 2 != 0:
+            print("Error: Please establish the same amount of X and Y")
+            sys.exit(0)
     if specialFuncToCall=="sort":
         quad = (specialFuncToCall, arrDimToSend, arrToSend, arrToSend)
     else:
@@ -826,7 +833,7 @@ def p_error(p):
     if p:
         print("Syntax error at token", p.type)
         print(p.lexer.lineno)
-        #sys.exit(0)
+        sys.exit(0)
     else:
         print("Syntax error at EOF")
 
@@ -844,38 +851,82 @@ s = '''
 program arrays;
 void main()
 {
-    var arr as int[5];
-    var x, y, temp, result as float;
+    var arr as int[6];
+    var x, y, result as float;
 
     x=1;
 
+    //Arr X
     arr[1] = 7;
     arr[2] = 12;
     arr[3] = 4;
-    arr[4] = 10;
-    arr[5] = 6;
+    //Arr Y
+    arr[4] = 6;
+    arr[5] = 10;
+    arr[6] = 5;
     print("Array Created");
-
-    // Find de Array
-    //while(x<=5)
-    //{
-    //    if(arr[x]==10)
-    //    {
-    //        print("Found");
-    //        print (x);
-    //    }
-    //    x = x + 1;
-    //}
-
-    print("Sort");
-    result = arr.sort();
-
+    
     x=1;
-    while(x<=5)
+    while(x<=6)
     {
         print(arr[x]);
         x=x+1;
     }
+
+    y=10;
+    // Find de Array
+    print("Find");
+    x=1;
+    while(x<=6)
+    {
+        if(arr[x]==y)
+        {
+            print("Found in position");
+            print (x);
+        }
+        x = x + 1;
+    }
+        
+    print("Sort");
+    result = arr.sort();
+    x=1;
+    while(x<=6)
+    {
+        print(arr[x]);
+        x=x+1;
+    }
+    
+    print("Multiply x2 if less than 10");
+    x=1;
+    while(x<=6)
+    {
+        if(arr[x]<10)
+        {
+            arr[x] = arr[x] * 2;
+        }
+        x = x + 1;
+    }
+    x=1;
+    while(x<=6)
+    {
+        print(arr[x]);
+        x=x+1;
+    }
+    
+    print("Create Array Acumulutivo");
+    x=1;
+    while(x<=5)
+    {
+        arr[x] = arr[x] + arr[x+1];
+        x = x + 1;
+    }
+    x=1;
+    while(x<=6)
+    {
+        print(arr[x]);
+        x=x+1;
+    }
+    
 
     print("Max");
     result = arr.max();
@@ -898,6 +949,9 @@ void main()
 
     print("Variance");
     print(arr.variance());
+    
+    print("Draw Linear Regression");
+    result = arr.draw();
 
     //result = arr.max() + arr.average();
     //print(result);

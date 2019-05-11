@@ -156,7 +156,7 @@ Rule 150   funciones_arr1 -> IQRANGE
 Rule 151   funciones_arr1 -> STDEV puntoCreateSpecial
 Rule 152   funciones_arr1 -> VARIANCE puntoCreateSpecial
 Rule 153   funciones_arr1 -> MODIFY
-Rule 154   funciones_arr1 -> DRAW
+Rule 154   funciones_arr1 -> DRAW puntoCreateSpecial
 Rule 155   funciones_arr1 -> SORT puntoCreateSpecial
 Rule 156   puntoCreateSpecial -> <empty>
 Rule 157   empty -> <empty>
@@ -280,7 +280,7 @@ puntoCreateParamTable : 46
 puntoCreatePrintConstantQuad : 93
 puntoCreatePrintQuad : 92
 puntoCreateProgram   : 1
-puntoCreateSpecial   : 145 146 147 148 149 151 152 155
+puntoCreateSpecial   : 145 146 147 148 149 151 152 154 155
 puntoCreateVar       : 10 11 49 51
 puntoCreateVarTable  : 1
 puntoCreateVarTableState : 1 1 46
@@ -3138,7 +3138,7 @@ state 187
     (151) funciones_arr1 -> . STDEV puntoCreateSpecial
     (152) funciones_arr1 -> . VARIANCE puntoCreateSpecial
     (153) funciones_arr1 -> . MODIFY
-    (154) funciones_arr1 -> . DRAW
+    (154) funciones_arr1 -> . DRAW puntoCreateSpecial
     (155) funciones_arr1 -> . SORT puntoCreateSpecial
 
     MAX             shift and go to state 221
@@ -3716,10 +3716,12 @@ state 229
 
 state 230
 
-    (154) funciones_arr1 -> DRAW .
+    (154) funciones_arr1 -> DRAW . puntoCreateSpecial
+    (156) puntoCreateSpecial -> .
 
-    LPAREN          reduce using rule 154 (funciones_arr1 -> DRAW .)
+    LPAREN          reduce using rule 156 (puntoCreateSpecial -> .)
 
+    puntoCreateSpecial             shift and go to state 266
 
 state 231
 
@@ -3728,7 +3730,7 @@ state 231
 
     LPAREN          reduce using rule 156 (puntoCreateSpecial -> .)
 
-    puntoCreateSpecial             shift and go to state 266
+    puntoCreateSpecial             shift and go to state 267
 
 state 232
 
@@ -3737,7 +3739,7 @@ state 232
 
     LBLOQUE         reduce using rule 108 (puntoCreateWhileQuad -> .)
 
-    puntoCreateWhileQuad           shift and go to state 267
+    puntoCreateWhileQuad           shift and go to state 268
 
 state 233
 
@@ -3768,7 +3770,7 @@ state 233
     ID              shift and go to state 118
     CALL            shift and go to state 95
 
-    expresion                      shift and go to state 268
+    expresion                      shift and go to state 269
     compare                        shift and go to state 106
     exp                            shift and go to state 107
     termino                        shift and go to state 108
@@ -3802,14 +3804,14 @@ state 236
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada . LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    LPAREN          shift and go to state 269
+    LPAREN          shift and go to state 270
 
 
 state 237
 
     (51) funciones3 -> COMMA tipo . ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
 
-    ID              shift and go to state 270
+    ID              shift and go to state 271
 
 
 state 238
@@ -3837,7 +3839,7 @@ state 240
 
     (84) leida -> INPUT LPAREN . RPAREN
 
-    RPAREN          shift and go to state 271
+    RPAREN          shift and go to state 272
 
 
 state 241
@@ -3847,7 +3849,7 @@ state 241
 
     RBRACKET        reduce using rule 82 (puntoCreateArrQuad -> .)
 
-    puntoCreateArrQuad             shift and go to state 272
+    puntoCreateArrQuad             shift and go to state 273
 
 state 242
 
@@ -3856,7 +3858,7 @@ state 242
     (87) condicion1 -> . empty
     (157) empty -> .
 
-    ELSE            shift and go to state 274
+    ELSE            shift and go to state 275
     ID              reduce using rule 157 (empty -> .)
     IF              reduce using rule 157 (empty -> .)
     PRINT           reduce using rule 157 (empty -> .)
@@ -3866,14 +3868,14 @@ state 242
     CALL            reduce using rule 157 (empty -> .)
     RBLOQUE         reduce using rule 157 (empty -> .)
 
-    condicion1                     shift and go to state 273
-    empty                          shift and go to state 275
+    condicion1                     shift and go to state 274
+    empty                          shift and go to state 276
 
 state 243
 
     (91) escritura -> PRINT LPAREN puntoPushFondoFalso escritura1 RPAREN puntoPopFondoFalso . SEMICOLON
 
-    SEMICOLON       shift and go to state 276
+    SEMICOLON       shift and go to state 277
 
 
 state 244
@@ -3988,7 +3990,7 @@ state 252
     RBRACKET        reduce using rule 131 (puntoSumaResta -> .)
     COMMA           reduce using rule 131 (puntoSumaResta -> .)
 
-    puntoSumaResta                 shift and go to state 277
+    puntoSumaResta                 shift and go to state 278
 
 state 253
 
@@ -4010,7 +4012,7 @@ state 253
     RBRACKET        reduce using rule 131 (puntoSumaResta -> .)
     COMMA           reduce using rule 131 (puntoSumaResta -> .)
 
-    puntoSumaResta                 shift and go to state 278
+    puntoSumaResta                 shift and go to state 279
 
 state 254
 
@@ -4034,7 +4036,7 @@ state 254
     RBRACKET        reduce using rule 136 (puntoMultDivide -> .)
     COMMA           reduce using rule 136 (puntoMultDivide -> .)
 
-    puntoMultDivide                shift and go to state 279
+    puntoMultDivide                shift and go to state 280
 
 state 255
 
@@ -4058,7 +4060,7 @@ state 255
     RBRACKET        reduce using rule 136 (puntoMultDivide -> .)
     COMMA           reduce using rule 136 (puntoMultDivide -> .)
 
-    puntoMultDivide                shift and go to state 280
+    puntoMultDivide                shift and go to state 281
 
 state 256
 
@@ -4111,7 +4113,7 @@ state 257
     ID              shift and go to state 118
     CALL            shift and go to state 95
 
-    expresion                      shift and go to state 281
+    expresion                      shift and go to state 282
     compare                        shift and go to state 106
     exp                            shift and go to state 107
     termino                        shift and go to state 108
@@ -4123,7 +4125,7 @@ state 258
 
     (144) funciones_arr -> PUNTO funciones_arr1 LPAREN . RPAREN
 
-    RPAREN          shift and go to state 282
+    RPAREN          shift and go to state 283
 
 
 state 259
@@ -4177,28 +4179,35 @@ state 265
 
 state 266
 
+    (154) funciones_arr1 -> DRAW puntoCreateSpecial .
+
+    LPAREN          reduce using rule 154 (funciones_arr1 -> DRAW puntoCreateSpecial .)
+
+
+state 267
+
     (155) funciones_arr1 -> SORT puntoCreateSpecial .
 
     LPAREN          reduce using rule 155 (funciones_arr1 -> SORT puntoCreateSpecial .)
 
 
-state 267
+state 268
 
     (106) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad . bloque puntoEndWhileQuad
     (66) bloque -> . LBLOQUE bloque1 RBLOQUE
 
     LBLOQUE         shift and go to state 155
 
-    bloque                         shift and go to state 283
+    bloque                         shift and go to state 284
 
-state 268
+state 269
 
     (110) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion . RPAREN puntoCreateDoWhileQuad
 
-    RPAREN          shift and go to state 284
+    RPAREN          shift and go to state 285
 
 
-state 269
+state 270
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN . llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
     (97) llamada1 -> . expresion puntoVerifyArgumento llamada2
@@ -4231,9 +4240,9 @@ state 269
     ID              shift and go to state 118
     CALL            shift and go to state 95
 
-    llamada1                       shift and go to state 285
-    expresion                      shift and go to state 286
-    empty                          shift and go to state 287
+    llamada1                       shift and go to state 286
+    expresion                      shift and go to state 287
+    empty                          shift and go to state 288
     compare                        shift and go to state 106
     exp                            shift and go to state 107
     termino                        shift and go to state 108
@@ -4241,7 +4250,7 @@ state 269
     tipo_cte                       shift and go to state 111
     llamada                        shift and go to state 119
 
-state 270
+state 271
 
     (51) funciones3 -> COMMA tipo ID . puntoCreateVar puntoCreateVarType puntoPushParam funciones3
     (20) puntoCreateVar -> .
@@ -4249,23 +4258,23 @@ state 270
     COMMA           reduce using rule 20 (puntoCreateVar -> .)
     RPAREN          reduce using rule 20 (puntoCreateVar -> .)
 
-    puntoCreateVar                 shift and go to state 288
+    puntoCreateVar                 shift and go to state 289
 
-state 271
+state 272
 
     (84) leida -> INPUT LPAREN RPAREN .
 
     SEMICOLON       reduce using rule 84 (leida -> INPUT LPAREN RPAREN .)
 
 
-state 272
+state 273
 
     (77) asignacion1 -> LBRACKET puntoGuardarArr puntoPushFondoFalso expresion puntoCreateArrQuad . RBRACKET puntoPopFondoFalso
 
-    RBRACKET        shift and go to state 289
+    RBRACKET        shift and go to state 290
 
 
-state 273
+state 274
 
     (85) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 . puntoFillIfQuad
     (89) puntoFillIfQuad -> .
@@ -4279,18 +4288,18 @@ state 273
     CALL            reduce using rule 89 (puntoFillIfQuad -> .)
     RBLOQUE         reduce using rule 89 (puntoFillIfQuad -> .)
 
-    puntoFillIfQuad                shift and go to state 290
+    puntoFillIfQuad                shift and go to state 291
 
-state 274
+state 275
 
     (86) condicion1 -> ELSE . puntoCreateElseQuad bloque
     (90) puntoCreateElseQuad -> .
 
     LBLOQUE         reduce using rule 90 (puntoCreateElseQuad -> .)
 
-    puntoCreateElseQuad            shift and go to state 291
+    puntoCreateElseQuad            shift and go to state 292
 
-state 275
+state 276
 
     (87) condicion1 -> empty .
 
@@ -4304,7 +4313,7 @@ state 275
     RBLOQUE         reduce using rule 87 (condicion1 -> empty .)
 
 
-state 276
+state 277
 
     (91) escritura -> PRINT LPAREN puntoPushFondoFalso escritura1 RPAREN puntoPopFondoFalso SEMICOLON .
 
@@ -4318,35 +4327,9 @@ state 276
     RBLOQUE         reduce using rule 91 (escritura -> PRINT LPAREN puntoPushFondoFalso escritura1 RPAREN puntoPopFondoFalso SEMICOLON .)
 
 
-state 277
-
-    (128) exp1 -> PLUS puntoPushOperador termino puntoSumaResta . exp1
-    (128) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
-    (129) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
-    (130) exp1 -> . empty
-    (157) empty -> .
-
-    PLUS            shift and go to state 175
-    MINUS           shift and go to state 176
-    GREATERTHAN     reduce using rule 157 (empty -> .)
-    LESSTHAN        reduce using rule 157 (empty -> .)
-    GREATERTHANEQUAL reduce using rule 157 (empty -> .)
-    LESSTHANEQUAL   reduce using rule 157 (empty -> .)
-    EQUALEQUAL      reduce using rule 157 (empty -> .)
-    NOTEQUAL        reduce using rule 157 (empty -> .)
-    AND             reduce using rule 157 (empty -> .)
-    OR              reduce using rule 157 (empty -> .)
-    SEMICOLON       reduce using rule 157 (empty -> .)
-    RPAREN          reduce using rule 157 (empty -> .)
-    RBRACKET        reduce using rule 157 (empty -> .)
-    COMMA           reduce using rule 157 (empty -> .)
-
-    exp1                           shift and go to state 292
-    empty                          shift and go to state 177
-
 state 278
 
-    (129) exp1 -> MINUS puntoPushOperador termino puntoSumaResta . exp1
+    (128) exp1 -> PLUS puntoPushOperador termino puntoSumaResta . exp1
     (128) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
     (129) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
     (130) exp1 -> . empty
@@ -4372,16 +4355,14 @@ state 278
 
 state 279
 
-    (133) termino1 -> TIMES puntoPushOperador factor puntoMultDivide . termino1
-    (133) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
-    (134) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
-    (135) termino1 -> . empty
+    (129) exp1 -> MINUS puntoPushOperador termino puntoSumaResta . exp1
+    (128) exp1 -> . PLUS puntoPushOperador termino puntoSumaResta exp1
+    (129) exp1 -> . MINUS puntoPushOperador termino puntoSumaResta exp1
+    (130) exp1 -> . empty
     (157) empty -> .
 
-    TIMES           shift and go to state 179
-    DIVIDE          shift and go to state 180
-    PLUS            reduce using rule 157 (empty -> .)
-    MINUS           reduce using rule 157 (empty -> .)
+    PLUS            shift and go to state 175
+    MINUS           shift and go to state 176
     GREATERTHAN     reduce using rule 157 (empty -> .)
     LESSTHAN        reduce using rule 157 (empty -> .)
     GREATERTHANEQUAL reduce using rule 157 (empty -> .)
@@ -4395,12 +4376,12 @@ state 279
     RBRACKET        reduce using rule 157 (empty -> .)
     COMMA           reduce using rule 157 (empty -> .)
 
-    termino1                       shift and go to state 294
-    empty                          shift and go to state 181
+    exp1                           shift and go to state 294
+    empty                          shift and go to state 177
 
 state 280
 
-    (134) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide . termino1
+    (133) termino1 -> TIMES puntoPushOperador factor puntoMultDivide . termino1
     (133) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
     (134) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
     (135) termino1 -> . empty
@@ -4428,14 +4409,42 @@ state 280
 
 state 281
 
+    (134) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide . termino1
+    (133) termino1 -> . TIMES puntoPushOperador factor puntoMultDivide termino1
+    (134) termino1 -> . DIVIDE puntoPushOperador factor puntoMultDivide termino1
+    (135) termino1 -> . empty
+    (157) empty -> .
+
+    TIMES           shift and go to state 179
+    DIVIDE          shift and go to state 180
+    PLUS            reduce using rule 157 (empty -> .)
+    MINUS           reduce using rule 157 (empty -> .)
+    GREATERTHAN     reduce using rule 157 (empty -> .)
+    LESSTHAN        reduce using rule 157 (empty -> .)
+    GREATERTHANEQUAL reduce using rule 157 (empty -> .)
+    LESSTHANEQUAL   reduce using rule 157 (empty -> .)
+    EQUALEQUAL      reduce using rule 157 (empty -> .)
+    NOTEQUAL        reduce using rule 157 (empty -> .)
+    AND             reduce using rule 157 (empty -> .)
+    OR              reduce using rule 157 (empty -> .)
+    SEMICOLON       reduce using rule 157 (empty -> .)
+    RPAREN          reduce using rule 157 (empty -> .)
+    RBRACKET        reduce using rule 157 (empty -> .)
+    COMMA           reduce using rule 157 (empty -> .)
+
+    termino1                       shift and go to state 296
+    empty                          shift and go to state 181
+
+state 282
+
     (34) tipo_cte1 -> LBRACKET puntoPushFondoFalso puntoGuardarArr expresion . puntoCreateArrQuad RBRACKET puntoPopFondoFalso
     (82) puntoCreateArrQuad -> .
 
     RBRACKET        reduce using rule 82 (puntoCreateArrQuad -> .)
 
-    puntoCreateArrQuad             shift and go to state 296
+    puntoCreateArrQuad             shift and go to state 297
 
-state 282
+state 283
 
     (144) funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .
 
@@ -4457,7 +4466,7 @@ state 282
     COMMA           reduce using rule 144 (funciones_arr -> PUNTO funciones_arr1 LPAREN RPAREN .)
 
 
-state 283
+state 284
 
     (106) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque . puntoEndWhileQuad
     (109) puntoEndWhileQuad -> .
@@ -4471,9 +4480,9 @@ state 283
     CALL            reduce using rule 109 (puntoEndWhileQuad -> .)
     RBLOQUE         reduce using rule 109 (puntoEndWhileQuad -> .)
 
-    puntoEndWhileQuad              shift and go to state 297
+    puntoEndWhileQuad              shift and go to state 298
 
-state 284
+state 285
 
     (110) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN . puntoCreateDoWhileQuad
     (112) puntoCreateDoWhileQuad -> .
@@ -4487,16 +4496,16 @@ state 284
     CALL            reduce using rule 112 (puntoCreateDoWhileQuad -> .)
     RBLOQUE         reduce using rule 112 (puntoCreateDoWhileQuad -> .)
 
-    puntoCreateDoWhileQuad         shift and go to state 298
+    puntoCreateDoWhileQuad         shift and go to state 299
 
-state 285
+state 286
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 . RPAREN puntoPopFondoFalso puntoCreateGoSubQuad
 
-    RPAREN          shift and go to state 299
+    RPAREN          shift and go to state 300
 
 
-state 286
+state 287
 
     (97) llamada1 -> expresion . puntoVerifyArgumento llamada2
     (102) puntoVerifyArgumento -> .
@@ -4504,16 +4513,16 @@ state 286
     COMMA           reduce using rule 102 (puntoVerifyArgumento -> .)
     RPAREN          reduce using rule 102 (puntoVerifyArgumento -> .)
 
-    puntoVerifyArgumento           shift and go to state 300
+    puntoVerifyArgumento           shift and go to state 301
 
-state 287
+state 288
 
     (98) llamada1 -> empty .
 
     RPAREN          reduce using rule 98 (llamada1 -> empty .)
 
 
-state 288
+state 289
 
     (51) funciones3 -> COMMA tipo ID puntoCreateVar . puntoCreateVarType puntoPushParam funciones3
     (21) puntoCreateVarType -> .
@@ -4521,18 +4530,18 @@ state 288
     COMMA           reduce using rule 21 (puntoCreateVarType -> .)
     RPAREN          reduce using rule 21 (puntoCreateVarType -> .)
 
-    puntoCreateVarType             shift and go to state 301
+    puntoCreateVarType             shift and go to state 302
 
-state 289
+state 290
 
     (77) asignacion1 -> LBRACKET puntoGuardarArr puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET . puntoPopFondoFalso
     (143) puntoPopFondoFalso -> .
 
     EQUALS          reduce using rule 143 (puntoPopFondoFalso -> .)
 
-    puntoPopFondoFalso             shift and go to state 302
+    puntoPopFondoFalso             shift and go to state 303
 
-state 290
+state 291
 
     (85) condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad .
 
@@ -4546,16 +4555,16 @@ state 290
     RBLOQUE         reduce using rule 85 (condicion -> IF LPAREN expresion RPAREN puntoCreateIfQuad bloque condicion1 puntoFillIfQuad .)
 
 
-state 291
+state 292
 
     (86) condicion1 -> ELSE puntoCreateElseQuad . bloque
     (66) bloque -> . LBLOQUE bloque1 RBLOQUE
 
     LBLOQUE         shift and go to state 155
 
-    bloque                         shift and go to state 303
+    bloque                         shift and go to state 304
 
-state 292
+state 293
 
     (128) exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .
 
@@ -4573,7 +4582,7 @@ state 292
     COMMA           reduce using rule 128 (exp1 -> PLUS puntoPushOperador termino puntoSumaResta exp1 .)
 
 
-state 293
+state 294
 
     (129) exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .
 
@@ -4591,7 +4600,7 @@ state 293
     COMMA           reduce using rule 129 (exp1 -> MINUS puntoPushOperador termino puntoSumaResta exp1 .)
 
 
-state 294
+state 295
 
     (133) termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .
 
@@ -4611,7 +4620,7 @@ state 294
     COMMA           reduce using rule 133 (termino1 -> TIMES puntoPushOperador factor puntoMultDivide termino1 .)
 
 
-state 295
+state 296
 
     (134) termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .
 
@@ -4631,14 +4640,14 @@ state 295
     COMMA           reduce using rule 134 (termino1 -> DIVIDE puntoPushOperador factor puntoMultDivide termino1 .)
 
 
-state 296
+state 297
 
     (34) tipo_cte1 -> LBRACKET puntoPushFondoFalso puntoGuardarArr expresion puntoCreateArrQuad . RBRACKET puntoPopFondoFalso
 
-    RBRACKET        shift and go to state 304
+    RBRACKET        shift and go to state 305
 
 
-state 297
+state 298
 
     (106) while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad .
 
@@ -4652,7 +4661,7 @@ state 297
     RBLOQUE         reduce using rule 106 (while -> WHILE puntoPushSaltoWhile LPAREN expresion RPAREN puntoCreateWhileQuad bloque puntoEndWhileQuad .)
 
 
-state 298
+state 299
 
     (110) do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad .
 
@@ -4666,7 +4675,7 @@ state 298
     RBLOQUE         reduce using rule 110 (do_while -> DO puntoPushSaltoDoWhile bloque WHILE LPAREN expresion RPAREN puntoCreateDoWhileQuad .)
 
 
-state 299
+state 300
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN . puntoPopFondoFalso puntoCreateGoSubQuad
     (143) puntoPopFondoFalso -> .
@@ -4688,22 +4697,22 @@ state 299
     RBRACKET        reduce using rule 143 (puntoPopFondoFalso -> .)
     COMMA           reduce using rule 143 (puntoPopFondoFalso -> .)
 
-    puntoPopFondoFalso             shift and go to state 305
+    puntoPopFondoFalso             shift and go to state 306
 
-state 300
+state 301
 
     (97) llamada1 -> expresion puntoVerifyArgumento . llamada2
     (99) llamada2 -> . COMMA expresion puntoVerifyArgumento llamada2
     (100) llamada2 -> . empty
     (157) empty -> .
 
-    COMMA           shift and go to state 307
+    COMMA           shift and go to state 308
     RPAREN          reduce using rule 157 (empty -> .)
 
-    llamada2                       shift and go to state 306
-    empty                          shift and go to state 308
+    llamada2                       shift and go to state 307
+    empty                          shift and go to state 309
 
-state 301
+state 302
 
     (51) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType . puntoPushParam funciones3
     (57) puntoPushParam -> .
@@ -4711,16 +4720,16 @@ state 301
     COMMA           reduce using rule 57 (puntoPushParam -> .)
     RPAREN          reduce using rule 57 (puntoPushParam -> .)
 
-    puntoPushParam                 shift and go to state 309
+    puntoPushParam                 shift and go to state 310
 
-state 302
+state 303
 
     (77) asignacion1 -> LBRACKET puntoGuardarArr puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso .
 
     EQUALS          reduce using rule 77 (asignacion1 -> LBRACKET puntoGuardarArr puntoPushFondoFalso expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso .)
 
 
-state 303
+state 304
 
     (86) condicion1 -> ELSE puntoCreateElseQuad bloque .
 
@@ -4734,7 +4743,7 @@ state 303
     RBLOQUE         reduce using rule 86 (condicion1 -> ELSE puntoCreateElseQuad bloque .)
 
 
-state 304
+state 305
 
     (34) tipo_cte1 -> LBRACKET puntoPushFondoFalso puntoGuardarArr expresion puntoCreateArrQuad RBRACKET . puntoPopFondoFalso
     (143) puntoPopFondoFalso -> .
@@ -4756,9 +4765,9 @@ state 304
     RBRACKET        reduce using rule 143 (puntoPopFondoFalso -> .)
     COMMA           reduce using rule 143 (puntoPopFondoFalso -> .)
 
-    puntoPopFondoFalso             shift and go to state 310
+    puntoPopFondoFalso             shift and go to state 311
 
-state 305
+state 306
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso . puntoCreateGoSubQuad
     (103) puntoCreateGoSubQuad -> .
@@ -4780,16 +4789,16 @@ state 305
     RBRACKET        reduce using rule 103 (puntoCreateGoSubQuad -> .)
     COMMA           reduce using rule 103 (puntoCreateGoSubQuad -> .)
 
-    puntoCreateGoSubQuad           shift and go to state 311
+    puntoCreateGoSubQuad           shift and go to state 312
 
-state 306
+state 307
 
     (97) llamada1 -> expresion puntoVerifyArgumento llamada2 .
 
     RPAREN          reduce using rule 97 (llamada1 -> expresion puntoVerifyArgumento llamada2 .)
 
 
-state 307
+state 308
 
     (99) llamada2 -> COMMA . expresion puntoVerifyArgumento llamada2
     (113) expresion -> . compare expresion2
@@ -4818,7 +4827,7 @@ state 307
     ID              shift and go to state 118
     CALL            shift and go to state 95
 
-    expresion                      shift and go to state 312
+    expresion                      shift and go to state 313
     compare                        shift and go to state 106
     exp                            shift and go to state 107
     termino                        shift and go to state 108
@@ -4826,14 +4835,14 @@ state 307
     tipo_cte                       shift and go to state 111
     llamada                        shift and go to state 119
 
-state 308
+state 309
 
     (100) llamada2 -> empty .
 
     RPAREN          reduce using rule 100 (llamada2 -> empty .)
 
 
-state 309
+state 310
 
     (51) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam . funciones3
     (51) funciones3 -> . COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3
@@ -4843,10 +4852,10 @@ state 309
     COMMA           shift and go to state 195
     RPAREN          reduce using rule 157 (empty -> .)
 
-    funciones3                     shift and go to state 313
+    funciones3                     shift and go to state 314
     empty                          shift and go to state 196
 
-state 310
+state 311
 
     (34) tipo_cte1 -> LBRACKET puntoPushFondoFalso puntoGuardarArr expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso .
 
@@ -4868,7 +4877,7 @@ state 310
     COMMA           reduce using rule 34 (tipo_cte1 -> LBRACKET puntoPushFondoFalso puntoGuardarArr expresion puntoCreateArrQuad RBRACKET puntoPopFondoFalso .)
 
 
-state 311
+state 312
 
     (96) llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad .
 
@@ -4890,7 +4899,7 @@ state 311
     COMMA           reduce using rule 96 (llamada -> CALL PUNTO puntoPushFondoFalso ID puntoVerifyLlamada LPAREN llamada1 RPAREN puntoPopFondoFalso puntoCreateGoSubQuad .)
 
 
-state 312
+state 313
 
     (99) llamada2 -> COMMA expresion . puntoVerifyArgumento llamada2
     (102) puntoVerifyArgumento -> .
@@ -4898,29 +4907,29 @@ state 312
     COMMA           reduce using rule 102 (puntoVerifyArgumento -> .)
     RPAREN          reduce using rule 102 (puntoVerifyArgumento -> .)
 
-    puntoVerifyArgumento           shift and go to state 314
+    puntoVerifyArgumento           shift and go to state 315
 
-state 313
+state 314
 
     (51) funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3 .
 
     RPAREN          reduce using rule 51 (funciones3 -> COMMA tipo ID puntoCreateVar puntoCreateVarType puntoPushParam funciones3 .)
 
 
-state 314
+state 315
 
     (99) llamada2 -> COMMA expresion puntoVerifyArgumento . llamada2
     (99) llamada2 -> . COMMA expresion puntoVerifyArgumento llamada2
     (100) llamada2 -> . empty
     (157) empty -> .
 
-    COMMA           shift and go to state 307
+    COMMA           shift and go to state 308
     RPAREN          reduce using rule 157 (empty -> .)
 
-    llamada2                       shift and go to state 315
-    empty                          shift and go to state 308
+    llamada2                       shift and go to state 316
+    empty                          shift and go to state 309
 
-state 315
+state 316
 
     (99) llamada2 -> COMMA expresion puntoVerifyArgumento llamada2 .
 
